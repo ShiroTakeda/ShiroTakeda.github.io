@@ -1,0 +1,516 @@
+@charset "UTF-8";
+/*
+
+2060a0
+
+"ax07 written by Nicola Lambathakis (banzai) banzai@tattoocms.it"
+に付属するstyle.cssを編集・変更したもの。
+オリジナルのax07は以下の場所で入手可能。
+Theme URI: http://www.tattoocms.it/templates/ax07.html
+
+Time-stamp: <2011-11-19 18:32:32 Shiro Takeda>
+*/
+
+/* 最大幅を1050px とする */
+
+/*
+------------------------------------------------------------------------- */
+/* Main Sections
+------------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+}
+body
+{
+  font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+  margin: 1em;          /* Margin 1em */
+  padding: 0;           /* Padding はゼロ */
+  font-size: 90%;       /* 文字の大きさ.少し小さく. */
+  background-color: #ffffff;    /* グレー */
+  line-height: 150%;
+  }
+
+div, p, img, a, td, ul, ol
+{
+}
+
+/* Font size for heading */
+h1 { font-size: 120% }
+h2 { font-size: 120% }
+h3 { font-size: 110% }
+h4 { font-size: 110% }
+h5 { font-size: 105% }
+h6 { font-size: 105% }
+
+h1
+{
+  margin: 0.5em 8em 0.5em 0em;
+  padding-bottom: 0.2em;
+
+  color: #2060a0;
+
+  border-bottom-color: #808080;
+  border-bottom-width: 3px;
+  border-bottom-style: double;
+  }
+h2
+{
+  margin: 0.5em 9em 0.5em 0em;
+  padding-bottom: 0.2em;
+
+  color: #2060a0;
+
+  border-bottom-color: #808080;
+  border-bottom-width: 3px;
+  border-bottom-style: double;
+  }
+h3
+{
+  margin: 0.5em 10em 0.5em 0em;
+  padding-bottom: 0.2em;
+
+  color: #808080;
+  
+  border-bottom-color: #808080;
+  border-bottom-width: 3px;
+  border-bottom-style: double;
+  }
+h4
+{
+  margin: 0.5em 10em 0.5em 0em;
+  padding-bottom: 0.2em;
+
+  color: #707070;
+  }
+  
+h6 
+{
+  font-weight: bold;
+  }
+
+p { 
+    text-indent: 1em;
+    padding: 0 0 0.5em 0;
+}
+
+a, a:link
+{
+  color: #2060a0;
+  text-decoration: none;
+  border-bottom-width: 1px;
+  border-bottom-style: dotted;
+  border-bottom-color: #999999;
+}
+a:visited
+{
+color: #a060a0;
+  }
+a:hover
+{
+  background-color: #e0e0ff;
+  color: #000000;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  }
+a:active            /* ??? */
+{
+  color: #2060a0;
+  }
+
+a img
+{
+  border-color: #2060a0;
+  border-width: 1.5px;
+  border-style: outset;
+}
+a:hover img 
+{
+  border-color: #004080;
+  border-width: 2px;
+  border-style: outset;
+}
+img
+{
+  border: none;
+}
+
+/* 番号付きリスト */
+ol
+{
+  margin: 0.5em 0 1em 3em;
+}
+ol li
+{
+  list-style-type: decimal;
+  padding: 0.2em 0 0.3em 0.3em;
+}
+
+/* 記号付きリスト */
+ul
+{
+  margin: 0 0 0 1em;
+}
+ul li
+{
+  }
+
+/* ここの設定よくわからず. */
+.clear
+{
+  clear: both;          /* float による回り込みを解除 */
+  height: 1px;
+  margin: -1px 0 0;
+  font-size: 1px;
+  }
+
+/* page は全体 */
+#page
+{
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0px;
+}
+
+/* header 部分 */
+#header
+{
+  margin: 0px 0px 10px 0px;
+
+  background-color: #f3f7fa;
+  border-color: #cfe4f2;
+  border-width: 1px;
+  border-style: solid;
+  max-width: 1050px;
+}
+
+#insideheader
+{
+  margin: 0.5em 3em 0.5em 1em;
+}
+
+#insideheader h1
+{
+  margin: 1em 3em 1em 0em;
+  padding: 0.5em 1em 0.5em 40px;    /* wide left padding for icon  */
+
+  font-size: 120%;
+  color: #2060a0;
+
+  background-image: url(http://shirotakeda.org/css/images/000645_small_alt.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+  border-bottom-style: none;
+  
+  line-height: 180%
+}
+
+#header p
+{
+  padding: 0 0 0 0;
+  }
+
+/* ??? */
+#middlebody
+{
+  height: 30px;
+  margin: 0px;
+  padding: 0px 0px 0px 20px
+}
+
+#contentarea
+{
+}
+
+/* left column */
+#leftcolumn
+{
+/*   background-color: #ffffff; */
+  margin: 0px 0px 0px 0px;
+  padding: 1em 1.5em 1em 0.5em;
+
+  width: 200px;
+  float: left;
+
+  border-right-width: 1px;
+  border-right-style: solid;
+  border-right-color: #CCCCCC;
+
+  font-size: 90%;
+  }
+
+#leftcolumn h3
+{
+  margin: 15px 0px 10px 0px;
+  padding: 3px 5px 3px 3px;
+
+  font-size: 120%;
+
+  border-bottom-width: 3px;
+  border-bottom-style: double;
+  border-bottom-color: #CCCCCC;
+
+ /*  border-top-width: 1.5px; */
+/*   border-top-style: groove; */
+/*   border-top-color: #CCCCCC; */
+  }
+
+#leftcolumn ul li
+{
+  padding: 0.2em 0 0.3em 0.3em;
+}
+
+/* #leftcolumn a */
+
+/* { */
+/*   color: #d01050; */
+/*   } */
+
+#leftcolumn a, a:link
+{
+  color: #2060a0;
+  text-decoration: none;
+  border-bottom-width: 1px;
+  border-bottom-style: dotted;
+  border-bottom-color: #999999;
+}
+#leftcolumn a:visited
+{
+color: #a060a0;
+  }
+#leftcolumn a:hover
+{
+  background-color: #e0e0ff;
+  color: #000000;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  }
+#leftcolumn a:active            /* ??? */
+{
+  color: #2060a0;
+  }
+
+/* Footer */
+#footer
+{
+  margin: 0 0 0 0;
+  background-color: #f3f7fa;
+  border-color: #cfe4f2;
+  border-width: 1px;
+  border-style: solid;
+
+  max-width: 1050px;
+  
+  font-size: 90%;
+}
+#infooter
+{
+  padding: 10px 10px 10px 10px;
+  text-align: center;
+}
+#infooter a 
+{
+  font-weight: bold;
+  }
+
+/* Main content. [ *content* ] が入るところ */
+#maincontent
+{
+  margin-left: 250px;
+  margin-right: 20px;
+
+  padding: 10px 20px 10px 0.5em;
+
+  max-width: 780px;     /* 250 + 20 + 780 = 1050 */
+  min-width: 400px;
+
+  height: auto !important; /* Detect height automatically, Incompatible w/IE */
+  min-height: 300px;
+
+  line-height: 180%;
+  }
+
+#maincontent ul
+{
+  margin: 0.5em 0 1em 2em;
+  }
+#maincontent ul li
+{
+  padding: 0.2em 0 0.3em 0.3em;
+}
+
+/* ??? */
+#greyblock {
+    margin-top: 0px;
+    float: right;
+    margin-right: 64px;
+    height: 200px;
+    padding-top: 8px;
+    padding-right: 4px;
+    padding-bottom: 4px;
+    padding-left: 5px;
+}
+
+/* Navi */
+#nav 
+{
+  padding: 1em 2em 1em 0em;
+
+}
+
+blockquote
+{
+  font-style: normal;
+  color: #000080;
+  margin: 0em 0em 0em 0em;
+  padding: 1em 1em 1em 2em;
+  }
+
+blockquote.inyou
+{
+  font-style: normal;
+  font-size: 100%;
+  margin: 1em 1em 1em 0em;
+  padding: 1em 1em 1em 2em;
+  border-style: solid;
+  border-width: 1px;
+  color: #400000;
+  background-color: #fef9f9;
+  border-color: #f0e0e0;
+  }
+
+blockquote.chu
+{
+  font-style: normal;
+  font-size: 100%;
+  margin: 1em 3em 1em 2em;
+  padding: 1em 1em 1em 2em;
+  border-style: solid;
+  border-width: 1px;
+  color: #505050;
+  background-color: #f7f7f7;
+  border-color: #cfe4f2;
+  }
+
+blockquote.italic
+{ font-style: italic;
+  color: #000080;
+  }
+
+div.note
+{
+  color: #f00000;
+}
+
+quote
+{
+  font-family: italic;
+  color: #4444aa;
+  }
+
+pre
+{ font-size: 100%;
+  line-height: 110%;
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  color: #000080;
+  border-color: #f0eac0;
+  background-color: #fffdef;
+  white-space: pre;
+  margin: 1em 1.5em 1em 0.5em;
+  padding: 1em 2em;
+  }
+
+td
+{
+  padding: 5px 0px 5px 0px;
+}
+
+.go2top 
+{
+  margin: 1em 0em 1.5em 0em;
+  font-weight: bold;
+
+}
+
+div.new 
+{
+  color: #5050a0;
+  padding-bottom: 1em;
+
+  background-repeat: no-repeat;
+  background-position: left center;
+  border-bottom-style: none; */
+}
+
+
+fieldset
+{
+  padding: 10px 10px 20px 10px;
+
+}
+
+input 
+{
+  background-color: #f5faff;
+  border-style: inset;
+}
+
+input.button
+{
+  background-color: #f3f3f3;
+  border-style: outset;
+}
+
+#ajaxSearch_submit 
+{
+  background-color: #f3f3f3;
+  border-style: outset;
+}
+
+input.radio
+{
+  border-style: none;
+}
+
+textarea
+{
+  background-color: #fdfcf5;
+  border-style: inset;
+  border-width: 2px 2px 2px 2px;
+}
+
+.intro
+{
+  margin: 15px 0px 0px 0px;
+  padding: 1em 1.5em 1em 1em;
+  background-color: #f3f7fa;
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  border-color: #cfe4f2;
+
+}
+
+.date
+{
+  font-weight: bold;
+  color: #000050;
+}
+
+.date a
+{
+  font-weight: normal;
+  }
+
+
+.login
+{
+  font-style: normal;
+  margin: 1em 3em 1em 0em;
+  padding: 1em 1em 1em 1em;
+  border-style: double;
+  border-width: 1px 2px 1px 2px;
+  color: #505050;
+  background-color: #fff3f3;
+  border-color: #e0b0b0;
+  }
