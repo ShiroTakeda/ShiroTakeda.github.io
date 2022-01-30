@@ -1,0 +1,132 @@
+ /* common styling */
+.menu {
+font-family: verdana, sans-serif; 
+width:750px; 
+position:relative; 
+font-size:0.80em;
+z-index:100;
+margin:0px 0 0 10px; 
+}
+.menu ul {
+padding:0; 
+list-style-type: none;
+margin:0px 0 0 0; 
+}
+.menu ul li {
+float:left;
+position:relative;
+margin:0;
+padding-left: 2px;
+}
+.menu ul li a, .menu ul li a:visited {
+display:block; 
+text-decoration:none; 
+color:#000; 
+width:72px; 
+height:2em; 
+color:#9BCA0F; 
+border:1px solid #9BCA0F; 
+border-width:1px 1px 0 1px; 
+background:#FFF; 
+padding-left:6px; 
+line-height:2em;
+border-top: 1px solid #6DA133; 
+
+}
+* html .menu ul li a, .menu ul li a:visited {
+width:72px;
+w\idth:71px;
+}
+.menu ul li ul {
+display: none;
+}
+table {
+margin:-1px; 
+border-collapse:collapse;
+font-size:1em;
+}
+
+/* specific to non IE browsers */
+.menu ul li:hover a,
+.menu ul li a:hover {
+color:#9BCA0F; 
+background:#F4F4F4;
+border-top: 1px solid #9BCA0F;
+}
+
+/*added*/
+.menu ul li a.here, .menu a .active  {
+color:#FFA500; 
+background:#FFF;
+border-top: 1px solid #676767;
+}
+.here {
+color:#9BCA0F; 
+background:#EBEBEB;
+border-top: 1px solid #ff9900;
+}
+
+.menu ul li:hover ul,
+.menu ul li a:hover ul {
+display:block; 
+position:absolute; 
+top:2em;
+margin-top:1px;
+left:0; 
+width:150px;
+}
+* html .menu ul li a:hover ul {
+margin-top:0;
+marg\in-top:1px;
+}
+
+.menu ul li:hover ul li ul,
+.menu ul li a:hover ul li a ul {
+visibility:hidden; 
+position:absolute; 
+height:0; 
+width:0;
+}
+
+.menu ul li:hover ul li a,
+.menu ul li a:hover ul li a {
+display:block; 
+background:#F7F7F7; 
+color:#9BCA0F; 
+height:auto; 
+line-height:1.2em; 
+padding:5px 10px; 
+width:129px;
+border:1px solid #BABABA;
+
+}
+* html .menu ul li a:hover ul li a {
+width:150px;
+w\idth:129px;
+}
+
+.menu ul li:hover ul li a.drop,
+.menu ul li a:hover ul li a.drop {
+background:#F8F8F8 url(drop.gif) bottom right no-repeat;
+}
+
+.menu ul li:hover ul li a:hover,
+.menu ul li a:hover ul li a:hover {
+background:#FFF; 
+color:#6DA133;
+}
+
+.menu ul li:hover ul li:hover ul,
+.menu ul li a:hover ul li a:hover ul {
+visibility:visible; 
+position:absolute; 
+left:150px; 
+top:0;
+width:150px;
+}
+
+.menu ul li:hover ul li:hover ul.left,
+.menu ul li a:hover ul li a:hover ul.left {
+left:-150px;
+}
+
