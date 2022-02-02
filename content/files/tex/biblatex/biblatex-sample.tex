@@ -1,0 +1,83 @@
+\documentclass[10pt,a4j]{jarticle}
+
+\usepackage{ascmac}
+\usepackage{mathpazo}
+\usepackage{color}
+\definecolor{MyBrown}{rgb}{0.3,0,0}
+\definecolor{MyBlue}{rgb}{0,0,0.3}
+\definecolor{MyRed}{rgb}{0.6,0,0.1}
+\definecolor{MyGreen}{rgb}{0,0.4,0}
+\usepackage[dvipdfm,bookmarks=true,bookmarksnumbered=true,%
+colorlinks=true,linkcolor=MyBlue,citecolor=MyRed,%
+filecolor=MyBlue,pagecolor=MyBlue,urlcolor=MyGreen]{hyperref}
+
+\usepackage[utf8]{inputenc}
+\usepackage[backend=biber,bibencoding=utf8,style=authoryear-icomp]{biblatex}
+
+% 文献データの指定
+\addbibresource{biblatex-sample.bib}
+
+\begin{document}
+[\today：作成]\\
+
+プリアンプルにおけるbiblatexパッケージ関連の設定。
+\begin{screen}
+\begin{verbatim}
+% inputencパッケージの読み込み
+\usepackage[utf8]{inputenc}
+% biblatexパッケージの読み込み。
+\usepackage[backend=biber,bibencoding=utf8,style=authoryear-icomp]{biblatex}
+% 文献データの指定
+\addbibresource{biblatex-sample.bib}
+\end{verbatim}
+\end{screen}
+\vspace*{1em}
+
+文献リストを載せたい部分に
+\begin{screen}
+\begin{verbatim}
+\printbibliography
+\end{verbatim}
+\end{screen}
+と書く。
+
+\vspace*{2em}
+以下は\verb|\textcite|命令によって文献を引用している部分。
+\vspace*{1em}
+
+\textcite{brezis93:_leapf_inter_compet},
+\textcite{ishikawa94:_revis_stolp_samuel_rybcz_theor_produc_exter},
+\textcite{Biker-2007-unemployment}, \textcite{Takeda2012a},
+\textcite{takeda06:_cge_analy_welfar_effec_trade}, \textcite{yamazaki13:_japan},
+\textcite{takeda10:_cge_analy_welfar_effec_trade},
+\textcite{krugman91:_geogr_trade}, \textcite{fujita99jp:_spatial_econom},
+\textcite{somusho04jp:2000io-kaisetsu}, \textcite{2009yamasue502165},
+\textcite{2007yamasue482353}, \textcite{krugman91:_is_bilat_bad},
+\textcite{lucas76:_econom_polic_evaluat},
+\textcite{ishikawa03:_green_gas_emiss_contr_open_econom},
+\textcite{rutherford00:_gtapin_gtap_eg}, \textcite{Takeda2011b},
+\textcite{takeda2011c}, \textcite{Babiker-1999-KyotoProtocoland},
+\textcite{wong95:_inter_trade_goods_factor_mobil_},
+\textcite{milne-thomson68:_theor_hydrod},
+\textcite{wang89:_model_therm_hydrod_aspec_molten}, \textcite{brooke03:_gams},
+\textcite{iwamoto91jp:haito-keika}, \textcite{Hattori00}, \textcite{Hattori01},
+\textcite{Hattori02}, \textcite{imai71:_micr_1}, \textcite{imai72:_micr_2},
+\textcite{ito85:_inte_trad}, \textcite{kuroda97jp:keo},
+\textcite{miyazawa02:_io_intr}, \textcite{katayama2001},
+\textcite{markusen99jp:trade_vol_1}, \textcite{barro97jp},
+\textcite{nishimura90:_micr_econ}, \textcite{arimura-takeda2012},
+\textcite{oyama99:_mark_stru}, \textcite{isikawa02jp:_env_trade},
+\textcite{takeda2012_cge}, \textcite{kiyono93:_regu_comp_1},
+\textcite{takeda2013jecon}.
+
+\nocite{*}
+
+% ここに参考文献を表示。
+\printbibliography
+
+\end{document}
+
+--------------------
+Local Variables:
+fill-column: 80
+End:

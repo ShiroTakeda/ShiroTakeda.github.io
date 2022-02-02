@@ -1,0 +1,120 @@
+%
+% Filename:            aer.tex
+% Author:	       Shiro Takeda
+% e-mail               Shiro Takeda <zbc08106@park.zero.ad.jp>
+% First-written:       <2001/12/02>
+% Time-stamp:	       <2005-10-21 12:35:50 Shiro Takeda>
+%
+% Version:
+% $Id: aer.tex,v 1.3 2005/10/21 03:39:14 st Exp $
+%############################## Main #################################
+
+\documentclass[a4j,11pt]{jarticle}
+
+%%% natbib.sty の読み込み。
+%
+% natbib.sty を使うと、経済学で普通使う author (year) の形式で引用できま
+% す。
+\usepackage[longnamesfirst]{natbib}
+
+%%% harvard.sty の人はこっち。
+% \usepackage{harvard}
+
+%%% BibTeX 記号の定義。
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+%%% 参考文献 => Reference.
+\renewcommand{\refname}{References}
+    
+%%% title, author, acknowledgement, and date
+\title{
+\vspace{-2cm}
+Example: AER 風}
+\author{Shiro Takeda}
+\date{}
+
+%#####################################################################
+%######################### Document Starts ###########################
+%#####################################################################
+\begin{document}
+
+%%% BibTeX のスタイルファイルの指定。
+%
+% ここでは aer.bst を指定。Reference の形式が AER 風になる。
+\bibliographystyle{aer}
+% \bibliographystyle{ecta}
+% \bibliographystyle{econometrica}
+% \bibliographystyle{cje}
+
+%%% title
+\maketitle
+
+\begin{center}
+ \verb|$Id: aer.tex,v 1.3 2005/10/21 03:39:14 st Exp $|
+\end{center}
+
+%########################## Text Starts ##############################
+\noindent
+\texttt{aer.bst} を使った例。AER 風の reference になります。
+\\
+\\
+% natbib.sty を使ってるときには citet で普通の経済学っぽい引用の形式にな
+% ります。
+一緒に \texttt{natbib.sty} を使ってます。普通の経済学っぽい citation の
+形式になります。\\
+% 実際に引用する命令。こういうように書けば、本文で引用してくれて、その引
+% 用れた文献を自動で reference に入れてくれます。
+\citet{brander83:_model_inter_trade},
+\citet{helpman85:_market_struc_foreig_trade},
+\citet{baldwin88:_market_acces_inter_compet},
+\citet{helpman89:_trade_polic_market_struc},
+\citet{brezis93:_leapf_inter_compet},
+\citet{fujita99:_spacial_econom},
+\citet{krugman99:_inter_econom},
+\citet{baldwin00:_agglom_integ_tax_hormon},
+\citet{krugman00:_inter_econom},
+\\
+\\
+% 一気に沢山 cite。同じ著者のならカンマで区切ってそのまま並べればよし。
+一気に沢山 cite。同じ著者のならカンマで区切ってそのまま並べればよし。\\
+\citet{krugman79:_increas_retur_monop_compet_inter_trade,
+krugman80:_scale_econom_produc_differ_patter_trade,
+krugman81:_intrain_special_gains_trade,
+krugman84:_impor_protec_expor_promot, krugman87:_is_free_trade_passe,
+krugman87:_narrow_movin_band_dutch_diseas, krugman91:_geogr_trade,
+krugman91:_is_bilat_bad, krugman91:_move_free_trade_zones,
+krugman93:_narrow_broad_argum_free_trade, krugman96:_pop_inter,
+krugman00:_techon_trade_factor_prices}.
+\\
+\\
+ちなみに、Reference で一番上にある
+\citet{baldwin88:_market_acces_inter_compet} が \BibTeX のデータベースで
+どう登録されてるかというと、
+\begin{verbatim}
+	
+	@InCollection{baldwin88:_market_acces_inter_compet,
+	  author =       {Richard E. Baldwin and Paul R. Krugman},
+	  title =        {Market Access and International Competition: A
+	                 Simulation Study of {16K} Random Access Memories},
+	  booktitle =    {Empirical Methods for International Trade},
+	  publisher =    pu-MIT,
+	  year =         1988,
+	  editor =       {R. Feenstra},
+	  address =      ad-MIT
+	}
+
+\end{verbatim}
+こんな感じになってます。このようにデータベースでは項目毎に箇条書きで登録
+しておくだけです。\BibTeX はこれを自動的に Reference 部分のような複雑な
+形式に加工してくれるというわけです。
+
+%%% データベースファイル (bib file) の指定。
+% ここでは econ_ref.bib を指定してます。
+\bibliography{econ_ref}
+
+\end{document}
+
+%#####################################################################
+%######################### Document Ends #############################
+%#####################################################################

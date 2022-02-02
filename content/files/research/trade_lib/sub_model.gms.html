@@ -1,0 +1,1747 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+ <head>
+  <title>sub_model.gms</title>
+ <meta name="generator" content="emacs 21.4.1; htmlfontify 0.18">
+<style type="text/css"><!-- 
+body { background: rgb(0, 0, 48);  color: rgb(224, 255, 224);  font-style: normal;  font-weight: 500;  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.default   { background: rgb(0, 0, 48);  color: rgb(224, 255, 224);  font-style: normal;  font-weight: 500;  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.default a { background: rgb(0, 0, 48);  color: rgb(224, 255, 224);  font-style: normal;  font-weight: 500;  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-slash-face   { color: rgb(240, 160, 240);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-slash-face a { color: rgb(240, 160, 240);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-operator-face   { color: rgb(135, 206, 235);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-operator-face a { color: rgb(135, 206, 235);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-string-face   { color: rgb(255, 160, 160);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-string-face a { color: rgb(255, 160, 160);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-explanation-face   { color: rgb(240, 240, 144);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-explanation-face a { color: rgb(240, 240, 144);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-lst-warning-face   { color: rgb(255, 0, 0);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-lst-warning-face a { color: rgb(255, 0, 0);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-statement-face   { color: rgb(0, 255, 255);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-statement-face a { color: rgb(0, 255, 255);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-dollar-face   { color: rgb(255, 255, 0);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-dollar-face a { color: rgb(255, 255, 0);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-comment-face   { color: rgb(64, 255, 32);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-comment-face a { color: rgb(64, 255, 32);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+ --></style>
+
+ </head>
+  <body>
+
+<pre>
+<span class="gams-comment-face">$ontext
+Copyright (C)   2006 Shiro Takeda
+Time-stamp: 	&lt;2006-10-27 23:52:50 Shiro Takeda&gt;
+$Id: sub_model.gms,v 1.1 2006/11/13 06:23:20 st Exp $
+version:
+Author: 	Shiro Takeda
+First-written:	&lt;2005/04/02&gt;
+
+This program defines models for calibration and simulation.
+
+$offtext
+</span>
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Import data.</span>
+<span class="gams-dollar-face">$include</span> ..\gtap6data.gms
+<span class="gams-statement-face">alias</span> (r,rr)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">alias</span> (r,t), (r, tt), (s, ss)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">set</span>	r_s(r,s)<span class="gams-lst-warning-face">;</span>
+r_s(r,s) = <span class="gams-statement-face">no</span><span class="gams-lst-warning-face">;</span>
+r_s(r,r) = <span class="gams-statement-face">yes</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> r_s<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Import set definition:</span>
+<span class="gams-dollar-face">$include</span> .\%set_file%
+
+<span class="gams-comment-face">*	Specification of liberalization participants:</span>
+<span class="gams-dollar-face">$if exist</span> .\%lib_partcipant_file% <span class="gams-dollar-face">$include</span> .\%lib_partcipant_file%
+
+<span class="gams-statement-face">set</span>
+    k(i)	<span class="gams-explanation-face">Imperfectly competititve sectors</span>
+    l(i)	<span class="gams-explanation-face">Perfectly competititve sectors</span>
+<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Benchmark data:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Benchmark data:&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display i, r, f, vafm, vfm, vxmd, vtwr, vst, vdgm, vigm, vdpm, vipm, vxm, vim,</span>
+<span class="gams-comment-face">* 	vdm, vdfm, vi, vifm, vom, vgm, vpm, vg, vp, vt, evoa, vb, vm, va,</span>
+<span class="gams-comment-face">* 	market, vdep, vkb;</span>
+
+<span class="gams-comment-face">* display vdga, viga, vdgm, vigm, vdpa, vipa, vdpm, vipm, evoa, evfa, vfm, vdfa;</span>
+<span class="gams-comment-face">* display vifa, vdfm, vifm, vims, viws, vxmd, vxwd, vst, vtwr, fbep, isep;</span>
+<span class="gams-comment-face">* display osep, adrv, tfrv, purv, vrrv, mfrv, xtrv;</span>
+<span class="gams-comment-face">* display vdm, vom, voa, vom;</span>
+<span class="gams-comment-face">* display vtw, vpm, vgm, vim, evom, vb;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Tax rates:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Tax rates:&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display rto, rtf, rtpd, rtpi, rtgd, rtgi, rtfd, rtfi, rtxs, rtms;</span>
+<span class="gams-comment-face">* display rtf0, rtpd0, rtpi0, rtgd0, rtgi0, rtfd0, rtfi0, rtxs0, rtms0;</span>
+<span class="gams-statement-face">display</span> rtms, rtxs<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Elasticity parameters:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Elasticity parameters:&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display esubd, esubva, esubm, etrae;</span>
+<span class="gams-statement-face">display</span> esubd, esubva<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Aggregate trade margin:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Aggregate trade margin:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">parameter</span>
+    vtwr_(i,r,s)	<span class="gams-explanation-face">Trade margin (aggregate)</span>
+<span class="gams-lst-warning-face">;</span>
+vtwr_(i,r,s) = <span class="gams-statement-face">sum</span>(j, vtwr(j,i,r,s))<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display vtwr_;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Remove small trade data:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Remove small trade data:&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;Before adjustment&quot;</span>,vb<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">parameter</span>
+    chk_vxmd
+    chk_vtwr
+    chk_rtms
+    chk_rtxs
+<span class="gams-lst-warning-face">;</span>
+chk_vxmd(i,r,s)<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">abs</span>(vxmd(i,r,s)) &lt; 1e-8) = vxmd(i,r,s)<span class="gams-lst-warning-face">;</span>
+chk_vtwr(i,r,s)<span class="gams-dollar-face">$</span>(vtwr_(i,r,s) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> vxmd(i,r,s))) = vtwr_(i,r,s)<span class="gams-lst-warning-face">;</span>
+chk_rtxs(i,r,s)<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">abs</span>(rtxs(i,r,s)) &lt; 1e-3) = rtxs(i,r,s)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> chk_vxmd, chk_vtwr, chk_rtxs<span class="gams-lst-warning-face">;</span>
+
+vxmd(i,r,s)<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">abs</span>(vxmd(i,r,s)) &lt; 1e-8) = 0<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> vxmd<span class="gams-lst-warning-face">;</span>
+
+vtwr_(i,r,s)<span class="gams-dollar-face">$</span>(vtwr_(i,r,s) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> vxmd(i,r,s))) = 0<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> vtwr_<span class="gams-lst-warning-face">;</span>
+
+vb(r) = vpm(r) + vgm(r) + <span class="gams-statement-face">sum</span>(cgd,vom(cgd,r)) 
+	- <span class="gams-statement-face">sum</span>(f, evom(f,r))
+	- <span class="gams-statement-face">sum</span>(j,  vom(j,r)*rto(j,r))
+	- <span class="gams-statement-face">sum</span>(j,  <span class="gams-statement-face">sum</span>(i, vdfm(i,j,r)*rtfd(i,j,r) + vifm(i,j,r)*rtfi(i,j,r)))
+	- <span class="gams-statement-face">sum</span>(j,  <span class="gams-statement-face">sum</span>(f, vfm(f,j,r)*rtf(f,j,r)))
+	- <span class="gams-statement-face">sum</span>(i, vdpm(i,r)*rtpd(i,r) + vipm(i,r)*rtpi(i,r))
+	- <span class="gams-statement-face">sum</span>(i, vdgm(i,r)*rtgd(i,r) + vigm(i,r)*rtgi(i,r))
+	- <span class="gams-statement-face">sum</span>((i,s), rtms(i,s,r) *  (vxmd(i,s,r) * (1-rtxs(i,s,r)) + vtwr_(i,s,r)))
+	+ <span class="gams-statement-face">sum</span>((i,s), rtxs(i,r,s) * vxmd(i,r,s))<span class="gams-lst-warning-face">;</span>
+vb(<span class="gams-string-face">&quot;chksum&quot;</span>) = <span class="gams-statement-face">sum</span>(r, vb(r))<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;After adjustment&quot;</span>, vb<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Total import:</span>
+vim(i,r) = <span class="gams-statement-face">sum</span>(s,(vxmd(i,s,r)*(1-rtxs(i,s,r))+vtwr_(i,s,r))*(1+rtms(i,s,r)))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Aggregate demand:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Aggregate demand:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">parameter</span>
+    v_pm(i,r)		<span class="gams-explanation-face">Private households purchases at market prices</span>
+    v_gm(i,r)		<span class="gams-explanation-face">Government purchases at market prices</span>
+    v_fm(i,j,r)		<span class="gams-explanation-face">Intermediates purchases at market prices</span>
+
+    v_pa(i,r)		<span class="gams-explanation-face">Private households purchases at agent prices</span>
+    v_ga(i,r)		<span class="gams-explanation-face">Government purchases at agent prices</span>
+    v_fa(i,j,r)		<span class="gams-explanation-face">Intermediates purchases at agent prices</span>
+
+    rtp(i,r)		<span class="gams-explanation-face">Tax rates on private demand</span>
+    rtg(i,r)		<span class="gams-explanation-face">Tax rates on government demand</span>
+    rti(i,j,r)		<span class="gams-explanation-face">Intermediate tax rates</span>
+<span class="gams-lst-warning-face">;</span>
+v_pm(i,r) = vdpm(i,r) + vipm(i,r)<span class="gams-lst-warning-face">;</span>
+v_gm(i,r) = vdgm(i,r) + vigm(i,r)<span class="gams-lst-warning-face">;</span>
+v_fm(i,j,r) = vdfm(i,j,r) + vifm(i,j,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display v_pm, v_gm, v_fm;</span>
+
+v_pa(i,r) = vdpa(i,r) + vipa(i,r)<span class="gams-lst-warning-face">;</span>
+v_ga(i,r) = vdga(i,r) + viga(i,r)<span class="gams-lst-warning-face">;</span>
+v_fa(i,j,r) = vdfa(i,j,r) + vifa(i,j,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display v_pa, v_ga, v_fa;</span>
+
+rtp(i,r)<span class="gams-dollar-face">$</span>v_pm(i,r) = (v_pa(i,r)/v_pm(i,r) - 1)<span class="gams-lst-warning-face">;</span>
+rtg(i,r)<span class="gams-dollar-face">$</span>v_gm(i,r) = (v_ga(i,r)/v_gm(i,r) - 1)<span class="gams-lst-warning-face">;</span>
+rti(i,j,r)<span class="gams-dollar-face">$</span>v_fm(i,j,r) = (v_fa(i,j,r)/v_fm(i,j,r) - 1)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display rtp, rtg, rti;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Aggregate private and government demand:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Aggregate private and government demand:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">parameter</span>
+    vdcm(i,r)		<span class="gams-explanation-face">Final demand (domestic)</span>
+    vicm(i,r)		<span class="gams-explanation-face">Final demand (imported)</span>
+    v_cm(i,r)		<span class="gams-explanation-face">Final demand at market prices</span>
+    vcm(r)		<span class="gams-explanation-face">Aggregate final demand</span>
+
+    vdca(i,r)		<span class="gams-explanation-face">Final demand (domestic) at agent prices</span>
+    vica(i,r)		<span class="gams-explanation-face">Final demand (imported) at agent prices</span>
+    v_ca(i,r)		<span class="gams-explanation-face">Final demand at agent prices</span>
+
+    rtc(i,r)		<span class="gams-explanation-face">Tax rates on final demand</span>
+<span class="gams-lst-warning-face">;</span>
+vdcm(i,r) = vdpm(i,r) + vdgm(i,r)<span class="gams-lst-warning-face">;</span>
+vicm(i,r) = vipm(i,r) + vigm(i,r)<span class="gams-lst-warning-face">;</span>
+v_cm(i,r) = vdcm(i,r) + vicm(i,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display vdcm, vicm, v_cm;</span>
+
+vdca(i,r) = vdpa(i,r) + vdga(i,r)<span class="gams-lst-warning-face">;</span>
+vica(i,r) = vipa(i,r) + viga(i,r)<span class="gams-lst-warning-face">;</span>
+v_ca(i,r) = vdca(i,r) + vica(i,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display vdca, vica, v_ca;</span>
+
+rtc(i,r)<span class="gams-dollar-face">$</span>v_cm(i,r) = (v_ca(i,r)/v_cm(i,r) - 1)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display rtc;</span>
+
+vcm(r) = <span class="gams-statement-face">sum</span>(i, (1+rtc(i,r)) * v_cm(i,r))<span class="gams-lst-warning-face">;</span>
+
+vdpm(i,r) = 0<span class="gams-lst-warning-face">;</span>
+vdgm(i,r) = 0<span class="gams-lst-warning-face">;</span>
+vipm(i,r) = 0<span class="gams-lst-warning-face">;</span>
+vigm(i,r) = 0<span class="gams-lst-warning-face">;</span>
+vdpa(i,r) = 0<span class="gams-lst-warning-face">;</span>
+vdga(i,r) = 0<span class="gams-lst-warning-face">;</span>
+vipa(i,r) = 0<span class="gams-lst-warning-face">;</span>
+viga(i,r) = 0<span class="gams-lst-warning-face">;</span>
+rtpd(i,r) = 0<span class="gams-lst-warning-face">;</span>
+rtpi(i,r) = 0<span class="gams-lst-warning-face">;</span>
+rtgd(i,r) = 0<span class="gams-lst-warning-face">;</span>
+rtgi(i,r) = 0<span class="gams-lst-warning-face">;</span>
+
+rtpd0(i,r) = 0<span class="gams-lst-warning-face">;</span>
+rtpi0(i,r) = 0<span class="gams-lst-warning-face">;</span>
+rtgd0(i,r) = 0<span class="gams-lst-warning-face">;</span>
+rtgi0(i,r) = 0<span class="gams-lst-warning-face">;</span>
+
+vpm(r) = 0<span class="gams-lst-warning-face">;</span>
+vgm(r) = 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Reference prices:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Reference prices:&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">parameter</span>
+	pc0(i,r)	<span class="gams-explanation-face">Reference price for final demand</span>
+        po0(i,r)        <span class="gams-explanation-face">Reference output price (domestic or export)</span>,
+        pai0(j,i,r)     <span class="gams-explanation-face">Reference price for intermediate inputs</span>,
+        pf0(f,i,r)      <span class="gams-explanation-face">Reference price for factor inputs</span>
+
+        pmx0(i,s,r)     <span class="gams-explanation-face">Reference price of imports</span>,
+        pmt0(i,s,r)     <span class="gams-explanation-face">Reference price of transport services</span>,
+	pmm0(i,r,s)	<span class="gams-explanation-face">Price of import (net of tariff)</span>
+	pm0(i,r,s)	<span class="gams-explanation-face">Price of import (gross of tariff)</span>
+	pxx0(i,r,s)	<span class="gams-explanation-face">World price of export</span>
+<span class="gams-lst-warning-face">;</span>
+pc0(i,r) = 1 + rtc(i,r)<span class="gams-lst-warning-face">;</span>
+po0(i,r) = 1 - rto(i,r)<span class="gams-lst-warning-face">;</span>
+pai0(j,i,r) = 1 + rti(j,i,r)<span class="gams-lst-warning-face">;</span>
+pf0(f,j,s) = 1 + rtf(f,j,s)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display pc0, po0, pai0, pf0;</span>
+
+pvxmd(i,s,r) = (1 + rtms0(i,s,r)) * (1 - rtxs0(i,s,r))<span class="gams-lst-warning-face">;</span>
+pvtwr(i,s,r) = 1 + rtms0(i,s,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display pvxmd, pvtwr;</span>
+
+pmm0(i,r,s) = 1 - rtxs(i,r,s)<span class="gams-lst-warning-face">;</span>
+pmt0(i,s,r) = (1 + rtms(i,s,r))<span class="gams-lst-warning-face">;</span>
+pmx0(i,s,r) = pmt0(i,s,r) * pmm0(i,s,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display pmm0, pmt0, pmx0;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Calibrate tariff on services:</span>
+<span class="gams-statement-face">parameter</span>
+    tax_rev_fd	<span class="gams-explanation-face">Tax revenue from final demand</span>
+    chk_tariff_rev
+    chk_tariff
+    inc_tr	<span class="gams-explanation-face">Increase in tariff revenue</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">parameter</span>
+    m0(i,r,s)		<span class="gams-explanation-face">Value of import (exc. tariff)</span>
+    m0_(i,r,s)		<span class="gams-explanation-face">Value of import</span>
+<span class="gams-lst-warning-face">;</span>
+m0(i,r,s) = vxmd(i,r,s)<span class="gams-lst-warning-face">;</span>
+m0_(i,r,s) = (1-rtxs(i,r,s))*vxmd(i,r,s) + vtwr_(i,r,s)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display m0, m0_;</span>
+
+<span class="gams-comment-face">*	Include data of tariff on service trade:</span>
+<span class="gams-dollar-face">$include</span> .\%service_tariff_file%
+
+<span class="gams-statement-face">if</span>(%fl_ser%,
+    <span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Calibrate tariff on services:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Original tax revenue from final consumption:</span>
+    tax_rev_fd(i,r) = rtc(i,r)*v_cm(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Introduce tariff on service trade:</span>
+    <span class="gams-statement-face">display</span> t_on_ser<span class="gams-lst-warning-face">;</span>
+    rtms(i_ser,s,r) = t_on_ser(r,i_ser)/100<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">display</span> rtms<span class="gams-lst-warning-face">;</span>
+
+    pvxmd(i,s,r) = (1 + rtms(i,s,r)) * (1 - rtxs0(i,s,r))<span class="gams-lst-warning-face">;</span>
+    pvtwr(i,s,r) = 1 + rtms(i,s,r)<span class="gams-lst-warning-face">;</span>
+    pmm0(i,r,s) = 1 - rtxs0(i,r,s)<span class="gams-lst-warning-face">;</span>
+    pmt0(i,s,r) = (1 + rtms(i,s,r))<span class="gams-lst-warning-face">;</span>
+    pmx0(i,s,r) = pmt0(i,s,r) * pmm0(i,s,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Increase in value of tariff revenue:</span>
+    inc_tr(i_ser,s)
+	= <span class="gams-statement-face">sum</span>(r, rtms(i_ser,r,s) * m0_(i_ser,r,s)
+	- rtms0(i_ser,r,s) * m0_(i_ser,r,s))<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">display</span> inc_tr<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	New value of import:</span>
+    <span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;Before&quot;</span>, vim<span class="gams-lst-warning-face">;</span>
+    vim(i,r) = <span class="gams-statement-face">sum</span>(s,(vxmd(i,s,r)*(1-rtxs(i,s,r))+vtwr_(i,s,r))*(1+rtms(i,s,r)))<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;After&quot;</span>, vim<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	New value of final consumption of imported goods:</span>
+    <span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;Before&quot;</span>, vicm<span class="gams-lst-warning-face">;</span>
+    vicm(i_ser,r) = vicm(i_ser,r) + inc_tr(i_ser,r)<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;After&quot;</span>, vicm<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Consumption = private expenditure + government expenditure:</span>
+    v_cm(i,r) = vicm(i,r)+vdcm(i,r)<span class="gams-lst-warning-face">;</span>
+
+    rtms0(i_ser,r,s) = rtms(i_ser,r,s)<span class="gams-lst-warning-face">;</span>
+    rtc(i,r)<span class="gams-dollar-face">$</span>v_cm(i,r) = tax_rev_fd(i,r) / v_cm(i,r)<span class="gams-lst-warning-face">;</span>
+    pc0(i,r) = 1 + rtc(i,r)<span class="gams-lst-warning-face">;</span>
+    vcm(r) = <span class="gams-statement-face">sum</span>(i, pc0(i,r) * v_cm(i,r))<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">display</span> rtms0, rtc, pc0, vcm<span class="gams-lst-warning-face">;</span>
+)<span class="gams-lst-warning-face">;</span>
+
+vb(r) = vcm(r) + <span class="gams-statement-face">sum</span>(cgd,vom(cgd,r))
+	- <span class="gams-statement-face">sum</span>(f, evom(f,r))
+	- <span class="gams-statement-face">sum</span>(j, vom(j,r)*rto(j,r))
+	- <span class="gams-statement-face">sum</span>(j, <span class="gams-statement-face">sum</span>(i, rti(i,j,r) * v_fm(i,j,r)))
+	- <span class="gams-statement-face">sum</span>(j, <span class="gams-statement-face">sum</span>(f, vfm(f,j,r)*rtf(f,j,r)))
+	- <span class="gams-statement-face">sum</span>(i, rtc(i,r) * v_cm(i,r))
+	- <span class="gams-statement-face">sum</span>((i,s), rtms(i,s,r) *  (vxmd(i,s,r) * (1-rtxs(i,s,r)) + vtwr_(i,s,r)))
+	+ <span class="gams-statement-face">sum</span>((i,s), rtxs(i,r,s) * vxmd(i,r,s))<span class="gams-lst-warning-face">;</span>
+vb(<span class="gams-string-face">&quot;chksum&quot;</span>) = <span class="gams-statement-face">sum</span>(r, vb(r))<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;After adjustment&quot;</span>, vb<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Armington demand:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Armington demand:&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">parameter</span>
+    a0(i,r)		<span class="gams-explanation-face">Armington supply</span>
+    am0(i,r)		<span class="gams-explanation-face">Aggregate import supply</span>
+    ad0(i,r)		<span class="gams-explanation-face">Aggregate domestic supply</span>
+<span class="gams-lst-warning-face">;</span>
+a0(i,r) = vdcm(i,r) + vicm(i,r) + <span class="gams-statement-face">sum</span>(j, vdfm(i,j,r) + vifm(i,j,r))<span class="gams-lst-warning-face">;</span>
+ad0(i,r) = vdcm(i,r) + <span class="gams-statement-face">sum</span>(j, vdfm(i,j,r))<span class="gams-lst-warning-face">;</span>
+am0(i,r) = vicm(i,r) + <span class="gams-statement-face">sum</span>(j, vifm(i,j,r))<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> a0, ad0, am0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Investment:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Investment:&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">parameter</span>
+    inv		<span class="gams-explanation-face">Investment</span><span class="gams-lst-warning-face">;</span>
+inv(r) = vom(<span class="gams-string-face">&quot;cgds&quot;</span>,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display inv;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Trade data:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Trade data:&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">parameter</span>
+    vimm(i,r,s)		<span class="gams-explanation-face">Import + transport services</span>
+<span class="gams-lst-warning-face">;</span>
+vimm(i,r,s)<span class="gams-dollar-face">$</span>vxmd(i,r,s)
+    = vxmd(i,r,s)*(1-rtxs(i,r,s)) + vtwr_(i,r,s)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display vimm;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Other data and parameters:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Other data and parameters:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">parameter</span>
+    vad(i,r)		<span class="gams-explanation-face">Sectoral value-added</span>
+    vt			<span class="gams-explanation-face">Value of transport services</span>
+    tau(i,r,s)		<span class="gams-explanation-face">Unit transport cost coefficient</span>
+    tau0(i,r,s)		<span class="gams-explanation-face">Unit transport cost coefficient</span>
+<span class="gams-lst-warning-face">;</span>
+vad(i,r) = <span class="gams-statement-face">sum</span>(f, vfm(f,i,r) * pf0(f,i,r))<span class="gams-lst-warning-face">;</span>
+vt = <span class="gams-statement-face">sum</span>((i,r), vst(i,r))<span class="gams-lst-warning-face">;</span>
+tau(i,r,s)<span class="gams-dollar-face">$</span>vxmd(i,r,s) = vtwr_(i,r,s) / vxmd(i,r,s)<span class="gams-lst-warning-face">;</span>
+tau0(i,r,s) = tau(i,r,s)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display vad, vt, tau;</span>
+<span class="gams-statement-face">display</span> tau, tau0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Scale parameters:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Scale parameters:&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">parameter</span>
+    scale_f(f,r)	<span class="gams-explanation-face">Parameter for scale check</span>
+    scale_bop(r)	<span class="gams-explanation-face">Parameter for scale check</span>
+    scale_i(r)		<span class="gams-explanation-face">Parameter for scale check</span>
+<span class="gams-lst-warning-face">;</span>
+scale_f(f,r) = 1<span class="gams-lst-warning-face">;</span>
+scale_bop(r) = 1<span class="gams-lst-warning-face">;</span>
+scale_i(r) = 1<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Share parameters.</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Share parameters.&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">parameter</span>
+    sh_i(j,i,r)		<span class="gams-explanation-face">Share of each intermediate inputs</span>
+    sh_pf(i,r)		<span class="gams-explanation-face">Share of primary factor composite</span>
+    sh_f(f,i,r)		<span class="gams-explanation-face">Share of each primary factor</span>
+    sh_am(i,r)	 	<span class="gams-explanation-face">Share of import goods in Armington aggregation</span>
+    sh_ad(i,r)	 	<span class="gams-explanation-face">Share of domestic goods in Armington aggregation</span>
+    sh_m(i,r,s) 	<span class="gams-explanation-face">Share of import goods</span>
+    sh_c(i,r)		<span class="gams-explanation-face">Share of each good in consumption</span>
+    sh_t(i,r)		<span class="gams-explanation-face">Share of inputs in transport</span>
+    gamma(i,s,r)	<span class="gams-explanation-face">goods share of unit import cost</span>
+
+    sh_sd		<span class="gams-explanation-face">Domestic supply share</span>
+    sh_sx		<span class="gams-explanation-face">Export supply share</span>
+<span class="gams-lst-warning-face">;</span>
+
+pxx0(i,r,s) = (1 - rtxs(i,r,s))<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display pxx0;</span>
+
+sh_i(j,i,r)<span class="gams-dollar-face">$</span>vom(i,r) = pai0(j,i,r) * v_fm(j,i,r)
+    / (po0(i,r) * vom(i,r))<span class="gams-lst-warning-face">;</span>
+sh_pf(i,r)<span class="gams-dollar-face">$</span>vad(i,r) = vad(i,r) / (po0(i,r) * vom(i,r))<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display sh_i, sh_pf;</span>
+
+sh_f(f,i,r)<span class="gams-dollar-face">$</span>vad(i,r) = pf0(f,i,r) * vfm(f,i,r) / vad(i,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display sh_f;</span>
+
+sh_am(i,r)<span class="gams-dollar-face">$</span>a0(i,r) = am0(i,r) / a0(i,r)<span class="gams-lst-warning-face">;</span>
+sh_ad(i,r)<span class="gams-dollar-face">$</span>a0(i,r) = ad0(i,r) / a0(i,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display sh_am, sh_ad;</span>
+
+sh_c(i,r)<span class="gams-dollar-face">$</span>vcm(r) = pc0(i,r) * v_cm(i,r) / vcm(r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display sh_c;</span>
+
+sh_t(i,r)<span class="gams-dollar-face">$</span>sum((j,s), vst(j,s)) = vst(i,r) / vt<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display sh_t;</span>
+
+sh_m(i,s,r)<span class="gams-dollar-face">$</span>vxmd(i,s,r) =
+    (vxmd(i,s,r) * pmx0(i,s,r) + vtwr_(i,s,r) * pmt0(i,s,r) ) / vim(i,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display sh_m;</span>
+
+gamma(i,s,r)<span class="gams-dollar-face">$</span>vxmd(i,s,r)
+    = pmm0(i,s,r)*vxmd(i,s,r) / (pmm0(i,s,r)*vxmd(i,s,r) + vtwr_(i,s,r))<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display gamma;</span>
+
+<span class="gams-comment-face">*	Share of domestic supply:</span>
+sh_sd(i,r)<span class="gams-dollar-face">$</span>vdm(i,r)
+    = vdm(i,r) / (vdm(i,r) + <span class="gams-statement-face">sum</span>(s, vxmd(i,r,s)))<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Share of export supply:</span>
+sh_sx(i,r,s)<span class="gams-dollar-face">$</span>vxmd(i,r,s)
+    = vxmd(i,r,s) / (vdm(i,r) + <span class="gams-statement-face">sum</span>(rr, vxmd(i,r,rr)))<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">* display sh_sd, sh_sx;</span>
+
+<span class="gams-statement-face">parameter</span>
+    ams(i,r,s)		<span class="gams-explanation-face">Tech change</span><span class="gams-lst-warning-face">;</span>
+ams(i,r,s) = 1<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> ams<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Import parameter:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Import parameter&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-dollar-face">$include</span> .\%par_file%
+
+k(i)<span class="gams-dollar-face">$</span>sum(rnum, cdr(i,rnum)) = <span class="gams-statement-face">yes</span><span class="gams-lst-warning-face">;</span>
+l(i)<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> k(i)) = <span class="gams-statement-face">yes</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> k, l<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">parameter</span>
+    sh_trns(i,r)	<span class="gams-explanation-face">Share of output to transport sector in total output</span><span class="gams-lst-warning-face">;</span>
+sh_trns(i,r)<span class="gams-dollar-face">$</span>k(i) = vst(i,r) / vom(i,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_trns<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Parameters for calibration:</span>
+<span class="gams-statement-face">parameter</span>
+    beta0(i,r,s)	<span class="gams-explanation-face">Value share of goods in leontief aggregate</span>
+    qx0(i,r,s)		<span class="gams-explanation-face">Export supply of each firm</span>
+    qd0(i,r)		<span class="gams-explanation-face">Domestic supply of each firm</span>
+    vtqx0(i,r,s)	<span class="gams-explanation-face">Total value of export supply</span>
+    vtqd0(i,r)		<span class="gams-explanation-face">Total value of domestic supply</span>
+    vtq0(i,r)		<span class="gams-explanation-face">Total value of supply</span>
+    vtfc_(i,r)	 	<span class="gams-explanation-face">Benchmark total fixed cost</span>
+    xx(i,r,s)		<span class="gams-explanation-face">Value of supply</span>
+    sh_mk(i,*,s)	<span class="gams-explanation-face">Market share</span>
+    eod0(i,r)		<span class="gams-explanation-face">Elasticity of demand for Armington goods</span>
+<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">parameter</span>
+    beta0_(r,s)		<span class="gams-explanation-face">Value share of goods in leontief aggregate</span>
+    vtqx0_(r,s)		<span class="gams-explanation-face">Total value of export supply</span>
+    vtqd0_(r)		<span class="gams-explanation-face">Total value of domestic supply</span>
+    vtq0_(r)		<span class="gams-explanation-face">Total value of supply</span>
+    rto0_(r)		<span class="gams-explanation-face">Output tax rate</span>
+    a0_(r)		<span class="gams-explanation-face">Armington demand</span>
+    sa_(r)		<span class="gams-explanation-face">Armington elasticity</span>,
+    sm_(r)		<span class="gams-explanation-face">import EOS</span>
+    sdd_(r)		<span class="gams-explanation-face">dd EOS</span>
+    sff_(r)		<span class="gams-explanation-face">ff EOS</span>
+    sai_(r)		<span class="gams-explanation-face">Inverse of Armington elasticity</span>,
+    smi_(r)		<span class="gams-explanation-face">Inverse of import EOS</span>
+    sddi_(r)		<span class="gams-explanation-face">Inverse of dd EOS</span>
+    sffi_(r)		<span class="gams-explanation-face">Inverse of ff EOS</span>
+    sh_m_(r,s)		<span class="gams-explanation-face">Share of import from each region</span>
+    sh_am_(r)		<span class="gams-explanation-face">Share of aggregate import</span>
+    sh_ad_(r)		<span class="gams-explanation-face">Share of domestic goods</span>
+    xx_(r,s)		<span class="gams-explanation-face">Value of supply</span>
+    sh_mk_(r,s)		<span class="gams-explanation-face">Market share</span>
+    eod0_(r)		<span class="gams-explanation-face">Elasticity of demand for Armington goods</span>
+    sh_sd_(r)		<span class="gams-explanation-face">Domestic supply share in total supply</span>
+    sh_sx_(r,s)		<span class="gams-explanation-face">Export supply share in total supply</span>
+<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Value share of exports (imports):</span>
+beta0(i,s,r)<span class="gams-dollar-face">$</span>vxmd(i,s,r)
+    = pmm0(i,s,r)*vxmd(i,s,r) / (pmm0(i,s,r)*vxmd(i,s,r) + vtwr_(i,s,r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Value of total fixed cost:</span>
+vtfc_(i,r) = cdr(i,r) * (1-rto(i,r)) * (1-sh_trns(i,r)) * vom(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Value of total exports at FOB price:</span>
+vtqx0(i,s,r) = vxmd(i,s,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Value of total domestic supply:</span>
+vtqd0(i,r) = vdm(i,r)<span class="gams-lst-warning-face">;</span>
+
+vtq0(i,r) = vtqd0(i,r) + <span class="gams-statement-face">sum</span>(s, vtqx0(i,r,s))<span class="gams-lst-warning-face">;</span>
+
+xx(i,s,r) = vxmd(i,s,r)<span class="gams-lst-warning-face">;</span>
+xx(i,s,s) = vdm(i,s)<span class="gams-lst-warning-face">;</span>
+
+sh_mk(i,s,r)<span class="gams-dollar-face">$</span>vxmd(i,s,r) =
+    (vxmd(i,s,r) * pmx0(i,s,r) + vtwr_(i,s,r) * pmt0(i,s,r) )
+    / (vim(i,r) + vdm(i,r))<span class="gams-lst-warning-face">;</span>
+sh_mk(i,r,r)<span class="gams-dollar-face">$</span>vdm(i,r) =
+    vdm(i,r) / (vim(i,r) + vdm(i,r))<span class="gams-lst-warning-face">;</span>
+sh_mk(i,<span class="gams-string-face">&quot;total&quot;</span>,r) = <span class="gams-statement-face">sum</span>(s, sh_mk(i,s,r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Price elasticity of demand:</span>
+
+<span class="gams-comment-face">*	To be precise, price elasticity of Armington demand (eod0(i,r)) is</span>
+<span class="gams-comment-face">*	determined by the following relation.</span>
+
+<span class="gams-comment-face">*	eod0(i,r)$a0(i,r) = vcm(i,r) / a0(i,r);</span>
+
+<span class="gams-comment-face">*	However, for some goods (e.g. MIN), eod0(i,r) is equal to zero because</span>
+<span class="gams-comment-face">*	all Armington demand are intermediate demand.  If eod0 = 0, some</span>
+<span class="gams-comment-face">*	markup rates cannot be defined.  Here, we assume eod0(i,r) = 0.5.</span>
+eod0(i,r) = 0.5<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">set</span>  rmax(r,s)		<span class="gams-explanation-face">Mapping set</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">$ontext
+rmax(r,s) has the value yes if the share of supply from region r is the
+largest in market of region s.
+$offtext
+</span>
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Calibration:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Calibration:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Calibrated parameters:</span>
+<span class="gams-statement-face">parameter</span>
+    mud0(i,r)		<span class="gams-explanation-face">Calibrated benchmark markup rate for domestic market</span>
+    mux0(i,r,s)		<span class="gams-explanation-face">Calibrated benchmark markup rate for exports</span>
+    muxx0(i,r,s)	<span class="gams-explanation-face">Calibrated benchmark markup rate for exports (inc. transport cost)</span>
+    n0(i,r)		<span class="gams-explanation-face">Calibrated benchmark number of firms</span>
+    vtfc0(i,r)		<span class="gams-explanation-face">Calibrated benchmark total fixed cost</span>
+    vfc0(i,r)		<span class="gams-explanation-face">Value of fixed cost of each firm</span>
+    tfc0(i,r)		<span class="gams-explanation-face">Total fixed cost</span>
+    fc0(i,r)		<span class="gams-explanation-face">Fixed cost of each firm</span>
+    pd0(i,r)		<span class="gams-explanation-face">Reference price of domestic supply</span>
+    px0(i,r,s)		<span class="gams-explanation-face">Reference price of export supply</span>
+    qtt0(i,r)		<span class="gams-explanation-face">Total input (variable input + fixed input)</span>
+    qt0(i,r)		<span class="gams-explanation-face">Total ouput</span>
+    cy0(i,r)		<span class="gams-explanation-face">Calibrated benchmark unit cost</span>
+
+    tep0(i,r)		<span class="gams-string-face">&quot;(Excess) profit&quot;</span>
+    ep0(i,r)		<span class="gams-string-face">&quot;(Excess) profit&quot;</span>
+
+    phi0(i,r,s)		<span class="gams-string-face">&quot;Calibrated conjectural variation (delta x_j/ delta x_i)&quot;</span>
+    bphi0(i,r,s)	<span class="gams-string-face">&quot;Calibrated conjectural variation (delta ln X/ delta ln x_i)&quot;</span>
+
+<span class="gams-comment-face">*	Parameters for integrated market model:</span>
+    py0(i,r)		<span class="gams-explanation-face">Reference price for ouput</span>
+    mu0(i,r)		<span class="gams-explanation-face">Calibrated benchmark markup rate</span>
+
+<span class="gams-comment-face">*	Parameters for integrated Bertrand model:</span>
+    eodd0(i,r)		<span class="gams-explanation-face">Elasticity of domestic demand</span>
+    eodx0(i,r,s)	<span class="gams-explanation-face">Elasticity of export demand</span>
+    eodc0(i,r)		<span class="gams-explanation-face">Elasticity of total demand</span>
+
+<span class="gams-comment-face">*	Parameter for integrated Cournot model:</span>
+    h_qtv0(i,r)		<span class="gams-explanation-face">Rate of change in own total supply</span>
+    h_p0(r,i,t)		<span class="gams-explanation-face">Conjectured rate of change in price of rival firm</span>
+    h_qdv0(i,r)		<span class="gams-explanation-face">Conjectured ROC in own domestic supply</span>
+    h_qxv0(i,r,s)	<span class="gams-explanation-face">Conjectured ROC in own export supply</span>
+    h_qd0(r,i,ss)	<span class="gams-explanation-face">Conjectured ROC in domestic supply of rival firms</span>
+    h_qx0(r,i,t,s)	<span class="gams-explanation-face">Conjectured ROC in export supply of rival firms:</span>
+    h_pad0(r,i,ss)	<span class="gams-explanation-face">Conjectured ROC in p_ad:</span>
+    h_pm0(r,i,t,s)	<span class="gams-explanation-face">Conjectured ROC in p_m:</span>
+    h_pam0(r,i,s)	<span class="gams-explanation-face">Conjectured ROC in p_am:</span>
+    h_pa0(r,i,s)	<span class="gams-explanation-face">Conjectured ROC in p_a:</span>
+
+<span class="gams-comment-face">*	Parameter for CDR calibration model:</span>
+    cdr0(i,r)		<span class="gams-explanation-face">Calibrated CDR</span>
+
+<span class="gams-comment-face">*	Parameter for contestable market model:</span>
+    ac0(i,r)		<span class="gams-explanation-face">Calibrated benchmark average cost (for contestable market model)</span>
+<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Temporary value:</span>
+cy0(i,r) = 0<span class="gams-lst-warning-face">;</span>
+ac0(i,r) = 0<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">parameter</span>
+    profitchk	 	<span class="gams-explanation-face">Profit check (this must be zero)</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Variables for calibration:</span>
+<span class="gams-statement-face">variables</span>
+    mud0_(r)		<span class="gams-explanation-face">Benchmark markup rate for domestic market</span>
+    mux0_(r,s)		<span class="gams-explanation-face">Benchmark markup rate for exports</span>
+    muxx0_(r,s)		<span class="gams-explanation-face">Benchmark markup rate for exports (inc. transport cost)</span>
+
+    n0_(r)		<span class="gams-explanation-face">Benchmark number of firms</span>
+    ninv0_(r)		<span class="gams-explanation-face">Inverse of n0_</span>
+
+<span class="gams-comment-face">*	Variables for conjectural variation model:</span>
+    phi0_(r,s)		<span class="gams-explanation-face">Conjecutual variation parameter</span>
+    obj			<span class="gams-explanation-face">Objective variable</span>
+
+<span class="gams-comment-face">*	Variables for integrated market model:</span>
+    mu0_(r)		<span class="gams-explanation-face">Benchmark markup rate</span>
+    eodd0_(r)		<span class="gams-explanation-face">Benchmark Elasticity of domestic demand</span>
+    eodx0_(r,s)		<span class="gams-explanation-face">Benchmark Elasticity of export demand</span>
+
+<span class="gams-comment-face">*	Variables for integrated market Cournot model:</span>
+    h_qtv0_(r)		<span class="gams-explanation-face">Rate of change in own total supply</span>
+    h_p0_(r,t)		<span class="gams-explanation-face">Conjectured rate of change in price of rival firm</span>
+    h_qdv0_(r)		<span class="gams-explanation-face">Conjectured ROC in own domestic supply</span>
+    h_qxv0_(r,s)	<span class="gams-explanation-face">Conjectured ROC in own export supply</span>
+    h_qd0_(r,ss)	<span class="gams-explanation-face">Conjectured ROC in domestic supply of rival firms</span>
+    h_qx0_(r,t,s)	<span class="gams-explanation-face">Conjectured ROC in export supply of rival firms:</span>
+    h_pad0_(r,ss)	<span class="gams-explanation-face">Conjectured ROC in p_ad:</span>
+    h_pm0_(r,t,s)	<span class="gams-explanation-face">Conjectured ROC in p_m:</span>
+    h_pam0_(r,s)	<span class="gams-explanation-face">Conjectured ROC in p_am:</span>
+    h_pa0_(r,s)		<span class="gams-explanation-face">Conjectured ROC in p_a:</span>
+
+<span class="gams-comment-face">*	Variables for CDR calibration model:</span>
+    vtfc0_(r)		<span class="gams-explanation-face">Benchmark total fixed cost</span>
+
+<span class="gams-comment-face">*	Equations for NLP model</span>
+    dum_obj_		<span class="gams-explanation-face">Dummy objective variable</span>
+<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Equations for calibration:</span>
+<span class="gams-statement-face">equations</span>
+    e_n0_(r)		<span class="gams-explanation-face">Zero profit condition</span>
+    e_ninv0_(r)		<span class="gams-explanation-face">Inverse of n0_</span>
+    e_mud0_(r)		<span class="gams-explanation-face">Benchmark markup rate for domestic market</span>
+    e_mux0_(r,s)	<span class="gams-explanation-face">Benchmark markup rate for exports</span>
+    e_muxx0_(r,s)	<span class="gams-explanation-face">Benchmark markup rate for exports (adjusted by transport cost)</span>
+
+<span class="gams-comment-face">*	Equations for conjectural variation model:</span>
+    e_obj		<span class="gams-explanation-face">Objective variable</span>
+
+<span class="gams-comment-face">*	Equations for integrated market model</span>
+    e_mu0_(r)		<span class="gams-explanation-face">Benchmark markup rate</span>
+    e_eodd0_(r)		<span class="gams-explanation-face">Benchmark Elasticity of domestic demand</span>
+    e_eodx0_(r,s)	<span class="gams-explanation-face">Benchmark Elasticity of export demand</span>
+
+<span class="gams-comment-face">*	Variables for integrated market Cournot model:</span>
+    e_h_qtv0_(r)	<span class="gams-explanation-face">Rate of change in own total supply</span>
+    e_h_p0_(r,t)	<span class="gams-explanation-face">Conjectured rate of change in price of rival firm</span>
+    e_h_qdv0_(r)	<span class="gams-explanation-face">Conjectured ROC in own domestic supply</span>
+    e_h_qxv0_(r,s)	<span class="gams-explanation-face">Conjectured ROC in own export supply</span>
+    e_h_qd0_(r,s)	<span class="gams-explanation-face">Conjectured ROC in domestic supply of rival firms</span>
+    e_h_qx0_(r,t,s)	<span class="gams-explanation-face">Conjectured ROC in export supply of rival firms:</span>
+    e_h_pad0_(r,ss)	<span class="gams-explanation-face">Conjectured ROC in p_ad:</span>
+    e_h_pm0_(r,t,s)	<span class="gams-explanation-face">Conjectured ROC in p_m:</span>
+    e_h_pam0_(r,s)	<span class="gams-explanation-face">Conjectured ROC in p_am:</span>
+    e_h_pa0_(r,s)	<span class="gams-explanation-face">Conjectured ROC in p_a:</span>
+
+<span class="gams-comment-face">*	Equations for CDR calibration model:</span>
+    e_vtfc0_(r)		<span class="gams-explanation-face">Zero profit condition</span>
+
+<span class="gams-comment-face">*	Equations for NLP model</span>
+    e_dum_obj_		<span class="gams-explanation-face">Dummy objective variable</span>
+<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Equation definitions for calibration:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Equation definitions for calibration:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Zero profit condition:</span>
+e_n0_(r)<span class="gams-dollar-face">$</span>vtq0_(r) ..
+
+    vtfc0_(r)/(1-rto0_(r)) <span class="gams-operator-face">=e=</span>
+    ((vtqd0_(r) * mud0_(r))<span class="gams-dollar-face">$</span>vtqd0_(r)
+	+ <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>vtqx0_(r,s), vtqx0_(r,s) * mux0_(r,s))
+    )<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_int)
+    +
+    (mu0_(r)*vtq0_(r))<span class="gams-dollar-face">$</span>fl_int
+    <span class="gams-lst-warning-face">;</span>
+
+e_ninv0_(r)<span class="gams-dollar-face">$</span>vtq0_(r) ..
+
+    ninv0_(r) * n0_(r) <span class="gams-operator-face">=e=</span> 1<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Markup rate for domestic supply:</span>
+e_mud0_(r)<span class="gams-dollar-face">$</span>(sh_ad_(r) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> c_ms(<span class="gams-string-face">&quot;ic&quot;</span>))) ..
+
+    (mud0_(r)*n0_(r) - sddi_(r)*n0_(r)
+	- (sai_(r) - sddi_(r))
+	* (1 + (n0_(r) - 1) * phi0_(r,r))
+	- (1/eod0_(r) - sai_(r))
+	* (sh_ad_(r) + (n0_(r) - sh_ad_(r)) * phi0_(r,r))
+    )<span class="gams-dollar-face">$</span>(fl_q <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_h))
+    +
+    (n0_(r) - sdd_(r) * n0_(r) * mud0_(r)
+	- mud0_(r) * (sa_(r) - sdd_(r) + sh_ad_(r) * (eod0_(r) - sa_(r)))
+    )<span class="gams-dollar-face">$</span>fl_p
+    +
+    (mud0_(r)*n0_(r)
+	- sai_(r) * (1 + (n0_(r) - 1) * phi0_(r,r))
+	- (1/eod0_(r) - sai_(r))
+	* (sh_ad_(r) + (n0_(r) - sh_ad_(r)) * phi0_(r,r))
+    )<span class="gams-dollar-face">$</span>(fl_q <span class="gams-statement-face">and</span> fl_h)
+    <span class="gams-operator-face">=e=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Markup rate for export supply:</span>
+e_muxx0_(r,s)<span class="gams-dollar-face">$</span>(sh_m_(r,s) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> c_ms(<span class="gams-string-face">&quot;ic&quot;</span>))) ..
+
+    (muxx0_(r,s)*n0_(r)
+	- sffi_(s)*n0_(r)
+	- (smi_(s) - sffi_(s))
+	* (1 + (n0_(r) - 1) * phi0_(r,s))
+	- (sai_(s) - smi_(s))
+	* (sh_m_(r,s) + (n0_(r) - sh_m_(r,s)) * phi0_(r,s))
+	- (1/eod0_(s) - sai_(s))
+	* ((sh_am_(s)*sh_m_(r,s))
+	    + (n0_(r) - (sh_am_(s)*sh_m_(r,s))) * phi0_(r,s))
+    )<span class="gams-dollar-face">$</span>(fl_q <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_h))
+    +
+    (n0_(r) - sff_(s) * n0_(r) * muxx0_(r,s)
+	- muxx0_(r,s) * (sm_(s) - sff_(s)
+	    + sh_m_(r,s) * (sa_(s) - sm_(s)
+		+ sh_am_(s) * (eod0_(s) - sa_(s))))
+    )<span class="gams-dollar-face">$</span>fl_p
+    +
+    (muxx0_(r,s)*n0_(r)
+	- smi_(s) * (1 + (n0_(r) - 1) * phi0_(r,s))
+	- (sai_(s) - smi_(s))
+	* (sh_m_(r,s) + (n0_(r) - sh_m_(r,s)) * phi0_(r,s))
+	- (1/eod0_(s) - sai_(s))
+	* ((sh_am_(s)*sh_m_(r,s))
+	    + (n0_(r) - (sh_am_(s)*sh_m_(r,s))) * phi0_(r,s))
+    )<span class="gams-dollar-face">$</span>(fl_q <span class="gams-statement-face">and</span> fl_h)
+    <span class="gams-operator-face">=e=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Markup rate for export supply:</span>
+e_mux0_(r,s)<span class="gams-dollar-face">$</span>(sh_m_(r,s) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> c_ms(<span class="gams-string-face">&quot;ic&quot;</span>))) ..
+
+    mux0_(r,s) <span class="gams-operator-face">=e=</span> muxx0_(r,s) / beta0_(r,s)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Common markup rate for integrated market:</span>
+e_mu0_(r)<span class="gams-dollar-face">$</span>(fl_int <span class="gams-statement-face">and</span> vtq0_(r)) ..
+
+    ((mu0_(r) - sh_sd_(r) * mud0_(r)
+	- <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>sh_sx_(r,s), sh_sx_(r,s) * mux0_(r,s)))<span class="gams-dollar-face">$</span>(fl_ib_alt)
+	+
+	(1 - mu0_(r) * sh_sd_(r) * eodd0_(r)
+	    - mu0_(r) * <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>sh_sx_(r,s), sh_sx_(r,s) * eodx0_(r,s))
+	)<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_ib_alt)
+    )<span class="gams-dollar-face">$</span>fl_p
+    +
+    (mu0_(r) * h_qtv0_(r) + 1)<span class="gams-dollar-face">$</span>fl_q
+
+    <span class="gams-operator-face">=e=</span> 0<span class="gams-lst-warning-face">;</span>
+
+e_eodd0_(r)<span class="gams-dollar-face">$</span>(sh_ad_(r) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> c_ms(<span class="gams-string-face">&quot;ic&quot;</span>)) <span class="gams-statement-face">and</span> fl_int <span class="gams-statement-face">and</span> fl_p) ..
+
+    mud0_(r) * eodd0_(r) <span class="gams-operator-face">=e=</span> 1<span class="gams-lst-warning-face">;</span>
+
+e_eodx0_(r,s)<span class="gams-dollar-face">$</span>(sh_m_(r,s) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> c_ms(<span class="gams-string-face">&quot;ic&quot;</span>)) <span class="gams-statement-face">and</span> fl_int <span class="gams-statement-face">and</span> fl_p) ..
+
+    mux0_(r,s) * eodx0_(r,s) <span class="gams-operator-face">=e=</span> 1<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Zero profit condition:</span>
+e_vtfc0_(r)<span class="gams-dollar-face">$</span>vtq0_(r) ..
+
+    vtfc0_(r)/(1-rto0_(r)) <span class="gams-operator-face">=e=</span>
+    ((vtqd0_(r) * mud0_(r))<span class="gams-dollar-face">$</span>vtqd0_(r)
+	+ <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>vtqx0_(r,s), vtqx0_(r,s) * mux0_(r,s))
+    )<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_int)
+    +
+    (mu0_(r)*vtq0_(r))<span class="gams-dollar-face">$</span>fl_int
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Dummy objective variable for NLP solve:</span>
+e_dum_obj_ ..
+
+    dum_obj_ <span class="gams-operator-face">=e=</span> 1<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Objective function for model QCV</span>
+e_obj ..
+
+    obj <span class="gams-operator-face">=e=</span> <span class="gams-statement-face">sum</span>((r,s,t)<span class="gams-dollar-face">$</span>(xx_(s,r)<span class="gams-dollar-face">$</span>rmax(t,r)), xx_(s,r) *
+	(phi0_(s,r)-phi0_(t,r))*(phi0_(s,r)-phi0_(t,r)))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	FUNCTION definitions for integrated Cournot model: These functions are</span>
+<span class="gams-comment-face">*	valid only in model IC.</span>
+
+<span class="gams-comment-face">*	Conjectured ROC in p_ad:</span>
+h_pad0_(r,s) ==
+    ((1 + (n0_(r) - 1) * h_p0_(r,r)) * ninv0_(r))<span class="gams-dollar-face">$</span>r_s(r,s)
+    +
+    (h_p0_(r,s))<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> r_s(r,s))
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Conjectured ROC in p_m:</span>
+h_pm0_(r,t,s) ==
+    ((beta0_(r,s)
+	+ (n0_(r) - 1) * beta0_(r,s) * h_p0_(r,r)) * ninv0_(r)
+    )<span class="gams-dollar-face">$</span>r_s(r,t)
+    +
+    (beta0_(t,s) * h_p0_(r,t))<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> r_s(r,t))
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Conjectured ROC in p_am:</span>
+h_pam0_(r,s) ==
+    <span class="gams-statement-face">sum</span>(tt<span class="gams-dollar-face">$</span>sh_m_(tt,s), sh_m_(tt,s) * h_pm0_(r,tt,s))
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Conjectured ROC in p_a:</span>
+h_pa0_(r,s) ==
+    (sh_ad_(s) * h_pad0_(r,s))<span class="gams-dollar-face">$</span>sh_ad_(s)
+    + (sh_am_(s) * h_pam0_(r,s))<span class="gams-dollar-face">$</span>sh_am_(s)
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Equations for integrated market Cournot model:</span>
+
+<span class="gams-comment-face">*	ROC in own total supply:</span>
+e_h_qtv0_(r)<span class="gams-dollar-face">$</span>(c_ms(<span class="gams-string-face">&quot;ic&quot;</span>) <span class="gams-statement-face">and</span> vtq0_(r)) ..
+
+    h_qtv0_(r) <span class="gams-operator-face">=e=</span>
+    (sh_sd_(r) * h_qdv0_(r))<span class="gams-dollar-face">$</span>sh_sd_(r)
+    + <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>sh_sx_(r,s), sh_sx_(r,s) * h_qxv0_(r,s))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Conjectured ROC in prices of rival firms (Cournot conjecture):</span>
+e_h_p0_(r,t)<span class="gams-dollar-face">$</span>(c_ms(<span class="gams-string-face">&quot;ic&quot;</span>) <span class="gams-statement-face">and</span> vtq0_(t)) ..
+
+    (sh_sd_(t) * h_qd0_(r,t))<span class="gams-dollar-face">$</span>sh_sd_(t)
+    + <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>sh_sx_(t,s), sh_sx_(t,s) * h_qx0_(r,t,s))
+    <span class="gams-operator-face">=e=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Conjectured ROC in own domestic supply</span>
+e_h_qdv0_(r)<span class="gams-dollar-face">$</span>(c_ms(<span class="gams-string-face">&quot;ic&quot;</span>) <span class="gams-statement-face">and</span> sh_sd_(r)) ..
+
+    h_qdv0_(r) <span class="gams-operator-face">=e=</span>
+    - sdd_(r)
+    + (sdd_(r) - sa_(r)) * h_pad0_(r,r)
+    + (sa_(r) - eod0_(r)) * h_pa0_(r,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Conjectured ROC in own export supply:</span>
+e_h_qxv0_(r,s)<span class="gams-dollar-face">$</span>(c_ms(<span class="gams-string-face">&quot;ic&quot;</span>) <span class="gams-statement-face">and</span> sh_sx_(r,s)) ..
+
+    h_qxv0_(r,s) <span class="gams-operator-face">=e=</span>
+    - sff_(s) * beta0_(r,s)
+    + (sff_(s) - sm_(s)) * h_pm0_(r,r,s)
+    + (sm_(s) - sa_(s)) * h_pam0_(r,s)
+    + (sa_(s) - eod0_(s)) * h_pa0_(r,s)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Conjectured ROC in domestic supply of rival firms</span>
+e_h_qd0_(r,s)<span class="gams-dollar-face">$</span>(c_ms(<span class="gams-string-face">&quot;ic&quot;</span>) <span class="gams-statement-face">and</span> sh_sd_(s)) ..
+
+    h_qd0_(r,s) <span class="gams-operator-face">=e=</span>
+    - sdd_(s) * h_p0_(r,s)
+    + (sdd_(s) - sa_(s)) * h_pad0_(r,s)
+    + (sa_(s) - eod0_(s)) * h_pa0_(r,s)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Conjectured ROC in export supply of rival firms:</span>
+e_h_qx0_(r,t,s)<span class="gams-dollar-face">$</span>(c_ms(<span class="gams-string-face">&quot;ic&quot;</span>) <span class="gams-statement-face">and</span> sh_sx_(t,s)) ..
+
+    h_qx0_(r,t,s) <span class="gams-operator-face">=e=</span>
+    - sff_(s) * beta0_(t,s) * h_p0_(r,t)
+    + (sff_(s) - sm_(s)) * h_pm0_(r,t,s)
+    + (sm_(s) - sa_(s)) * h_pam0_(r,s)
+    + (sa_(s) - eod0_(s)) * h_pa0_(r,s)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Model declaration for calibration:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Model declaration for calibration:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">model</span> calib_par_qcv <span class="gams-explanation-face">Calibration of parameters for model QCV</span>
+
+      <span class="gams-slash-face">/ e_obj, e_n0_, e_mud0_, e_muxx0_, e_mux0_ /</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">model</span> calib_par_mcp <span class="gams-explanation-face">Calibration of parameters by MCP solver.</span>
+
+      <span class="gams-slash-face">/ e_n0_.n0_, e_mud0_.mud0_, e_muxx0_.muxx0_, e_mux0_.mux0_,
+	e_vtfc0_.vtfc0_, e_mu0_.mu0_, e_h_qtv0_.h_qtv0_, e_h_p0_.h_p0_,
+	e_h_qdv0_.h_qdv0_, e_h_qxv0_.h_qxv0_, e_h_qd0_.h_qd0_, e_h_qx0_.h_qx0_,
+	e_ninv0_.ninv0_, e_eodd0_.eodd0_, e_eodx0_.eodx0_
+	/</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">model</span> calib_par_nlp <span class="gams-explanation-face">Calibration of parameters by NLP solver.</span>
+
+      <span class="gams-slash-face">/ e_n0_, e_mud0_, e_muxx0_, e_mux0_, e_vtfc0_, e_mu0_, e_h_qtv0_,
+	e_h_p0_, e_h_qdv0_, e_h_qxv0_, e_h_qd0_, e_h_qx0_, e_dum_obj_,
+	e_ninv0_, e_eodd0_, e_eodx0_ /</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Variable declaration for model</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Variable declaration for model&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">variables</span>
+    q_d(i,r)		<span class="gams-explanation-face">Domestic supply (firm level)</span>
+    q_x(i,r,s)		<span class="gams-explanation-face">Export supply (firm level)</span>
+    n(i,r)		<span class="gams-explanation-face">The number of firms</span>
+    q_tt(i,r)		<span class="gams-explanation-face">Total input (variable input + fixed input) of each firm</span>
+    q_t(i,*)		<span class="gams-explanation-face">Total output of each firm</span>
+    mu_d(i,r)		<span class="gams-explanation-face">Markup rate of domestic supply</span>
+    mu_x(i,r,s)		<span class="gams-explanation-face">Markup rate of foreign supply</span>
+    mu_xx(i,r,s)	<span class="gams-explanation-face">Markup rate of foreign supply</span>
+    ac(i,r)		<span class="gams-explanation-face">Average cost</span>
+
+    y(i,r)		<span class="gams-explanation-face">Production</span>
+    y_xt(i,r)		<span class="gams-explanation-face">Production of inputs for transport sector in K</span>
+    a(i,r)		<span class="gams-explanation-face">Armington aggregation</span>
+    ad(i,r)		<span class="gams-explanation-face">Aggregation of domestic varieties</span>
+    am(i,r)		<span class="gams-explanation-face">Import aggregation</span>
+    m(i,r,s)		<span class="gams-explanation-face">Aggregation of foreign varieties</span>
+    u(r)		<span class="gams-explanation-face">Utility</span>
+    yt			<span class="gams-explanation-face">Transport sector</span>
+    p_y(i,r)		<span class="gams-explanation-face">Price index of ouputs</span>
+    p_d(i,r)		<span class="gams-explanation-face">Price of domestic supply</span>
+    p_x(i,r,s)		<span class="gams-explanation-face">Price of export supply</span>
+    p_com(i,r)		<span class="gams-explanation-face">Common supply price in the integrated market model</span>
+    p_ad(i,r)		<span class="gams-explanation-face">Price index of domestic goods</span>
+    p_am(i,r)		<span class="gams-explanation-face">Price index of import goods</span>
+    p_m(i,r,s)		<span class="gams-explanation-face">Price of import</span>
+    p_t			<span class="gams-explanation-face">Price of transport services</span>
+    p_a(i,r)		<span class="gams-explanation-face">Price index of Armington goods</span>
+    p_f(f,r)		<span class="gams-explanation-face">Price of primary factors</span>
+    p_u(r)		<span class="gams-explanation-face">Price index of utility</span>
+    inc_ra(r)		<span class="gams-explanation-face">Income of representative agent</span>
+    ep(i,r)		<span class="gams-string-face">&quot;(Excess) profit&quot;</span>
+    mu(i,r)		<span class="gams-explanation-face">Common markup rates</span>
+    h_p(r,i,t)		<span class="gams-explanation-face">Conjectured rate of change in price of rival firm</span>
+    h_pm(r,i,t,s)	<span class="gams-explanation-face">Conjectured ROC in p_m:</span>
+    h_pam(r,i,s)	<span class="gams-explanation-face">Conjectured ROC in p_am:</span>
+    h_pad(r,i,s)	<span class="gams-explanation-face">Conjectured ROC in p_ad:</span>
+    h_pa(r,i,s)		<span class="gams-explanation-face">Conjectured ROC in p_a:</span>
+    eod_d(i,r)		<span class="gams-explanation-face">Elasticity of domestic demand</span>
+    eod_x(i,r,s)	<span class="gams-explanation-face">Elasticity of export demand</span>
+    eod_c(i,r)		<span class="gams-explanation-face">Elasticity of total demand</span>
+
+    dum_obj		<span class="gams-explanation-face">Dummy objective variable for NLP model</span>
+<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Equation declaration for model</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Equation declaration for model&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">equations</span>
+    e_q_d(i,r)		<span class="gams-explanation-face">Domestic supply (firm level)</span>
+    e_q_x(i,r,s)	<span class="gams-explanation-face">Export supply (firm level)</span>
+    e_n(i,r)		<span class="gams-explanation-face">The number of firms</span>
+    e_q_tt(i,r)		<span class="gams-explanation-face">Total input (variable input + fixed input) of each firm</span>
+    e_q_t(i,*)		<span class="gams-explanation-face">Total output of each firm</span>
+    e_mu_d(i,r)		<span class="gams-explanation-face">Markup rate of domestic supply</span>
+    e_mu_x(i,r,s)	<span class="gams-explanation-face">Markup rate of foreign supply</span>
+    e_mu_xx(i,r,s)	<span class="gams-explanation-face">Markup rate of foreign supply</span>
+    e_ac(i,r)		<span class="gams-explanation-face">Average cost</span>
+    e_y(i,r)		<span class="gams-explanation-face">Production</span>
+    e_y_xt(i,r)		<span class="gams-explanation-face">Production of inputs for transport sector in K</span>
+    e_a(i,r)		<span class="gams-explanation-face">Armington aggregation</span>
+    e_ad(i,r)		<span class="gams-explanation-face">Aggregation of domestic varieties</span>
+    e_am(i,r)		<span class="gams-explanation-face">Import aggregation</span>
+    e_m(i,r,s)		<span class="gams-explanation-face">Aggregation of foreign varieties</span>
+    e_u(r)		<span class="gams-explanation-face">Utility</span>
+    e_yt		<span class="gams-explanation-face">Transport sector</span>
+    e_p_y(i,r)		<span class="gams-explanation-face">Price index of ouputs</span>
+    e_p_d(i,r)		<span class="gams-explanation-face">Price of domestic supply</span>
+    e_p_x(i,r,s)	<span class="gams-explanation-face">Price of export supply</span>
+    e_p_com(i,r)	<span class="gams-explanation-face">Common supply price in the integrated market model</span>
+    e_p_ad(i,r)		<span class="gams-explanation-face">Price index of domestic goods</span>
+    e_p_am(i,r)		<span class="gams-explanation-face">Price index of import goods</span>
+    e_p_m(i,r,s)	<span class="gams-explanation-face">Price of import</span>
+    e_p_t		<span class="gams-explanation-face">Price of transport services</span>
+    e_p_a(i,r)		<span class="gams-explanation-face">Price index of Armington goods</span>
+    e_p_f(f,r)		<span class="gams-explanation-face">Price of primary factors</span>
+    e_p_u(r)		<span class="gams-explanation-face">Price index of utility</span>
+    e_inc_ra(r)		<span class="gams-explanation-face">Income of representative agent</span>
+    e_ep(i,r)		<span class="gams-explanation-face">Excess profit</span>
+    e_mu(i,r)		<span class="gams-explanation-face">Common markup rates</span>
+    e_h_p(r,i,t)	<span class="gams-explanation-face">Conjectured rate of change in price of rival firm</span>
+    e_h_pm(r,i,t,s)	<span class="gams-explanation-face">Conjectured ROC in p_m:</span>
+    e_h_pam(r,i,s)	<span class="gams-explanation-face">Conjectured ROC in p_am:</span>
+    e_eod_d(i,r)	<span class="gams-explanation-face">Elasticity of domestic demand</span>
+    e_eod_x(i,r,s)	<span class="gams-explanation-face">Elasticity of export demand</span>
+    e_eod_c(i,r)	<span class="gams-explanation-face">Elasticity of total demand</span>
+
+    e_dum_obj		<span class="gams-explanation-face">Dummy objective variable for NLP model</span>
+<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Function definitions:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Function definitions for model:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Price index and unit cost</span>
+
+<span class="gams-comment-face">*	Price index of composite primary factor:</span>
+p_pf(i,r) ==
+    (
+	((<span class="gams-statement-face">sum</span>(f<span class="gams-dollar-face">$</span>sh_f(f,i,r),
+	    sh_f(f,i,r)
+	    * ((1+rtf(f,i,r)) * p_f(f,r) / pf0(f,i,r))**(1-sig_pf(i,r)))
+	)**(1/(1-sig_pf(i,r))))<span class="gams-dollar-face">$</span>(sig_pf(i,r) <span class="gams-statement-face">ne</span> 1)
+	+
+	(<span class="gams-statement-face">prod</span>(f<span class="gams-dollar-face">$</span>sh_f(f,i,r),
+	    ((1+rtf(f,i,r)) * p_f(f,r) / pf0(f,i,r))**(sh_f(f,i,r)))
+	)<span class="gams-dollar-face">$</span>(sig_pf(i,r) <span class="gams-statement-face">eq</span> 1)
+    )<span class="gams-dollar-face">$</span>vad(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Unit cost of production:</span>
+c_y(i,r) ==
+    (<span class="gams-statement-face">sum</span>(j<span class="gams-dollar-face">$</span>sh_i(j,i,r),
+	sh_i(j,i,r) * (1 + rti(j,i,r)) * p_a(j,r) / pai0(j,i,r))
+	+ (sh_pf(i,r) * p_pf(i,r))<span class="gams-dollar-face">$</span>vad(i,r)
+    )<span class="gams-dollar-face">$</span>vom(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Unit cost of Armington aggregation:</span>
+c_a(i,r) ==
+    (
+	(((sh_am(i,r) * (p_am(i,r))**(1-sig_a(i,r)))<span class="gams-dollar-face">$</span>sh_am(i,r)
+	+ (sh_ad(i,r) * (p_y(i,r))**(1-sig_a(i,r)))<span class="gams-dollar-face">$</span>sh_ad(i,r)
+	)**(1/(1-sig_a(i,r))))<span class="gams-dollar-face">$</span>l(i)
+	+
+	(((sh_am(i,r) * (p_am(i,r))**(1-sig_a(i,r)))<span class="gams-dollar-face">$</span>sh_am(i,r)
+	    + (sh_ad(i,r) * (p_ad(i,r))**(1-sig_a(i,r)))<span class="gams-dollar-face">$</span>sh_ad(i,r)
+	)**(1/(1-sig_a(i,r))))<span class="gams-dollar-face">$</span>k(i)
+    )<span class="gams-dollar-face">$</span>a0(i,r)
+<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Unit cost of domestic goods:</span>
+c_ad(i,r) ==
+    ((n(i,r))**(1/(1-sig_dd(i,r))) * p_d(i,r)
+    )<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> vdm(i,r) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_h))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Unit cost of consumption aggregation:</span>
+c_u(r) ==
+    (
+	(<span class="gams-statement-face">sum</span>(i<span class="gams-dollar-face">$</span>sh_c(i,r),
+	    sh_c(i,r) * ((1+rtc(i,r))*p_a(i,r) / pc0(i,r))**(1-sig_c))
+	)**(1/(1-sig_c))
+    )<span class="gams-dollar-face">$</span>(sig_c <span class="gams-statement-face">ne</span> 1)
+    +
+    (
+	<span class="gams-statement-face">prod</span>(i<span class="gams-dollar-face">$</span>sh_c(i,r),
+	    ((1+rtc(i,r))*p_a(i,r) / pc0(i,r))**(sh_c(i,r)))
+    )<span class="gams-dollar-face">$</span>(sig_c <span class="gams-statement-face">eq</span> 1)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Unit cost of import aggregation:</span>
+c_am(i,r) ==
+    (
+	((<span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>sh_m(i,s,r),
+	    sh_m(i,s,r)
+	    * ((1+rtms(i,s,r))*p_m(i,s,r)/(pmt0(i,s,r)*ams(i,s,r))
+	    )**(1-sig_m(i,r))
+	))**(1/(1-sig_m(i,r)))
+	)<span class="gams-dollar-face">$</span>(sig_m(i,r) <span class="gams-statement-face">ne</span> 1)
+	+
+	(<span class="gams-statement-face">prod</span>(s<span class="gams-dollar-face">$</span>sh_m(i,s,r),
+	    ((1+rtms(i,s,r))*p_m(i,s,r)/(pmt0(i,s,r)*ams(i,s,r))
+	    )**(sh_m(i,s,r)))
+	)<span class="gams-dollar-face">$</span>(sig_m(i,r) <span class="gams-statement-face">eq</span> 1)
+    )<span class="gams-dollar-face">$</span>vim(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Unit cost of import:</span>
+c_m(i,r,s) ==
+    ((n(i,r))**(1/(1-sig_ff(i,s))) * p_x_(i,r,s)
+    )<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> vxmd(i,r,s) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_h))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Price of export including transport cost (CIF price of export):</span>
+p_x_(i,r,s) ==
+    (
+	(gamma(i,r,s)*(1-rtxs(i,r,s))*p_y(i,r)/pmm0(i,r,s)
+	    + ((1-gamma(i,r,s))*(tau(i,r,s)*p_t/tau0(i,r,s)))<span class="gams-dollar-face">$</span>tau0(i,r,s)
+	)<span class="gams-dollar-face">$</span>l(i)
+	+
+	(gamma(i,r,s)*(1-rtxs(i,r,s))*p_x(i,r,s)/pmm0(i,r,s)
+	    + ((1-gamma(i,r,s))*(tau(i,r,s)*p_t/tau0(i,r,s)))<span class="gams-dollar-face">$</span>tau0(i,r,s)
+	)<span class="gams-dollar-face">$</span>k(i)
+    )<span class="gams-dollar-face">$</span>vxmd(i,r,s)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Unit cost of transport services:</span>
+c_t ==
+    ((<span class="gams-statement-face">sum</span>((i,r)<span class="gams-dollar-face">$</span>sh_t(i,r), sh_t(i,r) * (p_y(i,r))**(1-sig_t))
+    )**(1/(1-sig_t)))<span class="gams-dollar-face">$</span>(sig_t <span class="gams-statement-face">ne</span> 1)
+    +
+    (<span class="gams-statement-face">prod</span>((i,r)<span class="gams-dollar-face">$</span>sh_t(i,r), (p_y(i,r))**(sh_t(i,r))))<span class="gams-dollar-face">$</span>(sig_t <span class="gams-statement-face">eq</span> 1)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Price of investment goods:</span>
+p_inv(r) == <span class="gams-statement-face">sum</span>(cgd, p_y(cgd,r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Demand and supply functions:</span>
+
+<span class="gams-comment-face">*	Demand for primary factors:</span>
+a_f(f,i,r) ==
+    (vfm(f,i,r) *
+	(p_pf(i,r) / ((1+rtf(f,i,r))*p_f(f,r)/pf0(f,i,r)))**(sig_pf(i,r))
+    )<span class="gams-dollar-face">$</span>vfm(f,i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Final demand:</span>
+a_c(i,r) ==
+    (v_cm(i,r) * (c_u(r) / ((1+rtc(i,r)) * p_a(i,r) / pc0(i,r)))**(sig_c)
+    )<span class="gams-dollar-face">$</span>v_cm(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for domestic goods:</span>
+a_ad(i,r) ==
+    (
+	(ad0(i,r) * (c_a(i,r)/p_y(i,r))**(sig_a(i,r)))<span class="gams-dollar-face">$</span>l(i)
+	+
+	(ad0(i,r) * (c_a(i,r)/p_ad(i,r))**(sig_a(i,r)))<span class="gams-dollar-face">$</span>k(i)
+    )<span class="gams-dollar-face">$</span>ad0(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for import goods:</span>
+a_am(i,r) ==
+    (am0(i,r) * (c_a(i,r)/p_am(i,r))**(sig_a(i,r)))<span class="gams-dollar-face">$</span>am0(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for import:</span>
+a_m(i,r,s) ==
+    ( (m0(i,r,s)/ams(i,r,s))
+	* (c_am(i,s)/((1+rtms(i,r,s))*p_m(i,r,s)/(pmt0(i,r,s)*ams(i,r,s)))
+	)**(sig_m(i,s))
+    )<span class="gams-dollar-face">$</span>vxmd(i,r,s)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for domestic varieties:</span>
+a_dd(i,r) ==
+    ((vdm(i,r)/n0(i,r)) * (n(i,r))**(sig_dd(i,r)/(1-sig_dd(i,r)))
+    )<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> vdm(i,r) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_h))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for foreign varieties:</span>
+a_mm(i,r,s) ==
+    ((vxmd(i,r,s)/n0(i,r)) * (n(i,r))**(sig_ff(i,s)/(1-sig_ff(i,s)))
+    )<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> vxmd(i,r,s) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_h))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand from transport sector:</span>
+a_t(i,r) ==
+    (vst(i,r) * (c_t / p_y(i,r))**(sig_t))<span class="gams-dollar-face">$</span>vst(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Functions for imperfectly competitive models:</span>
+
+<span class="gams-comment-face">*	Elasticity of demand for Armington goods:</span>
+eod(i,r) == (eod0(i,r))<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> a0(i,r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Beta:</span>
+beta(i,r,s) ==
+    ((((1-rtxs(i,r,s))*p_x(i,r,s))
+	/ ((1-rtxs(i,r,s))*p_x(i,r,s) + p_t*tau(i,r,s)))<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> %fl_beta%)
+	+
+	beta0(i,r,s)<span class="gams-dollar-face">$</span>%fl_beta%
+    )<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> vxmd(i,r,s) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_cm))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Share of domestic goods:</span>
+s_ad(i,r) ==
+    (p_ad(i,r)*ad0(i,r)*ad(i,r) / (p_a(i,r)*a0(i,r)*a(i,r))
+    )<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> ad0(i,r) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_lgmc) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_cm))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Share of import goods:</span>
+s_am(i,r) ==
+    (p_am(i,r)*am0(i,r)*am(i,r) / (p_a(i,r)*a0(i,r)*a(i,r))
+    )<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> am0(i,r)  <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_lgmc) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_cm))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Share of import from each region:</span>
+s_m(i,r,s) ==
+    (((1+rtms(i,r,s))*p_m(i,r,s)*m0_(i,r,s)*m(i,r,s))
+	/ (p_am(i,s)*am0(i,s)*am(i,s))
+    )<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> vxmd(i,r,s) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_lgmc) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_cm))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Domestic supply share in total supply:</span>
+delta_d(i,r) ==
+    (qd0(i,r)*q_d(i,r) / (qt0(i,r)*q_t(i,r))
+    )<span class="gams-dollar-face">$</span>(fl_int <span class="gams-statement-face">and</span> k(i) <span class="gams-statement-face">and</span> qd0(i,r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Export supply share in total supply:</span>
+delta_x(i,r,s) ==
+    (qx0(i,r,s)*q_x(i,r,s) / (qt0(i,r)*q_t(i,r))
+    )<span class="gams-dollar-face">$</span>(fl_int <span class="gams-statement-face">and</span> k(i) <span class="gams-statement-face">and</span> qx0(i,r,s))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Functions for integrated Cournot model (model IC):</span>
+
+<span class="gams-comment-face">*	Conjectured ROC in p_a:</span>
+h_pa(r,i,s) ==
+    (s_ad(i,s) * h_pad(r,i,s))<span class="gams-dollar-face">$</span>ad0(i,s)
+    + (s_am(i,s) * h_pam0(r,i,s) * h_pam(r,i,s))<span class="gams-dollar-face">$</span>am0(i,s)
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Conjectured ROC in p_ad:</span>
+h_pad(r,i,ss) ==
+    ((1 + (n0(i,r)*n(i,r) - 1) * h_p0(r,i,r) * h_p(r,i,r))/(n0(i,r)*n(i,r))
+    )<span class="gams-dollar-face">$</span>r_s(r,ss)
+    +
+    (h_p0(r,i,ss) * h_p(r,i,ss))<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> r_s(r,ss))
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	ROC in own total supply:</span>
+h_qtv(i,r) ==
+    (delta_d(i,r) * h_qdv(i,r))<span class="gams-dollar-face">$</span>qd0(i,r)
+    + <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>qx0(i,r,s), delta_x(i,r,s) * h_qxv(i,r,s))
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Conjectured ROC in own domestic supply</span>
+h_qdv(i,r) ==
+    - sig_dd(i,r)
+    + (sig_dd(i,r) - sig_a(i,r)) * h_pad(r,i,r)
+    + (sig_a(i,r) - eod(i,r)) * h_pa(r,i,r)
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Conjectured ROC in own export supply:</span>
+h_qxv(i,r,s) ==
+    - sig_ff(i,s) * beta(i,r,s)
+    + (sig_ff(i,s) - sig_m(i,s)) * h_pm0(r,i,r,s) * h_pm(r,i,r,s)
+    + (sig_m(i,s) - sig_a(i,s)) * h_pam0(r,i,s) * h_pam(r,i,s)
+    + (sig_a(i,s) - eod(i,s)) * h_pa(r,i,s)
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Conjectured ROC in domestic supply of rival firms</span>
+h_qd(r,i,ss) ==
+    - sig_dd(i,ss) * h_p0(r,i,ss) * h_p(r,i,ss)
+    + (sig_dd(i,ss) - sig_a(i,ss)) * h_pad(r,i,ss)
+    + (sig_a(i,ss) - eod(i,ss)) * h_pa(r,i,ss)
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Conjectured ROC in export supply of rival firms:</span>
+h_qx(r,i,t,s) ==
+    - sig_ff(i,s) * beta(i,t,s) * h_p0(r,i,t) * h_p(r,i,t)
+    + (sig_ff(i,s) - sig_m(i,s)) * h_pm0(r,i,t,s) * h_pm(r,i,t,s)
+    + (sig_m(i,s) - sig_a(i,s)) * h_pam0(r,i,s) * h_pam(r,i,s)
+    + (sig_a(i,s) - eod(i,s)) * h_pa(r,i,s)
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Equation definitions for model:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Equation definitions for model:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Imperfectly competitive sectors:</span>
+
+<span class="gams-comment-face">*	FOC for profit maximization of domestic supply:</span>
+e_q_d(i,r)<span class="gams-dollar-face">$</span>(vdm(i,r) <span class="gams-statement-face">and</span> k(i))..
+
+    (((cy0(i,r)*c_y(i,r)
+	- (1-rto(i,r))*pd0(i,r)*p_d(i,r)
+	*(1-mud0(i,r)*mu_d(i,r))))<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_cm)
+	+
+	(ac0(i,r)*ac(i,r)-(1-rto(i,r))*pd0(i,r)*p_d(i,r))<span class="gams-dollar-face">$</span>fl_cm
+    )<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_int)
+    +
+    (vdm(i,r)*q_d(i,r)/n0(i,r) - a_dd(i,r)*ad(i,r))<span class="gams-dollar-face">$</span>fl_int
+    <span class="gams-operator-face">=g=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	FOC for profit maximization of export supply:</span>
+e_q_x(i,r,s)<span class="gams-dollar-face">$</span>(vxmd(i,r,s) <span class="gams-statement-face">and</span> k(i))..
+
+    ((cy0(i,r)*c_y(i,r)
+	- (1-rto(i,r))*px0(i,r,s)*p_x(i,r,s)
+	* (1-mux0(i,r,s)*mu_x(i,r,s)))<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_cm)
+	+
+	(ac0(i,r)*ac(i,r) - (1-rto(i,r))*px0(i,r,s)*p_x(i,r,s))<span class="gams-dollar-face">$</span>fl_cm
+    )<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_int)
+    +
+    (vxmd(i,r,s)*q_x(i,r,s)/n0(i,r) - a_mm(i,r,s)*m(i,r,s))<span class="gams-dollar-face">$</span>fl_int
+    <span class="gams-operator-face">=g=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">* 	Zero profit condition:</span>
+e_n(i,r)<span class="gams-dollar-face">$</span>(vom(i,r) <span class="gams-statement-face">and</span> k(i)) ..
+
+    (cy0(i,r)*c_y(i,r)*qtt0(i,r)*q_tt(i,r)
+	- (1-rto(i,r))
+	* (pd0(i,r)*p_d(i,r)*qd0(i,r)*q_d(i,r)
+	    + <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>qx0(i,r,s),
+		px0(i,r,s)*p_x(i,r,s)*qx0(i,r,s)*q_x(i,r,s)))
+    )<span class="gams-dollar-face">$</span>((<span class="gams-statement-face">not</span> fl_cm) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_fix))
+    +
+    (n(i,r) - 1)<span class="gams-dollar-face">$</span>(fl_cm <span class="gams-statement-face">or</span> fl_fix)
+    <span class="gams-operator-face">=g=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">* 	Excess profit (valid only in fixed-number-of-firms model)</span>
+e_ep(i,r)<span class="gams-dollar-face">$</span>(vom(i,r) <span class="gams-statement-face">and</span> k(i) <span class="gams-statement-face">and</span> fl_fix <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_cm))..
+
+    ep(i,r) +
+    cy0(i,r)*c_y(i,r)*qtt0(i,r)*q_tt(i,r)
+    - (1-rto(i,r))
+    * (pd0(i,r)*p_d(i,r)*qd0(i,r)*q_d(i,r)
+	+ <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>qx0(i,r,s), px0(i,r,s)*p_x(i,r,s)*qx0(i,r,s)*q_x(i,r,s)))
+    <span class="gams-operator-face">=e=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Total output of each firm:</span>
+e_q_t(i,r)<span class="gams-dollar-face">$</span>(vom(i,r) <span class="gams-statement-face">and</span> k(i))..
+
+    (qt0(i,r)*q_t(i,r)
+	- (qd0(i,r)*q_d(i,r) + <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>qx0(i,r,s), qx0(i,r,s)*q_x(i,r,s)))
+    )<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_int)
+    +
+    (cy0(i,r)*c_y(i,r) - (1-rto(i,r))*py0(i,r)*p_com(i,r)
+	* (1 - mu0(i,r)*mu(i,r)))<span class="gams-dollar-face">$</span>fl_int
+
+    <span class="gams-operator-face">=e=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Total input (variable input + fixed inputs) of each firm:</span>
+e_q_tt(i,r)<span class="gams-dollar-face">$</span>(vom(i,r) <span class="gams-statement-face">and</span> k(i))..
+
+    qtt0(i,r)*q_tt(i,r)
+    <span class="gams-operator-face">=e=</span> qt0(i,r)*q_t(i,r) + fc0(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Average cost:</span>
+e_ac(i,r)<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> vom(i,r) <span class="gams-statement-face">and</span> fl_cm) ..
+
+    ac0(i,r)*ac(i,r) * qt0(i,r)*q_t(i,r)
+    <span class="gams-operator-face">=e=</span> cy0(i,r)*c_y(i,r) * qtt0(i,r)*q_tt(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Markup rate for domestic supply:</span>
+e_mu_d(i,r)<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> vdm(i,r) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> c_ms(<span class="gams-string-face">&quot;ic&quot;</span>)) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_cm)) ..
+
+<span class="gams-comment-face">*	Quantity competition model with differentiated goods</span>
+    (mud0(i,r)*mu_d(i,r)*n0(i,r)*n(i,r) - n0(i,r)*n(i,r)/sig_dd(i,r)
+	- (1/sig_a(i,r) - 1/sig_dd(i,r))
+	* (1 + (n0(i,r)*n(i,r) - 1) * phi0(i,r,r))
+	- (1/eod(i,r) - 1/sig_a(i,r))
+	* (s_ad(i,r) + (n0(i,r)*n(i,r) - s_ad(i,r)) * phi0(i,r,r))
+    )<span class="gams-dollar-face">$</span>(fl_q <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_h))
+    +
+<span class="gams-comment-face">*	Bertrand competition model</span>
+    (n0(i,r)*n(i,r) - (mud0(i,r)*mu_d(i,r))*sig_dd(i,r)*n0(i,r)*n(i,r)
+	- (mud0(i,r)*mu_d(i,r))*(sig_a(i,r) - sig_dd(i,r)
+	    + s_ad(i,r) * (eod(i,r) - sig_a(i,r)))
+    )<span class="gams-dollar-face">$</span>fl_p
+    +
+<span class="gams-comment-face">*	LGMC</span>
+    (mud0(i,r)*mu_d(i,r) - 1/sig_dd(i,r))<span class="gams-dollar-face">$</span>fl_lgmc
+    +
+<span class="gams-comment-face">*	Quantity competition model with homogenous goods</span>
+    (mud0(i,r)*mu_d(i,r)*n0(i,r)*n(i,r)
+	- (1/sig_a(i,r)) * (1 + (n0(i,r)*n(i,r) - 1) * phi0(i,r,r))
+	- (1/eod(i,r) - 1/sig_a(i,r))
+	* (s_ad(i,r) + (n0(i,r)*n(i,r) - s_ad(i,r)) * phi0(i,r,r))
+    )<span class="gams-dollar-face">$</span>(fl_q <span class="gams-statement-face">and</span> fl_h)
+
+    <span class="gams-operator-face">=e=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Markup rate for export supply:</span>
+e_mu_xx(i,r,s)<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> vxmd(i,r,s) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> c_ms(<span class="gams-string-face">&quot;ic&quot;</span>)) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_cm)) ..
+
+<span class="gams-comment-face">*	Quantity competition model with differentiated goods</span>
+    (muxx0(i,r,s)*mu_xx(i,r,s)*n0(i,r)*n(i,r)
+	- n0(i,r)*n(i,r)/sig_ff(i,s)
+	- (1/sig_m(i,s) - 1/sig_ff(i,s))
+	* (1 + (n0(i,r)*n(i,r) - 1)*phi0(i,r,s))
+	- (1/sig_a(i,s) - 1/sig_m(i,s))
+	* (s_m(i,r,s) + (n0(i,r)*n(i,r) - s_m(i,r,s))*phi0(i,r,s))
+	- (1/eod(i,s) - 1/sig_a(i,s))
+	* (s_am(i,s)*s_m(i,r,s)
+	    + (n0(i,r)*n(i,r) - s_am(i,s)*s_m(i,r,s))*phi0(i,r,s))
+    )<span class="gams-dollar-face">$</span>(fl_q <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_h))
+    +
+<span class="gams-comment-face">*	Bertrand competition model</span>
+    (n0(i,r)*n(i,r)
+	- (muxx0(i,r,s) * mu_xx(i,r,s)) * sig_ff(i,s)*n0(i,r)*n(i,r)
+	- (muxx0(i,r,s) * mu_xx(i,r,s)) * (sig_m(i,s) - sig_ff(i,s)
+	    + s_m(i,r,s) * (sig_a(i,s) - sig_m(i,s)
+		+ s_am(i,s) * (eod(i,s) - sig_a(i,s))))
+    )<span class="gams-dollar-face">$</span>fl_p
+    +
+<span class="gams-comment-face">*	LGMC</span>
+    (muxx0(i,r,s) * mu_xx(i,r,s) - 1/sig_ff(i,s))<span class="gams-dollar-face">$</span>fl_lgmc
+    +
+<span class="gams-comment-face">*	Quantity competition model with homogenous goods</span>
+    (muxx0(i,r,s)*mu_xx(i,r,s)*n0(i,r)*n(i,r)
+	- (1/sig_m(i,s)) * (1 + (n0(i,r)*n(i,r) - 1)*phi0(i,r,s))
+	- (1/sig_a(i,s) - 1/sig_m(i,s))
+	* (s_m(i,r,s) + (n0(i,r)*n(i,r) - s_m(i,r,s))*phi0(i,r,s))
+	- (1/eod(i,s) - 1/sig_a(i,s))
+	* (s_am(i,s)*s_m(i,r,s)
+	    + (n0(i,r)*n(i,r) - s_am(i,s)*s_m(i,r,s))*phi0(i,r,s))
+    )<span class="gams-dollar-face">$</span>(fl_q <span class="gams-statement-face">and</span> fl_h)
+    <span class="gams-operator-face">=e=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Markup rate for export supply (adjustment for transport costs):</span>
+e_mu_x(i,r,s)<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> vxmd(i,r,s) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> c_ms(<span class="gams-string-face">&quot;ic&quot;</span>)) <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_cm)) ..
+
+    mux0(i,r,s) * mu_x(i,r,s) * beta(i,r,s)
+    <span class="gams-operator-face">=e=</span> muxx0(i,r,s) * mu_xx(i,r,s)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Common markup rates for integrated model:</span>
+e_mu(i,r)<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> vom(i,r) <span class="gams-statement-face">and</span> fl_int) ..
+
+<span class="gams-comment-face">*	Integrated Bertrand:</span>
+    (1/(mu0(i,r) * mu(i,r))
+	- (delta_d(i,r)/(mud0(i,r)*mu_d(i,r)))<span class="gams-dollar-face">$</span>qd0(i,r)
+	- <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>qx0(i,r,s), delta_x(i,r,s)/(mux0(i,r,s) * mu_x(i,r,s)))
+    )<span class="gams-dollar-face">$</span>(fl_p <span class="gams-statement-face">and</span> (<span class="gams-statement-face">not</span> fl_ib_alt))
+    +
+    (mu0(i,r) * mu(i,r)
+	- (delta_d(i,r) * (mud0(i,r)*mu_d(i,r)))<span class="gams-dollar-face">$</span>qd0(i,r)
+	- <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>qx0(i,r,s), delta_x(i,r,s) * (mux0(i,r,s) * mu_x(i,r,s)))
+    )<span class="gams-dollar-face">$</span>(fl_p <span class="gams-statement-face">and</span> fl_ib_alt)
+    +
+
+<span class="gams-comment-face">*	Integrated Cournot:</span>
+    (mu0(i,r) * mu(i,r) * h_qtv(i,r) + 1)<span class="gams-dollar-face">$</span>fl_q
+
+    <span class="gams-operator-face">=e=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">* *	Elasticity of total demand:</span>
+<span class="gams-comment-face">* e_eod_c(i,r)$(k(i) and vom(i,r) and fl_int and fl_p and fl_ib_alt) ..</span>
+
+<span class="gams-comment-face">*     eodc0(i,r) * eod_c(i,r) =e=</span>
+<span class="gams-comment-face">*     (delta_d(i,r) * eodd0(i,r) * eod_d(i,r))$qd0(i,r)</span>
+<span class="gams-comment-face">*     + sum(s$qx0(i,r,s), delta_x(i,r,s) * eodx0(i,r,s) * eod_x(i,r,s));</span>
+
+<span class="gams-comment-face">* *	Elasticity of domestic demand:</span>
+<span class="gams-comment-face">* e_eod_d(i,r)$(k(i) and qd0(i,r) and fl_int and fl_p and fl_ib_alt) ..</span>
+
+<span class="gams-comment-face">*     eodd0(i,r) * eod_d(i,r) * mud0(i,r) * mu_d(i,r) =e= 1;</span>
+
+<span class="gams-comment-face">*	Elasticity of total demand:</span>
+<span class="gams-comment-face">* e_eod_x(i,r,s)$(k(i) and qx0(i,r,s) and fl_int and fl_p and fl_ib_alt) ..</span>
+
+<span class="gams-comment-face">*     eodx0(i,r,s) * eod_x(i,r,s) * mux0(i,r,s) * mu_x(i,r,s) =e= 1;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Equations for integrated market Cournot model:</span>
+
+<span class="gams-comment-face">*	Conjectured ROC in prices of rival firms (Cournot conjecture):</span>
+e_h_p(r,i,t)<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> vom(i,t) <span class="gams-statement-face">and</span> c_ms(<span class="gams-string-face">&quot;ic&quot;</span>)) ..
+
+    (delta_d(i,t)*h_qd(r,i,t))<span class="gams-dollar-face">$</span>qd0(i,t)
+    + <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>qx0(i,t,s), delta_x(i,t,s)*h_qx(r,i,t,s))
+    <span class="gams-operator-face">=e=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Conjectured ROC in p_m:</span>
+e_h_pm(r,i,t,s)<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> c_ms(<span class="gams-string-face">&quot;ic&quot;</span>) <span class="gams-statement-face">and</span> vxmd(i,t,s)) ..
+
+    h_pm0(r,i,t,s)*h_pm(r,i,t,s) <span class="gams-operator-face">=e=</span>
+    ((beta(i,r,s)
+	+ (n0(i,r)*n(i,r)-1)*beta(i,r,s)*h_p0(r,i,r)*h_p(r,i,r))
+	/(n0(i,r)*n(i,r))
+    )<span class="gams-dollar-face">$</span>r_s(r,t)
+    +
+    (beta(i,t,s)*h_p0(r,i,t)*h_p(r,i,t))<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> r_s(r,t))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Conjectured ROC in p_am:</span>
+e_h_pam(r,i,s)<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> am0(i,s) <span class="gams-statement-face">and</span> c_ms(<span class="gams-string-face">&quot;ic&quot;</span>)) ..
+
+    h_pam0(r,i,s)*h_pam(r,i,s) <span class="gams-operator-face">=e=</span>
+    <span class="gams-statement-face">sum</span>(tt<span class="gams-dollar-face">$</span>vxmd(i,tt,s), s_m(i,tt,s)*h_pm0(r,i,tt,s)*h_pm(r,i,tt,s))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Zero profit conditions.</span>
+
+<span class="gams-comment-face">*	Production:</span>
+e_y(i,r)<span class="gams-dollar-face">$</span>(l(i) <span class="gams-statement-face">and</span> vom(i,r)) ..
+
+    c_y(i,r) <span class="gams-operator-face">=g=</span> (1-rto(i,r)) * p_y(i,r) / po0(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Production of inputs for transport sector in K</span>
+e_y_xt(i,r)<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> sh_trns(i,r)) ..
+
+    c_y(i,r) <span class="gams-operator-face">=g=</span> (1-rto(i,r)) * p_y(i,r) / po0(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Armington aggregation:</span>
+e_a(i,r)<span class="gams-dollar-face">$</span>a0(i,r) ..
+
+    c_a(i,r) <span class="gams-operator-face">=g=</span> p_a(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Domestic varieties:</span>
+e_ad(i,r)<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> ad0(i,r)) ..
+
+    (c_ad(i,r) - p_ad(i,r))<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_h)
+    +
+    (ad0(i,r)*ad(i,r) - a_ad(i,r) * a(i,r))<span class="gams-dollar-face">$</span>fl_h
+    <span class="gams-operator-face">=g=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Import aggregation:</span>
+e_am(i,r)<span class="gams-dollar-face">$</span>vim(i,r) ..
+
+    c_am(i,r) <span class="gams-operator-face">=g=</span> p_am(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Foreign varieties (import):</span>
+e_m(i,r,s)<span class="gams-dollar-face">$</span>vxmd(i,r,s) ..
+
+    ((c_m(i,r,s) - p_m(i,r,s))<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_h)
+	+ (vxmd(i,r,s)*m(i,r,s) - a_m(i,r,s) * am(i,s))<span class="gams-dollar-face">$</span>fl_h)<span class="gams-dollar-face">$</span>k(i)
+    +
+    (vxmd(i,r,s)*m(i,r,s) - a_m(i,r,s) * am(i,s))<span class="gams-dollar-face">$</span>l(i) <span class="gams-operator-face">=e=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Utility:</span>
+e_u(r) ..
+
+    c_u(r) <span class="gams-operator-face">=g=</span> p_u(r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Transport sector:</span>
+e_yt ..
+
+    c_t <span class="gams-operator-face">=g=</span> p_t<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Market clearing condtions.</span>
+
+<span class="gams-comment-face">*	Market of outputs:</span>
+e_p_y(i,r)<span class="gams-dollar-face">$</span>(vom(i,r) <span class="gams-statement-face">and</span> (l(i) <span class="gams-statement-face">or</span> (k(i) <span class="gams-statement-face">and</span> sh_trns(i,r)))) ..
+
+    (vom(i,r) * y(i,r)
+	- <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>vxmd(i,r,s), a_m(i,r,s) * am(i,s))
+	- (a_t(i,r) * yt)<span class="gams-dollar-face">$</span>vst(i,r)
+	- (a_ad(i,r) * a(i,r))<span class="gams-dollar-face">$</span>ad0(i,r)
+	- (scale_i(r) * inv(r))<span class="gams-dollar-face">$</span>cgd(i)
+    )<span class="gams-dollar-face">$</span>l(i)
+    +
+    (sh_trns(i,r) * vom(i,r) * y_xt(i,r) - a_t(i,r) * yt
+    )<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> sh_trns(i,r))
+    <span class="gams-operator-face">=g=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Outputs in the integrated market.</span>
+e_p_com(i,r)<span class="gams-dollar-face">$</span>(vom(i,r) <span class="gams-statement-face">and</span> k(i) <span class="gams-statement-face">and</span> fl_int) ..
+
+    (1-sh_trns(i,r))*vom(i,r)*q_t(i,r)/n0(i,r)
+    - (a_dd(i,r) * ad(i,r))<span class="gams-dollar-face">$</span>vdm(i,r)
+    - <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>vxmd(i,r,s), a_mm(i,r,s) * m(i,r,s))
+    <span class="gams-operator-face">=g=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Market for domestic output of imperfectly competititve sectors:</span>
+e_p_d(i,r)<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> vdm(i,r)) ..
+
+    ((vdm(i,r)*q_d(i,r)/n0(i,r) - a_dd(i,r) * ad(i,r))<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_h)
+	+ (pd0(i,r)*n0(i,r)*n(i,r)*qd0(i,r)*q_d(i,r) - ad0(i,r)*ad(i,r))<span class="gams-dollar-face">$</span>fl_h
+    )<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_int)
+    +
+    (p_d(i,r) - p_com(i,r))<span class="gams-dollar-face">$</span>fl_int
+    <span class="gams-operator-face">=g=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Market for export of imperfectly competititve sectors:</span>
+e_p_x(i,r,s)<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> vxmd(i,r,s)) ..
+
+    ((vxmd(i,r,s)*q_x(i,r,s)/n0(i,r) - a_mm(i,r,s) * m(i,r,s))<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_h)
+	+
+	(p_m(i,r,s) - p_x_(i,r,s))<span class="gams-dollar-face">$</span>fl_h
+    )<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_int)
+    +
+    (p_x(i,r,s) - p_com(i,r))<span class="gams-dollar-face">$</span>fl_int
+    <span class="gams-operator-face">=g=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Domestic goods:</span>
+e_p_ad(i,r)<span class="gams-dollar-face">$</span>(k(i) <span class="gams-statement-face">and</span> ad0(i,r)) ..
+
+    (ad0(i,r) * ad(i,r) - a_ad(i,r) * a(i,r))<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_h)
+    +
+    (p_ad(i,r) - p_d(i,r))<span class="gams-dollar-face">$</span>fl_h
+    <span class="gams-operator-face">=g=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Market for aggregate import:</span>
+e_p_am(i,r)<span class="gams-dollar-face">$</span>am0(i,r) ..
+
+    am0(i,r)*am(i,r) <span class="gams-operator-face">=g=</span> a_am(i,r)*a(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Market for import:</span>
+e_p_m(i,r,s)<span class="gams-dollar-face">$</span>vxmd(i,r,s) ..
+
+    ((m0(i,r,s) * m(i,r,s) - a_m(i,r,s) * am(i,s))<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> fl_h)
+	+ (px0(i,r,s)*n0(i,r)*n(i,r)*qx0(i,r,s)*q_x(i,r,s)
+	    - m0(i,r,s) * m(i,r,s))<span class="gams-dollar-face">$</span>fl_h
+    )<span class="gams-dollar-face">$</span>k(i)
+    +
+    (p_m(i,r,s) - p_x_(i,r,s))<span class="gams-dollar-face">$</span>l(i) <span class="gams-operator-face">=e=</span> 0
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Market of transport services:</span>
+e_p_t ..
+
+    vt * yt <span class="gams-operator-face">=g=</span>
+    <span class="gams-statement-face">sum</span>((l,r,s)<span class="gams-dollar-face">$</span>vxmd(l,r,s), tau(l,r,s)*a_m(l,r,s)*am(l,s))
+    +
+    <span class="gams-statement-face">sum</span>((k,r,s)<span class="gams-dollar-face">$</span>vxmd(k,r,s),
+	n0(k,r)*n(k,r)*tau(k,r,s)*px0(k,r,s)*qx0(k,r,s)*q_x(k,r,s))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Market of Armington goods:</span>
+e_p_a(i,r)<span class="gams-dollar-face">$</span>a0(i,r) ..
+
+    a0(i,r) * a(i,r) <span class="gams-operator-face">=g=</span>
+    <span class="gams-statement-face">sum</span>(l<span class="gams-dollar-face">$</span>v_fm(i,l,r), v_fm(i,l,r) * y(l,r))
+    + <span class="gams-statement-face">sum</span>(k<span class="gams-dollar-face">$</span>sh_trns(k,r), sh_trns(k,r) * v_fm(i,k,r) * y_xt(k,r))
+    + <span class="gams-statement-face">sum</span>(k<span class="gams-dollar-face">$</span>v_fm(i,k,r), (1 - sh_trns(k,r)) * v_fm(i,k,r) * n(k,r)*q_tt(k,r))
+    + (a_c(i,r) * u(r))<span class="gams-dollar-face">$</span>v_cm(i,r)
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Market for primary factors:</span>
+e_p_f(f,r) ..
+
+    scale_f(f,r) * evom(f,r)
+    <span class="gams-operator-face">=g=</span>  <span class="gams-statement-face">sum</span>(l<span class="gams-dollar-face">$</span>vfm(f,l,r), a_f(f,l,r) * y(l,r))
+    + <span class="gams-statement-face">sum</span>(k<span class="gams-dollar-face">$</span>sh_trns(k,r), sh_trns(k,r) * a_f(f,k,r) * y_xt(k,r))
+    + <span class="gams-statement-face">sum</span>(k<span class="gams-dollar-face">$</span>vfm(f,k,r), (1 - sh_trns(k,r)) * a_f(f,k,r)*n(k,r)*q_tt(k,r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Market for utility:</span>
+e_p_u(r) ..
+
+    inc_ra(r) <span class="gams-operator-face">=g=</span> p_u(r) * vcm(r) * u(r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Regional income</span>
+e_inc_ra(r) ..
+
+    inc_ra(r) <span class="gams-operator-face">=e=</span>
+
+<span class="gams-comment-face">*	Factor income:</span>
+    <span class="gams-statement-face">sum</span>(f<span class="gams-dollar-face">$</span>evom(f,r), p_f(f,r) * scale_f(f,r) * evom(f,r))
+
+<span class="gams-comment-face">*	Ouput tax:</span>
+    + <span class="gams-statement-face">sum</span>(l<span class="gams-dollar-face">$</span>vom(l,r), rto(l,r)*p_y(l,r)*vom(l,r)*y(l,r))
+
+    + <span class="gams-statement-face">sum</span>(k<span class="gams-dollar-face">$</span>sh_trns(k,r), rto(k,r)*p_y(k,r)*vom(k,r)*y_xt(k,r)*sh_trns(k,r))
+
+    + <span class="gams-statement-face">sum</span>(k<span class="gams-dollar-face">$</span>vom(k,r), rto(k,r)
+	*n(k,r) * (p_d(k,r)*vdm(k,r)*q_d(k,r)
+	    + <span class="gams-statement-face">sum</span>(s, p_x(k,r,s)*vxmd(k,r,s)*q_x(k,r,s))))
+
+<span class="gams-comment-face">*	Intermediate tax:</span>
+    + <span class="gams-statement-face">sum</span>((j,l)<span class="gams-dollar-face">$</span>v_fm(j,l,r), rti(j,l,r)*p_a(j,r)*v_fm(j,l,r)*y(l,r))
+
+    + <span class="gams-statement-face">sum</span>((k,j)<span class="gams-dollar-face">$</span>v_fm(j,k,r),
+	rti(j,k,r)*p_a(j,r)*v_fm(j,k,r)
+	* (sh_trns(k,r)*y_xt(k,r) + (1-sh_trns(k,r))*n(k,r)*q_tt(k,r)))
+
+<span class="gams-comment-face">*	Factor tax:</span>
+    + <span class="gams-statement-face">sum</span>((f,l)<span class="gams-dollar-face">$</span>vfm(f,l,r), rtf(f,l,r)*p_f(f,r)*a_f(f,l,r)*y(l,r))
+
+    + <span class="gams-statement-face">sum</span>((f,k)<span class="gams-dollar-face">$</span>vfm(f,k,r),
+	rtf(f,k,r)*p_f(f,r)*a_f(f,k,r)
+	* (sh_trns(k,r)*y_xt(k,r) + (1-sh_trns(k,r))*n(k,r)*q_tt(k,r)))
+
+<span class="gams-comment-face">*	Export subsidies:</span>
+    - <span class="gams-statement-face">sum</span>((l,s)<span class="gams-dollar-face">$</span>vxmd(l,r,s), rtxs(l,r,s)*p_y(l,r)*a_m(l,r,s)*am(l,s))
+
+    - <span class="gams-statement-face">sum</span>((k,s)<span class="gams-dollar-face">$</span>vxmd(k,r,s),
+	rtxs(k,r,s)*n0(k,r)*n(k,r)*px0(k,r,s)*p_x(k,r,s)*qx0(k,r,s)*q_x(k,r,s))
+
+<span class="gams-comment-face">*	Tariff:</span>
+    + <span class="gams-statement-face">sum</span>((l,s)<span class="gams-dollar-face">$</span>vxmd(l,s,r),
+	rtms(l,s,r)*((1-rtxs(l,s,r))*p_y(l,s) + p_t*tau(l,s,r))*a_m(l,s,r)*am(l,r))
+
+    + <span class="gams-statement-face">sum</span>((k,s)<span class="gams-dollar-face">$</span>vxmd(k,s,r),
+	rtms(k,s,r)*((1-rtxs(k,s,r))*p_x(k,s,r) + p_t*tau(k,s,r))
+	*px0(k,s,r)*n0(k,s)*n(k,s)*qx0(k,s,r)*q_x(k,s,r))
+
+<span class="gams-comment-face">*	Consumption tax:</span>
+    + <span class="gams-statement-face">sum</span>(i<span class="gams-dollar-face">$</span>v_cm(i,r), rtc(i,r)*p_a(i,r)*a_c(i,r)*u(r))
+
+<span class="gams-comment-face">*	Excess profit:</span>
+    + (<span class="gams-statement-face">sum</span>(k, n0(k,r)*n(k,r)*ep(k,r)))<span class="gams-dollar-face">$</span>fl_fix
+
+    - scale_i(r) * p_inv(r) * inv(r)
+
+    + <span class="gams-statement-face">sum</span>(rnum, p_u(rnum)) * scale_bop(r) * vb(r)
+    <span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Dummy objective variable for NLP model:</span>
+e_dum_obj ..
+
+    dum_obj <span class="gams-operator-face">=e=</span> 1<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Model declaration:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Model declaration:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">model</span> gtap_trade_lib_mcp <span class="gams-explanation-face">GTAPinGAMS MCP model</span> <span class="gams-slash-face">/
+
+      e_q_d.q_d, e_q_x.q_x, e_n.n, e_q_tt.q_tt, e_q_t.q_t, e_mu_d.mu_d,
+      e_mu_xx.mu_xx, e_mu_x.mu_x, e_mu.mu, e_y.y, e_y_xt.y_xt, e_a.a, e_ad.ad,
+      e_am.am, e_m.m, e_u.u, e_yt.yt, e_p_y.p_y, e_p_com.p_com, e_p_d.p_d,
+      e_p_x.p_x, e_p_ad.p_ad, e_p_am.p_am, e_p_m.p_m, e_p_t.p_t, e_p_a.p_a,
+      e_p_f.p_f, e_p_u.p_u, e_inc_ra.inc_ra, e_ac.ac, e_ep.ep,
+
+</span><span class="gams-comment-face">*       e_eod_d.eod_d,</span><span class="gams-slash-face">
+</span><span class="gams-comment-face">*       e_eod_x.eod_x, e_eod_c.eod_c,</span><span class="gams-slash-face">
+
+      e_h_p.h_p, e_h_pam.h_pam, e_h_pm.h_pm
+
+      /</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">model</span> gtap_trade_lib_nlp <span class="gams-explanation-face">GTAPinGAMS NLP model</span> <span class="gams-slash-face">/
+
+      e_q_d, e_q_x, e_n, e_q_tt, e_q_t, e_mu_d, e_mu_xx, e_mu_x, e_mu, e_y,
+      e_a, e_ad, e_am, e_m, e_u, e_yt, e_p_y, e_p_com, e_y_xt, e_p_d, e_p_x,
+      e_p_ad, e_p_am, e_p_m, e_p_t, e_p_a, e_p_f, e_p_u, e_inc_ra, e_ac, e_ep,
+
+</span><span class="gams-comment-face">*     e_eod_d, e_eod_x, e_eod_c,</span><span class="gams-slash-face">
+
+      e_h_p, e_h_pam, e_h_pm,
+
+      e_dum_obj
+      /</span><span class="gams-lst-warning-face">;</span>
+
+gtap_trade_lib_mcp.workspace = 500<span class="gams-lst-warning-face">;</span>
+gtap_trade_lib_nlp.workspace = 500<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Parameters for checking results:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Parameters for checking results:&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">parameter</span>
+    chk_modelstat	<span class="gams-explanation-face">The value of model status</span>
+    chk_solvestat	<span class="gams-explanation-face">The value of solve status</span>
+    chk_walrus		<span class="gams-string-face">&quot;inc_ra.m/inc_ra.l&quot;</span>
+    chk_mu
+
+    l_sh_exp		<span class="gams-explanation-face">Export share</span>
+    l_p_x_		<span class="gams-explanation-face">CIF price of export</span>
+    l_ev		<span class="gams-explanation-face">Equivalent variation (bil$)</span>
+
+    pc_u		<span class="gams-explanation-face">% change in utility</span>
+    pc_scale		<span class="gams-explanation-face">% change in scale of each firm</span>
+    pc_so		<span class="gams-explanation-face">% change in sectoral output</span>
+    pc_n		<span class="gams-explanation-face">% change in the number of firms</span>
+    pc_ave_markup	<span class="gams-explanation-face">% change in average markup rates</span>
+    pc_markup_ds	<span class="gams-explanation-face">% change in markup rates for domestic supply</span>
+    pc_markup_ex	<span class="gams-explanation-face">% change in markup rates for export supply</span>
+    pc_markup_exx	<span class="gams-explanation-face">% change in markup rates for export supply</span>
+    pc_ave_markup_ex	<span class="gams-explanation-face">% change in average markup rates for export supply</span>
+    pc_ave_markup_exx	<span class="gams-explanation-face">% change in average markup rates for export supply</span>
+    pc_px_cif		<span class="gams-string-face">&quot;% change in export price (CIF)&quot;</span>
+    pc_px_cif_ave	<span class="gams-string-face">&quot;% change in average export price (CIF)&quot;</span>
+    pc_pd		<span class="gams-explanation-face">% change in domestic price</span>
+
+    pc_ac		<span class="gams-explanation-face">% change in average cost</span>
+    pc_tfc		<span class="gams-explanation-face">% change in total fixed cost</span>
+
+    par_result
+<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Set temporary values:</span>
+l_sh_exp(ms,i,r,s) = 0<span class="gams-lst-warning-face">;</span>
+
+pc_u(r,ms) = 0<span class="gams-lst-warning-face">;</span>
+chk_walrus(ms) = 0<span class="gams-lst-warning-face">;</span>
+pc_scale(ms,k,r) = 0<span class="gams-lst-warning-face">;</span>
+pc_n(ms,k,r) = 0<span class="gams-lst-warning-face">;</span>
+pc_so(ms,k,r) = 0<span class="gams-lst-warning-face">;</span>
+l_ev(r,ms) = 0<span class="gams-lst-warning-face">;</span>
+chk_walrus(ms) = 0<span class="gams-lst-warning-face">;</span>
+pc_ave_markup(r,i,ms) = 0<span class="gams-lst-warning-face">;</span>
+pc_ac(r,i,ms) = 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">* pc_scale(ms,k,r) = 0;</span>
+<span class="gams-comment-face">* pc_n(ms,k,r) = 0;</span>
+<span class="gams-comment-face">* pc_so(ms,k,r) = 0;</span>
+<span class="gams-comment-face">* pc_markup_ds(i,ms,r) = 0;</span>
+<span class="gams-comment-face">* pc_markup_ex(i,ms,r,s) = 0;</span>
+<span class="gams-comment-face">* pc_markup_exx(i,ms,r,s) = 0;</span>
+<span class="gams-comment-face">* pc_ave_markup(i,ms,r) = 0;</span>
+<span class="gams-comment-face">* pc_ave_markup_ex(i,ms,r) = 0;</span>
+<span class="gams-comment-face">* pc_ave_markup_exx(i,ms,r) = 0;</span>
+<span class="gams-comment-face">* pc_ac(i,ms,r) = 0;</span>
+<span class="gams-comment-face">* pc_tfc(i,ms,r) = 0;</span>
+<span class="gams-comment-face">* pc_pd(i,ms,r) = 0;</span>
+<span class="gams-comment-face">* pc_px_cif(i,ms,r,s) = 0;</span>
+<span class="gams-comment-face">* pc_px_cif_ave(i,ms,r) = 0;</span>
+
+<span class="gams-comment-face">* --------------------</span>
+<span class="gams-comment-face">* Local Variables:</span>
+<span class="gams-comment-face">* mode: gams</span>
+<span class="gams-comment-face">* fill-column: 78</span>
+<span class="gams-comment-face">* tab-width: 8</span>
+<span class="gams-comment-face">* End:</span>
+
+</pre>
+
+ </body>
+</html>

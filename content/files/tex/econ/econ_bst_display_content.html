@@ -1,0 +1,3516 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Created by htmlize-1.34 in css mode. -->
+<html>
+  <head>
+    <title>econ.bst</title>
+    <style type="text/css">
+    <!--
+      body {
+        color: #e0ffe0;
+        background-color: #000000;
+      }
+      .builtin {
+        /* font-lock-builtin-face */
+        color: #b0c4de;
+      }
+      .comment {
+        /* font-lock-comment-face */
+        color: #60ff50;
+      }
+      .constant {
+        /* font-lock-constant-face */
+        color: #22ffff;
+      }
+      .function-name {
+        /* font-lock-function-name-face */
+        color: #ffff60;
+      }
+      .keyword {
+        /* font-lock-keyword-face */
+        color: #00ffff;
+      }
+      .string {
+        /* font-lock-string-face */
+        color: #ff88cc;
+      }
+      .variable-name {
+        /* font-lock-variable-name-face */
+        color: #ffa500;
+      }
+
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <pre>
+<span class="comment">% econ.bst: BibTeX style file for papers in economics.</span>
+<span class="comment">%</span>
+<span class="comment">% First-written:       &lt;2007/07/28&gt;</span>
+<span class="comment">% Time-stamp:          &lt;2013-07-05 14:52:42 st&gt;</span>
+<span class="comment">% Version 2.1</span>
+<span class="comment">%</span>
+<span class="comment">% $Id: econ.bst,v 1.6 2008/12/22 09:10:51 st Exp $</span>
+
+<span class="comment">% Features of econ.bst</span>
+<span class="comment">% (1) Reference style used in economics paper.</span>
+<span class="comment">% (2) Highly customizable:</span>
+<span class="comment">%     In econ.bst, functions which have names like bst.xxx.yyy are defined.</span>
+<span class="comment">%     You can easily customize style of reference by changing contents of these functions.</span>
+
+<span class="comment">% This econ.bst files is based on the following bst files: jpolisci.bst (by</span>
+<span class="comment">% Osamu Iida), nissya.bst (by Koichi Higuchi), aer.bst, jfm.bst, jplain.bst.</span>
+<span class="comment">% I would like to thank the authors of these bst files.</span>
+
+<span class="comment">% Bug reports, requests and suggestions are welcome. </span>
+
+<span class="comment">% For changelogs, see CHANGES.txt file.</span>
+
+<span class="comment">% version number</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">econ.version</span>} { <span class="string">"2.1"</span> }
+
+<span class="comment">% Debug mode. Non-zero makes debug mode on.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">econ.debug</span>}
+{ #0 }    <span class="comment">% Debug mode off (default).</span>
+<span class="comment">% { #1 }    % Debug mode on.</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%%</span>
+<span class="comment">%%      Functions for customization:</span>
+<span class="comment">%%</span>
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% Use \bysame or not.</span>
+<span class="comment">%</span>
+<span class="comment">% If set to #0, \bysame is not used.</span>
+<span class="comment">% If set to #1, \bysame is used </span>
+<span class="comment">% If set to #2, \bysame is used (alternative abbreviation style).</span>
+<span class="comment">%</span>
+<span class="comment">% Note that integer number is expressed as # + integer in bst file.</span>
+<span class="comment">% \bysame is the function that abbreviates succession of the same authors' name by ---.</span>
+<span class="comment">%</span>
+<span class="comment">% See econ-sample.pdf for details.</span>
+<span class="comment">% </span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.use.bysame</span>}
+<span class="comment">% { #0 }    % Not use \bysame</span>
+{ #1 }    <span class="comment">% -&gt; Use \bysame (default)</span>
+<span class="comment">% { #2 }    % -&gt; Use \bysame of alternative style.</span>
+
+<span class="comment">% The definition of \bysame command.</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.bysame.definition</span>}
+{ <span class="string">"\hskip.3em \leavevmode\rule[.5ex]{3em}{.3pt}\hskip0.5em"</span> } <span class="comment">% (default)</span>
+<span class="comment">% { "\leavevmode\hbox to\leftmargin{\hrulefill\,\,}" } % If you set #2 to bst.use.bysame, use this.</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% The order of fist and last name.</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.author.name</span>}
+{ #0 }    <span class="comment">% (default)</span>
+<span class="comment">% { #1 }</span>
+<span class="comment">% { #2 }</span>
+
+<span class="comment">% Case of #0: First author -&gt; last-first, other authors -&gt; first-last. </span>
+<span class="comment">% Fujita, Masahisa, Paul R. Krugman, and Anthony J. Venables. </span>
+
+<span class="comment">% Case of #1: All authors -&gt; last-first</span>
+<span class="comment">% Fujita, Masahisa, Krugman, Paul R., and Venables, Anthony J.</span>
+
+<span class="comment">% Case of #2: All authors -&gt; first-last</span>
+<span class="comment">% Masahisa Fujita, Paul R. Krugman, and Anthony J. Venables.</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% Abbreviate first name of authors (editors):</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.first.name.initial</span>}
+{ #0 }    <span class="comment">% #0 -&gt; full letters (default).</span>
+<span class="comment">% { #1 }    % Non-zero -&gt; initial letter only.</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% Decapitalize of strings in title field.</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.title.lower.case</span>}
+{ #0 }    <span class="comment">% If #0, not decapitalize title (default).</span>
+<span class="comment">% { #1 }    % If non-#0, decapitalize title</span>
+
+<span class="comment">% Hide title filed.</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.hide.title</span>}
+{ #0 }    <span class="comment">% #0 -&gt; Title field is displayed (default)</span>
+<span class="comment">% { #1 }    % Non-zer -&gt; Title field is hidden </span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% Hide month.</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.hide.month</span>}
+{ #0 }    <span class="comment">% #0 -&gt; show month field (default).</span>
+<span class="comment">% { #1 }    % non-#0 -&gt; hide month field.</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% Attach number index like plain.bst.</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.use.number.index</span>}
+{ #0 }    <span class="comment">% Not use number index (default).</span>
+<span class="comment">% { #1 }    % Non-#0 -&gt; Use number index</span>
+
+<span class="comment">% The string before number index:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.number.index.pre</span>}
+{ <span class="string">"["</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after number index.  Adjustment is recommended.</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.number.index.post</span>}
+{ <span class="string">"]\hskip1.0em "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% Maximum digit of number index:</span>
+<span class="comment">% If the number of reference items &gt;= 100, set 3 to this function.</span>
+<span class="comment">% If the number of reference items &lt; 100, set 2 to this function.</span>
+<span class="comment">% If the number of reference items &lt; 10, set 1 to this function.</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.number.index.digit</span>}
+{ <span class="string">"2"</span> }    <span class="comment">% (default)</span>
+<span class="comment">% { "3" }</span>
+
+<span class="comment">% The functions below are used to adjust space and postion.  If you use fonts</span>
+<span class="comment">% other than computer modern fonts, you had better make adjustments.</span>
+<span class="comment">%</span>
+<span class="comment">% Setting for bst.number.index.digit = 1:</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.number.index.bibhang.one</span>}
+{ <span class="string">"2.05em"</span> }    <span class="comment">% (default)</span>
+<span class="comment">% Setting for bst.number.index.digit = 2:</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.number.index.bibhang.ten</span>}
+{ <span class="string">"2.55em"</span> }    <span class="comment">% (default)</span>
+<span class="comment">% Setting for bst.number.index.digit = 3:</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.number.index.bibhang.hund</span>}
+{ <span class="string">"3.05em"</span> }    <span class="comment">% (default).</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% Position of "year":</span>
+<span class="comment">%</span>
+<span class="comment">% You can choose the position of year by this function.</span>
+<span class="comment">%</span>
+<span class="comment">% If set to #0, year is placed right after "author".</span>
+<span class="comment">% If set to non-zero, year is placed at the end (before note field) except for</span>
+<span class="comment">% aritcle type entry. </span>
+<span class="comment">%</span>
+<span class="comment">% In article type entry, the position of year changes according to the</span>
+<span class="comment">% following rule:</span>
+<span class="comment">% </span>
+<span class="comment">% #1 -&gt; year is placed at the end.</span>
+<span class="comment">% #2 -&gt; year is placed after journal name in aritcle type entry.</span>
+<span class="comment">% #3 -&gt; year is placed after volume in aritcle type entry.</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.year.position</span>}
+{ #0 }    <span class="comment">% (default).</span>
+<span class="comment">% { #1 }    % Last place before note.</span>
+<span class="comment">% { #2 }    % After journal name for aticle type entry.</span>
+<span class="comment">% { #3 }    % After volume for aticle type entry.</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% If 0, references are sorted by old documents -&gt; recent documents.  If</span>
+<span class="comment">% non-zero, reverse order.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.reverse.year</span>}
+{ #0 }    <span class="comment">% Normal order (old -&gt; recent) (default).</span>
+<span class="comment">% { #1 }    % inverse order (recent -&gt; old)</span>
+
+<span class="comment">% If non-zero, sort references by using year field as the primary key</span>
+<span class="comment">% (chronological sorting).</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.sort.year</span>}
+{ #0 }    <span class="comment">% Normal case: year is used as the sorting key next to author (default).</span>
+<span class="comment">% { #1 }    % year is used as the primary sorting key.</span>
+
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% If non-zero, references are listed in citation order.</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.no.sort</span>}
+{ #0 }    <span class="comment">% (default)</span>
+<span class="comment">% { #1 }    % listed in citation order.</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% Non-zero -&gt; sort references by entry type (article, book, incollection etc.)</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.sort.entry.type</span>}
+{ #0 }    <span class="comment">% #0 -&gt; Normal (not sort references by entry type) (default).</span>
+<span class="comment">% { #1 }    % Non-zero -&gt; sort references by entry type.</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% 0 -&gt; use absorder field to sort items.  Otherwise, ignore absorder field.</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.notuse.absorder.field</span>}
+{ #0 }    <span class="comment">% #0 -&gt; Use absorder (default).</span>
+<span class="comment">% { #1 }    % Non-#0 -&gt; Not use absorder.</span>
+<span class="comment">%</span>
+<span class="comment">% Order of priority to sort items</span>
+<span class="comment">% </span>
+<span class="comment">% absorder -&gt; author -&gt; year -&gt; order -&gt; month -&gt; title</span>
+<span class="comment">%</span>
+<span class="comment">% wehre absorder and order fields are specific to econ.bst.</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% 0 -&gt; use order field to sort items.  Otherwise, ignore order field.</span>
+<span class="comment">% Note: order field is specific to econ.bst.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.notuse.order.field</span>}
+{ #0 }    <span class="comment">% #0 -&gt; Use order field (default).</span>
+<span class="comment">% { #1 }    % Non-#0 -&gt; not use order field.</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%%%     and</span>
+
+<span class="comment">%%% String used to separate author names in references.</span>
+<span class="comment">%</span>
+<span class="comment">% String replaced with _ in "Mr. A _ Mr. B "</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.and</span>}
+{ <span class="string">" and "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%% String used to separate author names in references (more than two authors).</span>
+<span class="comment">%</span>
+<span class="comment">% String replaced with _ in "Mr. A, Mr. B _ Mr. C"</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.ands</span>}
+{ <span class="string">", and "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%% String used to separate author names in citation part.</span>
+<span class="comment">%</span>
+<span class="comment">% String replaced with _ in "Mr. A _ Mr. B "</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.cite.and</span>}
+{ <span class="string">" and "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%% String used to separate author names in citation part (more than two authors).</span>
+<span class="comment">%</span>
+<span class="comment">% String replaced with _ in "Mr. A, Mr. B _ Mr. C"</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.cite.ands</span>}
+{ <span class="string">" and "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% Author names in the citation part are abbreviated by et al. if the number of</span>
+<span class="comment">% authors is greater or equal to bst.and.others.num.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.and.others.num</span>}
+{ #3 }    <span class="comment">% If the number of authors is greater or equal to three (default).</span>
+<span class="comment">% { #4 }</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% Strings used when abbreviating multiple-authors in citation part.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.and.others</span>}
+{ <span class="string">" et~al."</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       author </span>
+
+<span class="comment">% The string before author:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.author.pre</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after author:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.author.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       year</span>
+
+<span class="comment">% The string before year only for aritcle type entry.</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.year.pre</span>}
+{ <span class="string">" ("</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after year only for aritcle type entry.</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.year.post</span>}
+{ <span class="string">") "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after year for non-article type entry (book, incollection etc)</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.year.na.pre</span>}
+{ <span class="string">" ("</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after year for non-article type entry (book, incollection etc)</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.year.na.post</span>}
+{ <span class="string">") "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       title (except for title in book)</span>
+
+<span class="comment">% The string before title:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.title.pre</span>}
+{ <span class="string">"``"</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after title:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.title.post</span>}
+{ <span class="string">",''"</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       tile for book:</span>
+
+<span class="comment">% The string before book title:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.book.pre</span>}
+{ <span class="string">" {\it "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after book title:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.book.post</span>}
+{ <span class="string">"}"</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       booktitle</span>
+
+<span class="comment">% The string before booktitle:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.btitle.pre</span>}
+{ <span class="string">" {\it "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after booktitle:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.btitle.post</span>}
+{ <span class="string">"}"</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       journal name</span>
+
+<span class="comment">% The string before journal name:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.journal.pre</span>}
+{ <span class="string">" {\it "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after journal name:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.journal.post</span>}
+{ <span class="string">"}"</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       editor notation:</span>
+
+<span class="comment">% The string that indicates multiple editors:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.editors</span>}
+{ <span class="string">" eds. "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string that indicates single editor:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.editor</span>}
+{ <span class="string">" ed. "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% Order of editor and booktitle in incollection and inproceedings entries.</span>
+<span class="comment">%</span>
+<span class="comment">% If set to #0:         editors -&gt; booktitle order</span>
+<span class="comment">% If set to non-zero:   booktitle -&gt; editors order</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.editor.btitle.order</span>}
+{ #0 }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       edition</span>
+
+<span class="comment">% The string before edition:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.edition.pre</span>}
+{ <span class="string">", "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after edition:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.edition.post</span>}
+{ <span class="string">" edition"</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       volume</span>
+
+<span class="comment">% The string before volume:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.volume.pre</span>}
+{ <span class="string">", Vol. "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after volume:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.volume.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       number</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">% Hide number.  If non-zero, number is suppressed. </span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.hide.number</span>}
+<span class="comment">% { #0 }    % #0 -&gt; show number field (default)</span>
+{ #1 }    <span class="comment">% non-#0 -&gt; Hide number field.</span>
+
+<span class="comment">% The string before number:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.number.pre</span>}
+{ <span class="string">", No. "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after number:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.number.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       in </span>
+
+<span class="comment">% In</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.in</span>}
+{ <span class="string">" in "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       page</span>
+
+<span class="comment">% The string before page (multiple pages):</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.pages.pre</span>}
+{ <span class="string">", pp."</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string before page:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.page.pre</span>}
+{ <span class="string">", p."</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after page (multiple pages):</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.pages.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after page:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.page.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       chapter</span>
+
+<span class="comment">% The string before chapter:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.chapter.pre</span>}
+{ <span class="string">", Chap."</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after chapter:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.chapter.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       month</span>
+
+<span class="comment">% The string before month:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.month.pre</span>}
+{ <span class="string">", "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after month:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.month.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       address</span>
+<span class="comment">% The string before address:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.address.pre</span>}
+{ <span class="string">", "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after address:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.address.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% You can choose the order of address and publisher by this function.</span>
+<span class="comment">%</span>
+<span class="comment">% If #0,        address -&gt; publisher order (the default value).</span>
+<span class="comment">% If non-zero,  publisher -&gt; address order.</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.address.position</span>}
+{ #0 }    <span class="comment">% Address is placed before publisher (default)</span>
+<span class="comment">% { #1 }    % Address is placed after publisher </span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       publisher</span>
+
+<span class="comment">% The string before publisher:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.publisher.pre</span>}
+{ <span class="string">": "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after publisher:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.publisher.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       series</span>
+
+<span class="comment">% The string before series:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.series.pre</span>}
+{ <span class="string">", "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after series:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.series.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       organization</span>
+
+<span class="comment">% The string before organization:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.organization.pre</span>}
+{ <span class="string">", "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after organization:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.organization.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       school</span>
+
+<span class="comment">% The string before school:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.school.pre</span>}
+{ <span class="string">", "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after school:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.school.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       institution</span>
+
+<span class="comment">% The string before institution:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.institution.pre</span>}
+{ <span class="string">", "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after institution:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.institution.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       howpublished</span>
+
+<span class="comment">% The string before howpublished:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.howpublished.pre</span>}
+{ <span class="string">" "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after howpublished:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.howpublished.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       url</span>
+
+<span class="comment">% Show or Hide url.  If non-zero, url is displayed. Otherwise, url is suppressed. </span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.show.url</span>}
+{ #1 }    <span class="comment">% non-#0 -&gt; Show url field (default)</span>
+<span class="comment">% { #0 }    % #0 -&gt; Not show url field.</span>
+
+<span class="comment">% The string before url:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.url.pre</span>}
+{ <span class="string">", URL: "</span> }   <span class="comment">% (default)</span>
+
+<span class="comment">% The string after url:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.url.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       Access</span>
+
+<span class="comment">% This setting is valid only if there are "access" field in bib</span>
+<span class="comment">% files. The value of access field indicates accessed date for URL.</span>
+
+<span class="comment">% The string before access.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.access.pre</span>}
+{ <span class="string">", accessed on "</span> } <span class="comment">% (default)</span>
+
+<span class="comment">% The string after access.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.access.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       DOI (digital object identifier)</span>
+
+<span class="comment">% This setting is valid only if there are "doi" field in bib files.</span>
+
+<span class="comment">% Show or Hide DOI.  If non-zero, DOI is displayed. Otherwise, DOI is suppressed. </span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.show.doi</span>}
+{ #1 }    <span class="comment">% non-#0 -&gt; Show DOI field (default)</span>
+<span class="comment">% { #0 }    % #0 -&gt; Not show DOI field.</span>
+
+<span class="comment">% The string before DOI:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.doi.pre</span>}
+{ <span class="string">", DOI: \url{http://dx.doi.org/"</span> } <span class="comment">% (default)</span>
+
+<span class="comment">% The string after DOI:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.doi.post</span>}
+{ <span class="string">"}"</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       Other functions:</span>
+
+<span class="comment">% The string before note.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.note.pre</span>}
+{ <span class="string">", "</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string after note.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.note.post</span>}
+{ <span class="string">""</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string that represents Technical report:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.techrep</span>}
+{ <span class="string">" Tech. Rep."</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string that represents master thesis:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.mthesis</span>}
+{ <span class="string">" Master's thesis"</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">% The string that represents phd thesis:</span>
+<span class="comment">%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.phdthesis</span>}
+{ <span class="string">" Ph.D. dissertation"</span> }    <span class="comment">% (default)</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%%</span>
+<span class="comment">%%      Functions for customization end here:</span>
+<span class="comment">%%</span>
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.first</span>}
+{ <span class="string">"1st"</span> }
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.second</span>}
+{ <span class="string">"2nd"</span> }
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.third</span>}
+{ <span class="string">"3rd"</span> }
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.fourth</span>}
+{ <span class="string">"4th"</span> }
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.fifth</span>}
+{ <span class="string">"5th"</span> }
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.st</span>}
+{ <span class="string">"st"</span> }
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.nd</span>}
+{ <span class="string">"nd"</span> }
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.rd</span>}
+{ <span class="string">"rd"</span> }
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.th</span>}
+{ <span class="string">"th"</span> }
+
+<span class="comment">%%%%% memo by Takeda</span>
+
+<span class="comment">% "a" 'b := indicates substituting string "a" for variable b.</span>
+
+<span class="comment">% Integer number #0, #1,...</span>
+
+<span class="comment">%%% Function definition:</span>
+<span class="comment">%</span>
+<span class="comment">% FUNCTION {name}</span>
+<span class="comment">% { 's :=</span>
+<span class="comment">%</span>
+<span class="comment">% }</span>
+<span class="comment">%</span>
+<span class="comment">% This is the definition of a function named "name".   The function "name" is</span>
+<span class="comment">% used in the following way </span>
+<span class="comment">%</span>
+<span class="comment">% "foo" name</span>
+<span class="comment">% "foo" is an argument for the function "name".</span>
+<span class="comment">%</span>
+<span class="comment">% About the definition of a function with more than two arguments, see the</span>
+<span class="comment">% definition of "chop.word".</span>
+
+<span class="keyword">ENTRY</span>
+
+  <span class="comment">%%% Declaration of field</span>
+  { access <span class="variable-name">address</span> <span class="variable-name">author</span> <span class="variable-name">booktitle</span> <span class="variable-name">chapter</span> doi <span class="variable-name">edition</span> <span class="variable-name">editor</span> <span class="variable-name">howpublished</span>
+    <span class="variable-name">institution</span> <span class="variable-name">journal</span> <span class="variable-name">key</span> <span class="variable-name">month</span> <span class="variable-name">note</span> <span class="variable-name">number</span> <span class="variable-name">organization</span> <span class="variable-name">pages</span> <span class="variable-name">publisher</span>
+    <span class="variable-name">school</span> <span class="variable-name">series</span> <span class="variable-name">title</span> <span class="variable-name">type</span> url <span class="variable-name">volume</span> <span class="variable-name">year</span>
+
+    <span class="comment">% Fields specific to econ.bst</span>
+    <span class="variable-name">order</span> <span class="variable-name">absorder</span>
+  }
+
+  <span class="comment">% Definition of entry variable.  The entry variable is a variable which has</span>
+  <span class="comment">% different values according to different entries.</span>
+
+  <span class="comment">%% Integer entry variable:</span>
+  { order.cited }
+
+  <span class="comment">%% String entry variable</span>
+  { label cyear flabel alabel extra.label sort.label sort.label.abb
+    extra.label.bysame }
+
+<span class="comment">%%% Explanation of variables.</span>
+
+<span class="comment">% alabel: author (editor) name (abbreviated form) used for citation part.</span>
+<span class="comment">% Not used for reference part.</span>
+
+<span class="comment">% flabel: author (editor) name (full name form) used for citation part.</span>
+<span class="comment">% Not used for reference part.</span>
+
+<span class="comment">% sort.label: author (editor) name (full name form) used for sorting</span>
+<span class="comment">% entries (NB: this is not used for sorting in the current code).</span>
+
+<span class="comment">% sort.label.abb: author (editor) name (abbreviated form) used for sorting</span>
+<span class="comment">% entries.</span>
+
+<span class="comment">% sort.key$: key used for sorting entries.</span>
+<span class="comment">% It usually has the string of author - year - title - month.</span>
+    
+
+<span class="comment">%%% Declaration of variables:</span>
+
+<span class="comment">%% String global variables:</span>
+<span class="keyword">STRINGS</span> { s t tt }
+<span class="keyword">STRINGS</span> { year.num }
+<span class="keyword">STRINGS</span> { preone preten }
+<span class="keyword">STRINGS</span> { last.sort.label next.extra prev.author prev.author.aer this.author }
+<span class="keyword">STRINGS</span> { hang }
+<span class="keyword">STRINGS</span> { item.type }
+<span class="keyword">STRINGS</span> { tempa tempb }
+
+<span class="comment">%% Integer global variables:</span>
+<span class="keyword">INTEGERS</span> { nameptr namesleft numnames name.num }
+<span class="keyword">INTEGERS</span> { multiresult }
+<span class="keyword">INTEGERS</span> { index }
+<span class="keyword">INTEGERS</span> { len }
+<span class="keyword">INTEGERS</span> { last.extra.num }
+<span class="keyword">INTEGERS</span> { output.state before.all mid.sentence after.sentence after.block }
+<span class="keyword">INTEGERS</span> { last.period.comma }
+<span class="keyword">INTEGERS</span> { len1.aer len2.aer i.aer }
+
+<span class="comment">%%% Definition of functions:</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">not</span>}
+{   { #0 }
+    { #1 }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">and</span>}
+{   '<span class="builtin">skip$</span>
+    { <span class="builtin">pop$</span> #0 }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">or</span>}
+{   { <span class="builtin">pop$</span> #1 }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% Initialize variables:</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">init.state.consts</span>}
+{ #0 'before.all <span class="constant">:=</span>
+  #1 'mid.sentence <span class="constant">:=</span>
+  #2 'after.sentence <span class="constant">:=</span>
+  #3 'after.block <span class="constant">:=</span>
+}
+
+<span class="comment">%%% Remove comma and add period:</span>
+<span class="comment">%</span>
+<span class="comment">%%%</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">add.period.x</span>}
+{ <span class="builtin">duplicate$</span>
+  #-1 #1 <span class="builtin">substring$</span> <span class="string">","</span> =
+    { #-2 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> <span class="string">"."</span> * }
+    { <span class="builtin">duplicate$</span>
+      #-1 #2 <span class="builtin">substring$</span> <span class="string">". "</span> =
+        { #-3 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> <span class="string">"."</span> * }
+        { <span class="builtin">duplicate$</span>
+          #-1 #2 <span class="builtin">substring$</span> <span class="string">", "</span> =
+            { #-3 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> <span class="string">"."</span> * }
+            { <span class="builtin">duplicate$</span>
+              #-1 #2 <span class="builtin">substring$</span> <span class="string">",'"</span> =
+                { #-3 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> <span class="string">".'"</span> * }
+                { <span class="builtin">duplicate$</span>
+                  #-1 #2 <span class="builtin">substring$</span> <span class="string">".'"</span> =
+                    { #-3 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> <span class="string">".'"</span> * }
+                    { <span class="builtin">duplicate$</span>
+                      #-1 #2 <span class="builtin">substring$</span> <span class="string">".~"</span> =
+                        { #-3 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> <span class="string">".~"</span> * }
+                        { <span class="builtin">duplicate$</span>
+                          #-1 #2 <span class="builtin">substring$</span> <span class="string">",~"</span> =
+                            { #-3 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> <span class="string">".~"</span> * }
+                            { <span class="builtin">duplicate$</span>
+                              #-1 #3 <span class="builtin">substring$</span> <span class="string">",''"</span> =
+                                { #-4 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> <span class="string">".''"</span> * }
+                                { <span class="builtin">duplicate$</span>
+                                  #-1 #3 <span class="builtin">substring$</span> <span class="string">".''"</span> =
+                                    { #-4 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> <span class="string">".''"</span> * }
+                                    { <span class="builtin">add.period$</span> }
+                                  <span class="builtin">if$</span>
+                                }
+                              <span class="builtin">if$</span>
+                            }
+                          <span class="builtin">if$</span>
+                        }
+                      <span class="builtin">if$</span>
+                    }
+                  <span class="builtin">if$</span>
+                }
+              <span class="builtin">if$</span>
+            }
+          <span class="builtin">if$</span>
+        }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">output.nonnull</span>}
+{ 's <span class="constant">:=</span>
+  <span class="comment">% mid.sentence</span>
+  output.state mid.sentence =
+    { <span class="string">", "</span> * <span class="builtin">write$</span> }
+    <span class="comment">% not mid.sentence</span>
+    { output.state after.block =
+        <span class="comment">% after.block</span>
+        { add.period.x <span class="string">" "</span> * <span class="builtin">write$</span> }
+        <span class="comment">% before.all</span>
+        { output.state before.all =
+            '<span class="builtin">write$</span>
+            { add.period.x <span class="string">" "</span> * <span class="builtin">write$</span> }
+          <span class="builtin">if$</span>
+        }
+      <span class="builtin">if$</span>
+      <span class="comment">% not mid.sentence, set to mid.sentence</span>
+      mid.sentence 'output.state <span class="constant">:=</span>
+    }
+  <span class="builtin">if$</span>
+  s
+}
+
+<span class="comment">%%% If the last character is period or comma, set non-zero to</span>
+<span class="comment">%%% last.period.comma.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">period.comma.p</span>}
+{ <span class="builtin">duplicate$</span> 't <span class="constant">:=</span>
+  t #-1 #1 <span class="builtin">substring$</span> <span class="string">"."</span> = 
+  t #-1 #1 <span class="builtin">substring$</span> <span class="string">","</span> = or
+  t #-1 #1 <span class="builtin">substring$</span> <span class="string">":"</span> = or 
+  t #-1 #2 <span class="builtin">substring$</span> <span class="string">".'"</span> = or
+  t #-1 #2 <span class="builtin">substring$</span> <span class="string">",'"</span> = or
+  t #-1 #3 <span class="builtin">substring$</span> <span class="string">".''"</span> = or
+  t #-1 #3 <span class="builtin">substring$</span> <span class="string">",''"</span> = or
+  t #-1 #2 <span class="builtin">substring$</span> <span class="string">".~"</span> = or
+  t #-1 #2 <span class="builtin">substring$</span> <span class="string">",~"</span> = or
+    { #1 'last.period.comma <span class="constant">:=</span> }
+    { #0 'last.period.comma <span class="constant">:=</span> }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% remove unnecessary comma.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">remove.pre.comma</span>}
+{ 's <span class="constant">:=</span>
+  s <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { s #1 #1 <span class="builtin">substring$</span> <span class="string">","</span> = 
+       { s #2 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> }
+       { s #1 #1 <span class="builtin">substring$</span> <span class="string">"."</span> = 
+          { s #2 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> }
+          's
+         <span class="builtin">if$</span>
+       }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% output.nonnull.nocomma is the same as output.nonnull except that it does</span>
+<span class="comment">%%% not add commas even in mid.sentence.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">output.nonnull.nocomma</span>}
+{ 's <span class="constant">:=</span>
+  output.state mid.sentence =
+    <span class="comment">% mid.sentence</span>
+    { period.comma.p <span class="string">""</span> * <span class="builtin">write$</span> }
+
+    <span class="comment">% not mid.sentence</span>
+    { output.state after.block =
+        <span class="comment">% after.block</span>
+        { add.period.x <span class="string">" "</span> * <span class="builtin">write$</span> }
+        <span class="comment">% before.all</span>
+        { output.state before.all =
+            '<span class="builtin">write$</span>
+            { <span class="builtin">add.period$</span> <span class="string">" "</span> * <span class="builtin">write$</span> }
+          <span class="builtin">if$</span>
+        }
+      <span class="builtin">if$</span>
+      mid.sentence 'output.state <span class="constant">:=</span>
+    }
+  <span class="builtin">if$</span>
+  last.period.comma #0 =
+    { s }
+    { s remove.pre.comma }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">% Not used in the current econ.bst.</span>
+<span class="comment">% FUNCTION {output}</span>
+<span class="comment">% { duplicate$ empty$</span>
+<span class="comment">%     'pop$</span>
+<span class="comment">%     'output.nonnull</span>
+<span class="comment">%   if$</span>
+<span class="comment">% }</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">output.nocomma</span>}
+{ <span class="builtin">duplicate$</span> <span class="builtin">empty$</span>
+    '<span class="builtin">pop$</span>
+    'output.nonnull.nocomma
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">% Not used in the current econ.bst.</span>
+<span class="comment">% FUNCTION {output.check}</span>
+<span class="comment">% { 't :=</span>
+<span class="comment">%   duplicate$ empty$</span>
+<span class="comment">%     { pop$ "empty " t * " in " * cite$ * warning$ }</span>
+<span class="comment">%     'output.nonnull</span>
+<span class="comment">%   if$</span>
+<span class="comment">% }</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">output.check.nocomma</span>}
+{ 't <span class="constant">:=</span>
+  <span class="builtin">duplicate$</span> <span class="builtin">empty$</span>
+    { <span class="builtin">pop$</span> <span class="string">"empty "</span> t * <span class="string">" in "</span> * <span class="builtin">cite$</span> * <span class="builtin">warning$</span> }
+    'output.nonnull.nocomma
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%%% Format in bbl file:</span>
+
+<span class="comment">% \harvarditem[Brezis et~al.]{Brezis, Krugman and</span>
+<span class="comment">%   Tsiddon}{1993}{brezis93:_leapf_inter_compet}</span>
+<span class="comment">% Brezis, Elise~S., Paul~R. Krugman, and Daniel Tsiddon  (1993) ``Leapfrogging in</span>
+<span class="comment">%   International Competition: A Theory of Cycles in National Technological</span>
+<span class="comment">%   Leadership.'', {\em American Economic Review.}, Vol.~83. No.~5. pp.</span>
+<span class="comment">%   1211--1219.</span>
+
+<span class="comment">% \harvarditem[abbreviated citation]{full citation}{year}{keyword} ...</span>
+
+<span class="comment">%%% Add period and newline.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">fin.entry</span>}
+{ add.period.x
+  <span class="builtin">write$</span>
+  <span class="builtin">newline$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">new.block</span>}
+{ output.state before.all =
+    '<span class="builtin">skip$</span>
+    { after.block 'output.state <span class="constant">:=</span> }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">new.sentence</span>}
+{ output.state after.block =
+    '<span class="builtin">skip$</span>
+    { output.state before.all =
+        '<span class="builtin">skip$</span>
+        { after.sentence 'output.state <span class="constant">:=</span> }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">new.block.check</span>}
+{ <span class="builtin">empty$</span>
+    '<span class="builtin">skip$</span>
+    'new.block
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">field.or.null</span>}
+{ <span class="builtin">duplicate$</span> <span class="builtin">empty$</span>
+    { <span class="builtin">pop$</span> <span class="string">""</span> }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% booktitle</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.btitle</span>}
+{ <span class="variable-name">booktitle</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.btitle.pre <span class="variable-name">booktitle</span> * bst.btitle.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% journal</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.journal</span>}
+{ <span class="variable-name">journal</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.journal.pre <span class="variable-name">journal</span> * bst.journal.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% title for book</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.book</span>}
+{ <span class="variable-name">title</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.book.pre <span class="variable-name">title</span> * bst.book.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.url</span>}
+{ url <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { <span class="builtin">type$</span> <span class="string">"online"</span> = bst.show.url or
+        { bst.url.pre <span class="string">"\url{"</span> * url * <span class="string">"}"</span> * bst.url.post *
+          access <span class="builtin">empty$</span>
+             { <span class="string">""</span> * }
+             { bst.access.pre * access * bst.access.post * }
+          <span class="builtin">if$</span>
+        }
+        { <span class="string">""</span> }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.doi</span>}
+{ doi <span class="builtin">empty$</span> bst.show.doi not or
+    { <span class="string">""</span> }
+    { bst.doi.pre doi * bst.doi.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% author and editor</span>
+
+<span class="comment">%%% name</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.names</span>}
+{ 's <span class="constant">:=</span>
+  <span class="comment">% insert 1 to nameptr.</span>
+  #1 'nameptr <span class="constant">:=</span>
+  <span class="comment">% Set the number of authors to numnames.</span>
+  s <span class="builtin">num.names$</span> 'numnames <span class="constant">:=</span>
+  numnames 'namesleft <span class="constant">:=</span>
+  <span class="comment">% Repeat if namesleft &gt; 0</span>
+  { namesleft #0 &gt; }
+  {  nameptr #1 =
+     <span class="comment">% First author</span>
+     { bst.author.name #0 =
+       bst.author.name #1 =
+       or
+          { bst.first.name.initial #0 = 
+           { s nameptr <span class="string">"{vv~}{ll}{, ff}{, jj}"</span> <span class="builtin">format.name$</span> 't <span class="constant">:=</span> }
+           { s nameptr <span class="string">"{vv~}{ll}{, f.}{, jj}"</span> <span class="builtin">format.name$</span> 't <span class="constant">:=</span> }
+          <span class="builtin">if$</span>
+        }
+          { bst.first.name.initial #0 = 
+             { s nameptr <span class="string">"{ff~}{vv~}{ll}{, jj}"</span> <span class="builtin">format.name$</span> 't <span class="constant">:=</span> }
+             { s nameptr <span class="string">"{f.~}{vv~}{ll}{, jj}"</span> <span class="builtin">format.name$</span> 't <span class="constant">:=</span> }
+          <span class="builtin">if$</span>
+        }
+       <span class="builtin">if$</span>
+     }
+     <span class="comment">% The second or later authors</span>
+     { bst.author.name #0 =
+       bst.author.name #2 =
+       or
+          { bst.first.name.initial #0 = 
+             { s nameptr <span class="string">"{ff~}{vv~}{ll}{, jj}"</span> <span class="builtin">format.name$</span> 't <span class="constant">:=</span> }
+             { s nameptr <span class="string">"{f.~}{vv~}{ll}{, jj}"</span> <span class="builtin">format.name$</span> 't <span class="constant">:=</span> }
+         <span class="builtin">if$</span>
+          }
+          { bst.first.name.initial #0 = 
+               { s nameptr <span class="string">"{vv~}{ll}{, ff}{, jj}"</span> <span class="builtin">format.name$</span> 't <span class="constant">:=</span> }
+               { s nameptr <span class="string">"{vv~}{ll}{, f.}{, jj}"</span> <span class="builtin">format.name$</span> 't <span class="constant">:=</span> }
+         <span class="builtin">if$</span>
+          }
+       <span class="builtin">if$</span>
+     }
+    <span class="builtin">if$</span>
+
+    nameptr #1 &gt;
+      <span class="comment">% The second or later authors</span>
+      { namesleft #1 &gt;
+          { <span class="string">", "</span> * t * }
+          { t <span class="string">"others"</span> =
+              { bst.and.others * }
+              { numnames #2 =
+                   { bst.and * t * }
+                   { bst.ands * t * }
+          <span class="builtin">if$</span>
+        }
+            <span class="builtin">if$</span>
+          }
+        <span class="builtin">if$</span>
+      }
+      't
+    <span class="builtin">if$</span>
+    nameptr #1 <span class="constant">+</span> 'nameptr <span class="constant">:=</span>
+    namesleft #1 - 'namesleft <span class="constant">:=</span>
+  }
+  <span class="builtin">while$</span>
+}
+
+<span class="comment">%%% editor</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.editornames</span>}
+{ 's <span class="constant">:=</span>
+  #1 'nameptr <span class="constant">:=</span>
+  s <span class="builtin">num.names$</span> 'numnames <span class="constant">:=</span>
+  numnames 'namesleft <span class="constant">:=</span>
+    { namesleft #0 &gt; }
+    { bst.first.name.initial #0 = 
+        { s nameptr <span class="string">"{ff~}{vv~}{ll}{, jj}"</span> <span class="builtin">format.name$</span> 't <span class="constant">:=</span> }
+        { s nameptr <span class="string">"{f.~}{vv~}{ll}{, jj}"</span> <span class="builtin">format.name$</span> 't <span class="constant">:=</span> }
+      <span class="builtin">if$</span>
+      nameptr #1 &gt;
+        <span class="comment">% If there are multiple editors</span>
+        { namesleft #1 &gt;
+            { <span class="string">", "</span> * t * }
+            { t <span class="string">"others"</span> =
+                { bst.and.others * }
+                { numnames #2 =
+                    { bst.and  * t * }
+                    { bst.ands * t * }
+                  <span class="builtin">if$</span>
+                }
+              <span class="builtin">if$</span>
+            }
+          <span class="builtin">if$</span>
+        }
+        't
+      <span class="builtin">if$</span>
+      nameptr #1 <span class="constant">+</span> 'nameptr <span class="constant">:=</span>
+      namesleft #1 - 'namesleft <span class="constant">:=</span>
+    }
+  <span class="builtin">while$</span>
+}
+
+<span class="comment">% remove successive periods (commas) from author</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">remove.ss.period.auth</span>}
+{ 's <span class="constant">:=</span>
+  s format.names 'tempa <span class="constant">:=</span>
+  bst.author.post 'tempb <span class="constant">:=</span>
+  tempb #1 #1 <span class="builtin">substring$</span> <span class="string">"}"</span> =
+    { tempa tempb * }
+    { tempa #-1 #1 <span class="builtin">substring$</span> tempb #1 #1 <span class="builtin">substring$</span> = 
+        { tempa tempb #2 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> * }
+        { tempa tempb * }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">% &lt;prev name list&gt; &lt;new name list&gt; compare.names &lt;modified name list&gt;</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">compare.names.aer</span>}
+{ 's <span class="constant">:=</span>
+  'tempa <span class="constant">:=</span>
+
+<span class="comment">%   "current.author = " s * "\\" * write$ newline$</span>
+<span class="comment">%   "prev.author = " tempa * "\\" * write$ newline$</span>
+
+  tempa <span class="builtin">num.names$</span> 'len1.aer <span class="constant">:=</span>  <span class="comment">% len1 = the number of previous authors</span>
+  s <span class="builtin">num.names$</span> 'len2.aer <span class="constant">:=</span>         <span class="comment">% len2 = the number of current authors</span>
+
+<span class="comment">% len1.aer := min(len1.aer,len2.aer)</span>
+<span class="comment">% len1 -&gt; min{ the number of previous authors, the number of current authors }</span>
+  len1.aer len2.aer &gt;
+    { len2.aer 'len1.aer <span class="constant">:=</span> }
+    { }
+  <span class="builtin">if$</span>
+
+<span class="comment">% start with an empty string, then while the components are the same</span>
+<span class="comment">% add "\bysame"</span>
+  <span class="string">""</span>
+  #1 'i.aer <span class="constant">:=</span>
+
+  { i.aer len1.aer &gt; not }
+    { tempa i.aer <span class="string">"{ff }{vv }{ll}{ jj}"</span> <span class="builtin">format.name$</span>
+      s i.aer <span class="string">"{ff }{vv }{ll}{ jj}"</span> <span class="builtin">format.name$</span>
+      =
+        { #1 i.aer &lt;
+            { <span class="string">" and "</span> * }       <span class="comment">% \bysame &#12391;&#30465;&#30053;&#12377;&#12427;&#33879;&#32773;&#12398;&#21069;&#12395;&#12388;&#12367; and </span>
+            { }
+          <span class="builtin">if$</span>
+          <span class="string">"\bysame{}"</span> *
+          i.aer #1 <span class="constant">+</span> 'i.aer <span class="constant">:=</span> } 
+        { #-1 'len1.aer <span class="constant">:=</span> }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">while$</span>
+
+<span class="comment">% add the rest of the second string</span>
+  { i.aer len2.aer &gt; not }
+    { #1 i.aer &lt;
+        { <span class="string">" and "</span> * }
+        { }
+      <span class="builtin">if$</span>
+      s i.aer <span class="string">"{ff }{vv }{ll}{ jj}"</span> <span class="builtin">format.name$</span> *
+      i.aer #1 <span class="constant">+</span> 'i.aer <span class="constant">:=</span>
+    }
+  <span class="builtin">while$</span>
+}
+
+<span class="comment">%%% author</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.authors</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.use.bysame #2 =
+        { prev.author.aer <span class="variable-name">author</span> compare.names.aer 's <span class="constant">:=</span>
+          <span class="variable-name">author</span> 'prev.author.aer <span class="constant">:=</span> }
+        { <span class="variable-name">author</span> 's <span class="constant">:=</span> }
+      <span class="builtin">if$</span>
+      extra.label.bysame <span class="string">"bysame"</span> =
+        { <span class="string">"\bysame "</span> }
+        { bst.author.pre s remove.ss.period.auth * }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% editor</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.editors</span>}
+{ <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.use.bysame #2 =
+        { prev.author.aer <span class="variable-name">editor</span> compare.names.aer 's <span class="constant">:=</span>
+          <span class="variable-name">editor</span> 'prev.author.aer <span class="constant">:=</span> }
+        { <span class="variable-name">editor</span> 's <span class="constant">:=</span> }
+      <span class="builtin">if$</span>
+      extra.label.bysame <span class="string">"bysame"</span> =
+        { <span class="string">"\bysame "</span> }
+        { bst.author.pre s remove.ss.period.auth * }
+      <span class="builtin">if$</span>
+      s <span class="builtin">num.names$</span> #1 &gt;
+       { bst.editors * }
+       { bst.editor * }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.authors.alt</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { extra.label.bysame <span class="string">"bysame"</span> =
+        {<span class="string">"\bysame "</span>}
+        { bst.author.pre <span class="variable-name">author</span> remove.ss.period.auth * }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% editor</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.editors.alt</span>}
+{ <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { extra.label.bysame <span class="string">"bysame"</span> =
+        { <span class="string">"\bysame "</span> }
+        { bst.author.pre <span class="variable-name">editor</span> remove.ss.period.auth * }
+      <span class="builtin">if$</span>
+      <span class="variable-name">editor</span> <span class="builtin">num.names$</span> #1 &gt;
+       { bst.editors * }
+       { bst.editor * }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% format.in.ed.booktitle</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.editors.x</span>}
+{ <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.editor.btitle.order #0 =
+        { <span class="string">""</span> }
+        { <span class="variable-name">editor</span> <span class="builtin">num.names$</span> #1 &gt;
+           { bst.editors <span class="string">" by "</span> * }
+           { bst.editor  <span class="string">" by "</span> * }
+          <span class="builtin">if$</span>
+        }
+      <span class="builtin">if$</span>
+      <span class="variable-name">editor</span> format.editornames *
+      bst.editor.btitle.order #0 =
+        { <span class="variable-name">editor</span> <span class="builtin">num.names$</span> #1 &gt;
+           { bst.editors * }
+           { bst.editor * }
+          <span class="builtin">if$</span>
+        }
+        { <span class="string">""</span> * }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% Remove commas in the cases like "?." and "?,".</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">remove.irrelevant.period.comma</span>}
+{ 's <span class="constant">:=</span>
+  s <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { s #-1 #3 <span class="builtin">substring$</span> <span class="string">"?,'"</span> =
+      s #-1 #3 <span class="builtin">substring$</span> <span class="string">"?.'"</span> = or
+        { s #-3 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> <span class="string">"'"</span> * }
+        { s #-1 #4 <span class="builtin">substring$</span> <span class="string">"?,''"</span> =
+          s #-1 #4 <span class="builtin">substring$</span> <span class="string">"?.''"</span> = or
+            { s #-4 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> <span class="string">"''"</span> * }
+            { s #-1 #2 <span class="builtin">substring$</span> <span class="string">"?,"</span> =
+              s #-1 #2 <span class="builtin">substring$</span> <span class="string">"?."</span> = or
+                { s #-2 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> <span class="string">""</span> * }
+                { s #-1 #3 <span class="builtin">substring$</span> <span class="string">"?,~"</span> =
+                  s #-1 #3 <span class="builtin">substring$</span> <span class="string">"?.~"</span> = or
+                    { s #-4 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> <span class="string">"?~"</span> * }
+                    's
+                  <span class="builtin">if$</span>
+                }
+              <span class="builtin">if$</span>
+            }
+          <span class="builtin">if$</span>
+        }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% title</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.title.sub</span>}
+{ bst.title.lower.case #0 =
+     { bst.title.pre <span class="variable-name">title</span> * bst.title.post * }
+     { bst.title.pre <span class="variable-name">title</span> <span class="string">"t"</span> <span class="builtin">change.case$</span> * bst.title.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% title</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.title</span>}
+{ <span class="variable-name">title</span> <span class="builtin">empty$</span>
+  bst.hide.title #0 = not or
+    { <span class="string">""</span> }
+    { format.title.sub remove.irrelevant.period.comma }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% title for misc.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.misc.title</span>}
+{ <span class="variable-name">title</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.title.pre <span class="variable-name">title</span> * bst.title.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">% Convert "-" to "--" (for pages field)</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">n.dashify</span>}
+{ 't <span class="constant">:=</span>
+  <span class="string">""</span>
+  <span class="comment">%% while$</span>
+  { t <span class="builtin">empty$</span> not }
+  { t #1 #1 <span class="builtin">substring$</span> <span class="string">"-"</span> =
+      { t #1 #2 <span class="builtin">substring$</span> <span class="string">"--"</span> = not
+          { <span class="string">"--"</span> *
+            t #2 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> 't <span class="constant">:=</span>
+          }
+          { { t #1 #1 <span class="builtin">substring$</span> <span class="string">"-"</span> = }
+            { <span class="string">"-"</span> *
+              t #2 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> 't <span class="constant">:=</span>
+            }
+            <span class="builtin">while$</span>
+          }
+        <span class="builtin">if$</span>
+      }
+      { t #1 #1 <span class="builtin">substring$</span> *
+       t #2 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> 't <span class="constant">:=</span>
+      }
+    <span class="builtin">if$</span>
+  }
+  <span class="builtin">while$</span>
+}
+
+<span class="comment">%%% year</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.year</span>}
+{ <span class="variable-name">year</span> <span class="builtin">empty$</span>
+    { <span class="string">"there's no year in "</span> <span class="builtin">cite$</span> * <span class="builtin">warning$</span>
+      <span class="string">", "</span> }
+    { <span class="builtin">type$</span> <span class="string">"article"</span> =
+        { bst.year.pre <span class="variable-name">year</span> * extra.label * bst.year.post * }
+        { bst.year.na.pre <span class="variable-name">year</span> * extra.label * bst.year.na.post * }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% page for book</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.book.pages</span>}
+{ <span class="variable-name">pages</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.pages.pre <span class="variable-name">pages</span> * bst.pages.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% Attach tie for the string with two or less characters.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">tie.or.space.connect</span>}
+{ <span class="builtin">duplicate$</span> <span class="builtin">text.length$</span> #3 &lt;
+    { <span class="string">"~"</span> }
+    { <span class="string">" "</span> }
+  <span class="builtin">if$</span>
+  <span class="builtin">swap$</span> * *
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">either.or.check</span>}
+{ <span class="builtin">empty$</span>
+    '<span class="builtin">pop$</span>
+    { <span class="string">"can't use both "</span> <span class="builtin">swap$</span> * <span class="string">" fields in "</span> * <span class="builtin">cite$</span> * <span class="builtin">warning$</span> }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% volume for book</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.bvolume</span>}
+{ <span class="variable-name">volume</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.volume.pre <span class="variable-name">volume</span> * bst.volume.post *
+      <span class="variable-name">series</span> <span class="builtin">empty$</span>
+        '<span class="builtin">skip$</span>
+        <span class="comment">%% If there is series field</span>
+        { <span class="string">" of "</span> * <span class="variable-name">series</span> * bst.series.post * }
+      <span class="builtin">if$</span>
+<span class="comment">%       "volume and number" number either.or.check</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% series</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">output.series</span>}
+{ <span class="variable-name">series</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.series.pre <span class="variable-name">series</span> * bst.series.post * }
+ <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% number and series</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.number.series</span>}
+{ <span class="variable-name">volume</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">number</span> <span class="builtin">empty$</span>
+      bst.hide.month #0 = not or
+        <span class="comment">% number is empty</span>
+        { <span class="variable-name">series</span> <span class="builtin">empty$</span>
+            { <span class="string">""</span> }
+            <span class="comment">% series is not empty.</span>
+            { output.series }
+          <span class="builtin">if$</span>
+        }
+        <span class="comment">% number is not empty$</span>
+        { <span class="variable-name">series</span> <span class="builtin">empty$</span>
+            { bst.number.pre <span class="variable-name">number</span> * bst.number.post * }
+            <span class="comment">% series is not empty.</span>
+            { bst.in bst.series.pre * <span class="variable-name">series</span> * bst.series.post *
+              bst.number.pre * <span class="variable-name">number</span> * bst.number.post * }
+          <span class="builtin">if$</span>
+        }
+      <span class="builtin">if$</span>
+    }
+    { <span class="string">""</span> }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% Number or not.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">is.num</span>}
+{ <span class="builtin">chr.to.int$</span>
+  <span class="builtin">duplicate$</span> <span class="string">"0"</span> <span class="builtin">chr.to.int$</span> &lt; not
+  <span class="builtin">swap$</span> <span class="string">"9"</span> <span class="builtin">chr.to.int$</span> &gt; not and
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">extract.num</span>}
+{ <span class="builtin">duplicate$</span> 't <span class="constant">:=</span>
+  <span class="string">""</span> 's <span class="constant">:=</span>
+  { t <span class="builtin">empty$</span> not }
+  { t #1 #1 <span class="builtin">substring$</span>
+    t #2 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> 't <span class="constant">:=</span>
+    <span class="builtin">duplicate$</span> is.num
+      { s <span class="builtin">swap$</span> * 's <span class="constant">:=</span> }
+      { <span class="builtin">pop$</span> <span class="string">""</span> 't <span class="constant">:=</span> }
+    <span class="builtin">if$</span>
+  }
+  <span class="builtin">while$</span>
+  s <span class="builtin">empty$</span>
+    '<span class="builtin">skip$</span>
+    { <span class="builtin">pop$</span> s }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%%      edition</span>
+
+<span class="comment">% Convert edition to 1st, 2nd, 3rd, 4th etc</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">eng.ord</span>}
+{ <span class="builtin">duplicate$</span> <span class="string">"1"</span> <span class="builtin">swap$</span> *
+  #-2 #1 <span class="builtin">substring$</span> <span class="string">"1"</span> =
+     { bst.th * }
+     { <span class="builtin">duplicate$</span> #-1 #1 <span class="builtin">substring$</span>
+       <span class="builtin">duplicate$</span> <span class="string">"1"</span> =
+         { <span class="builtin">pop$</span> bst.st * }
+         { <span class="builtin">duplicate$</span> <span class="string">"2"</span> =
+             { <span class="builtin">pop$</span> bst.nd * }
+             { <span class="string">"3"</span> =
+                 { bst.rd * }
+                 { bst.th * }
+               <span class="builtin">if$</span>
+             }
+           <span class="builtin">if$</span>
+          }
+       <span class="builtin">if$</span>
+     }
+   <span class="builtin">if$</span>
+}
+
+<span class="comment">% Convert first, second etc in edition field to 1st, 2nd (from jfm.bst)</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">convert.edition</span>}
+{ <span class="variable-name">edition</span> extract.num <span class="string">"l"</span> <span class="builtin">change.case$</span> 's <span class="constant">:=</span>
+  s <span class="string">"first"</span> = s <span class="string">"1"</span> = or
+    { bst.first }
+    { s <span class="string">"second"</span> = s <span class="string">"2"</span> = or
+        { bst.second }
+        { s <span class="string">"third"</span> = s <span class="string">"3"</span> = or
+            { bst.third }
+            { s <span class="string">"fourth"</span> = s <span class="string">"4"</span> = or
+                { bst.fourth }
+                { s <span class="string">"fifth"</span> = s <span class="string">"5"</span> = or
+                    { bst.fifth }
+                    { s #1 #1 <span class="builtin">substring$</span> is.num
+                        { s eng.ord }
+                        { <span class="variable-name">edition</span> }
+                      <span class="builtin">if$</span>
+                    }
+                  <span class="builtin">if$</span>
+                }
+              <span class="builtin">if$</span>
+            }
+          <span class="builtin">if$</span>
+        }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% edition</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.edition</span>}
+{ <span class="variable-name">edition</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { output.state mid.sentence =
+        { bst.edition.pre convert.edition <span class="string">"l"</span> <span class="builtin">change.case$</span> * bst.edition.post * }
+        { bst.edition.pre convert.edition <span class="string">"t"</span> <span class="builtin">change.case$</span> * bst.edition.post * }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% month</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.month</span>}
+{ <span class="variable-name">month</span> <span class="builtin">empty$</span>
+  bst.hide.month #0 = not or
+    { <span class="string">""</span> }
+    { bst.month.pre <span class="variable-name">month</span> * bst.month.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% year and month</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.date</span>}
+{ format.month format.year *
+}
+
+<span class="comment">%%% Is multiple pages like 1-100?</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name"> multi.page.check </span>}
+{ 't <span class="constant">:=</span>
+  #0 'multiresult <span class="constant">:=</span>
+    { multiresult not
+      t <span class="builtin">empty$</span> not
+      and
+    }
+    { t #1 #1 <span class="builtin">substring$</span>
+      <span class="builtin">duplicate$</span> <span class="string">"-"</span> =
+      <span class="builtin">swap$</span> <span class="builtin">duplicate$</span> <span class="string">","</span> =
+      <span class="builtin">swap$</span> <span class="string">"+"</span> =
+      or or
+        { #1 'multiresult <span class="constant">:=</span> }
+        { t #2 <span class="builtin">global.max$</span> <span class="builtin">substring$</span> 't <span class="constant">:=</span> }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">while$</span>
+  multiresult
+}
+
+<span class="comment">%%% pages</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.pages</span>}
+{ <span class="variable-name">pages</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { <span class="variable-name">pages</span> multi.page.check
+      { bst.pages.pre <span class="variable-name">pages</span> n.dashify tie.or.space.connect * bst.pages.post }
+      { bst.page.pre <span class="variable-name">pages</span> tie.or.space.connect * bst.page.post }
+     <span class="builtin">if$</span>
+    }
+ <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% number</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.number</span>}
+{ <span class="variable-name">number</span> <span class="builtin">empty$</span>
+  bst.hide.number #0 = not or
+    { <span class="string">""</span> }
+    { bst.number.pre <span class="variable-name">number</span> * bst.number.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% volume</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.volume</span>}
+{ <span class="variable-name">volume</span> <span class="builtin">empty$</span>
+    '<span class="builtin">skip$</span>
+    { bst.volume.pre <span class="variable-name">volume</span> * bst.volume.post *
+      bst.year.position #3 =
+        { format.year * }
+        '<span class="builtin">skip$</span>
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% number, page</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.number.pages</span>}
+{ format.number format.pages * }
+
+<span class="comment">%%% volume, page</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.volume.pages</span>}
+{ format.volume format.pages * }
+
+<span class="comment">%%% volume, number, page</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.volume.number.pages</span>}
+{ format.volume format.number * format.pages * }
+
+<span class="comment">% volume, number, page</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.vol.num.pages</span>}
+{ <span class="variable-name">volume</span> <span class="builtin">empty$</span>
+    <span class="comment">%% volume is empty.</span>
+    { <span class="variable-name">number</span> <span class="builtin">empty$</span>
+        <span class="comment">%% number is empty.</span>
+        { <span class="variable-name">pages</span> <span class="builtin">empty$</span>
+            <span class="comment">% warning</span>
+            { <span class="string">"there is no volume, number, and pages in "</span> <span class="builtin">cite$</span> * <span class="builtin">warning$</span> <span class="string">""</span> } 
+            { <span class="string">""</span> format.pages * }
+         <span class="builtin">if$</span>
+        }
+        <span class="comment">%% number is not empty.</span>
+        <span class="comment">% warning</span>
+        { <span class="string">"there's a number but no volume in "</span> <span class="builtin">cite$</span> * <span class="builtin">warning$</span>
+          format.number.pages }
+     <span class="builtin">if$</span>
+    }
+    <span class="comment">%% volume is not empty.</span>
+    { <span class="variable-name">number</span> <span class="builtin">empty$</span>
+        <span class="comment">%% number is empty.</span>
+        { format.volume.pages }
+        <span class="comment">%% number is not empty.</span>
+        { format.volume.number.pages }
+     <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% chapter</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.chapter</span>}
+{ <span class="variable-name">chapter</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { <span class="variable-name">type</span> <span class="builtin">empty$</span>
+        { bst.chapter.pre <span class="variable-name">chapter</span> tie.or.space.connect * bst.chapter.post }
+        { <span class="string">", "</span> * <span class="variable-name">type</span> <span class="string">" "</span> * <span class="variable-name">chapter</span> * }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% chapter, pages</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.chapter.pages</span>}
+{ <span class="variable-name">chapter</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">pages</span> <span class="builtin">empty$</span>
+        { <span class="string">""</span> }
+        { <span class="string">""</span> format.pages * }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">pages</span> <span class="builtin">empty$</span>
+        { <span class="string">""</span> format.chapter * }
+        { <span class="string">""</span> format.chapter * format.pages * }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% editor and booktitle</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.in.ed.booktitle</span>}
+{ <span class="variable-name">booktitle</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+        { bst.in format.btitle * }
+        { bst.editor.btitle.order #0 =
+            { bst.in format.editors.x * <span class="string">" "</span> * format.btitle * }
+            { bst.in format.btitle * <span class="string">" "</span> * format.editors.x * }
+          <span class="builtin">if$</span>
+        }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% howpublished</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.howpublished</span>}
+{ <span class="variable-name">howpublished</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.howpublished.pre <span class="variable-name">howpublished</span> * bst.howpublished.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% address</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.address</span>}
+{ <span class="variable-name">address</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.address.pre <span class="variable-name">address</span> * bst.address.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% publisher</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.publisher</span>}
+{ <span class="variable-name">publisher</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.publisher.pre <span class="variable-name">publisher</span> * bst.publisher.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% organization</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.organization</span>}
+{ <span class="variable-name">organization</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.organization.pre <span class="variable-name">organization</span> * bst.organization.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%% publisher and address</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">output.publisher.address</span>}
+{ <span class="variable-name">address</span> <span class="builtin">empty$</span>
+    { format.publisher <span class="string">"publisher"</span> output.check.nocomma }
+    { bst.address.position #0 = 
+        { format.address output.nocomma
+          format.publisher <span class="string">"publisher"</span> output.check.nocomma }
+        { format.publisher <span class="string">"publisher"</span> output.check.nocomma
+          format.address output.nocomma }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%% address, organization, publisher</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">output.address.organization.publisher</span>}
+{ <span class="variable-name">address</span> <span class="builtin">empty$</span>
+    <span class="comment">%% address is empty</span>
+    { <span class="variable-name">organization</span> <span class="builtin">empty$</span>
+        <span class="comment">%% organization is empty</span>
+        { <span class="variable-name">publisher</span> <span class="builtin">empty$</span>
+            '<span class="builtin">skip$</span>
+            { format.publisher <span class="string">"publisher"</span> output.check.nocomma }
+          <span class="builtin">if$</span>
+        }
+        <span class="comment">%% organization is not empty</span>
+        { <span class="variable-name">publisher</span> <span class="builtin">empty$</span>
+            { format.organization <span class="string">"organization"</span> output.check.nocomma }
+            { format.organization <span class="string">"organization"</span> output.check.nocomma
+              format.publisher <span class="string">"publisher"</span> output.check.nocomma }
+          <span class="builtin">if$</span>
+        }
+     <span class="builtin">if$</span>
+    }
+    <span class="comment">%% address is not empty</span>
+    { <span class="variable-name">organization</span> <span class="builtin">empty$</span>
+        <span class="comment">%% organization is empty</span>
+        { <span class="variable-name">publisher</span> <span class="builtin">empty$</span>
+            <span class="comment">%% publisher is empty</span>
+            { format.address output.nocomma }
+            <span class="comment">%% publisher is not empty</span>
+            { bst.address.position #0 =
+                { format.address output.nocomma
+                  format.publisher <span class="string">"publisher"</span> output.check.nocomma }
+                { format.publisher <span class="string">"publisher"</span> output.check.nocomma
+                  format.address output.nocomma }
+              <span class="builtin">if$</span>
+            }
+         <span class="builtin">if$</span>
+        }
+        <span class="comment">%% organization is not empty</span>
+        { <span class="variable-name">publisher</span> <span class="builtin">empty$</span>
+            <span class="comment">%% publisher is empty</span>
+            { format.organization <span class="string">"organization"</span> output.check.nocomma
+              format.address output.nocomma }
+            <span class="comment">%% publisher is not empty</span>
+            { format.organization <span class="string">"organization"</span> output.check.nocomma
+              bst.address.position #0 = 
+                { format.address output.nocomma
+                  format.publisher <span class="string">"publisher"</span> output.check.nocomma }
+                { format.publisher <span class="string">"publisher"</span> output.check.nocomma
+                  format.address output.nocomma }
+              <span class="builtin">if$</span>
+            }
+         <span class="builtin">if$</span>
+        }
+     <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% misc</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">empty.misc.check</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span> <span class="variable-name">title</span> <span class="builtin">empty$</span> <span class="variable-name">howpublished</span> <span class="builtin">empty$</span>
+  <span class="variable-name">month</span> <span class="builtin">empty$</span> <span class="variable-name">year</span> <span class="builtin">empty$</span> <span class="variable-name">note</span> <span class="builtin">empty$</span>
+  and and and and and
+  <span class="variable-name">key</span> <span class="builtin">empty$</span> not and
+    { <span class="string">"all relevant fields are empty in "</span> <span class="builtin">cite$</span> * <span class="builtin">warning$</span> }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.thesis.type</span>}
+{ <span class="variable-name">type</span> <span class="builtin">empty$</span>
+    '<span class="builtin">skip$</span>
+    { <span class="builtin">pop$</span> <span class="string">" "</span> <span class="variable-name">type</span> * }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.tr.number</span>}
+{ <span class="variable-name">type</span> <span class="builtin">empty$</span>
+    { <span class="string">"Technical Report"</span> }
+    { <span class="string">" "</span> <span class="variable-name">type</span> * }
+  <span class="builtin">if$</span>
+  <span class="variable-name">number</span> <span class="builtin">empty$</span>
+    { <span class="string">"t"</span> <span class="builtin">change.case$</span> }
+    { <span class="variable-name">number</span> tie.or.space.connect }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% phdthesis</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.phd</span>}
+{ bst.phdthesis }
+
+<span class="comment">%%% mastersthesis</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.mthesis</span>}
+{ bst.mthesis }
+
+<span class="comment">%%% school</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.school</span>}
+{ <span class="variable-name">school</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.school.pre <span class="variable-name">school</span> * bst.school.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% institution</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.institution</span>}
+{ <span class="variable-name">institution</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.institution.pre <span class="variable-name">institution</span> * bst.institution.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% remove first ? characters.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">chop.word</span>}
+{ 's <span class="constant">:=</span>
+  'len <span class="constant">:=</span>
+  s #1 len <span class="builtin">substring$</span> =
+    { s len #1 <span class="constant">+</span> <span class="builtin">global.max$</span> <span class="builtin">substring$</span> }
+    's
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.note</span>}
+{ <span class="variable-name">note</span> <span class="builtin">empty$</span>
+    { <span class="string">""</span> }
+    { bst.note.pre <span class="variable-name">note</span> * bst.note.post * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%        \havarditem</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">output.bibitem</span>}
+{ <span class="builtin">newline$</span>
+  <span class="string">"\harvarditem["</span> <span class="builtin">write$</span>
+  alabel <span class="builtin">write$</span>                 <span class="comment">% alabel &lt;- abbreviated citation</span>
+  <span class="string">"]{"</span> <span class="builtin">write$</span>
+  flabel <span class="builtin">write$</span>                 <span class="comment">% flabel &lt;- full citation</span>
+  <span class="string">"}{"</span> <span class="builtin">write$</span>
+  cyear <span class="builtin">write$</span>
+  <span class="comment">% cyear = year</span>
+  <span class="string">"}{"</span> <span class="builtin">write$</span>
+  <span class="builtin">cite$</span> <span class="builtin">write$</span>                  <span class="comment">% cite$ -&gt; pusch keyword</span>
+  <span class="string">"}"</span> <span class="builtin">write$</span>
+  <span class="comment">% If number index is on</span>
+  bst.use.number.index #0 =
+     '<span class="builtin">skip$</span>
+     { index #1 <span class="constant">+</span> 'index <span class="constant">:=</span>
+       <span class="string">""</span> 'preone <span class="constant">:=</span>
+       <span class="string">""</span> 'preten <span class="constant">:=</span>
+       bst.number.index.digit <span class="string">"1"</span> =
+         '<span class="builtin">skip$</span>
+         { bst.number.index.digit <span class="string">"2"</span> =
+           { <span class="string">"\hskip0.5em"</span> 'preone <span class="constant">:=</span> }
+           { bst.number.index.digit <span class="string">"3"</span> =
+              { <span class="string">"\hskip1em"</span> 'preone <span class="constant">:=</span>
+                <span class="string">"\hskip0.5em"</span> 'preten <span class="constant">:=</span> }
+              '<span class="builtin">skip$</span>
+             <span class="builtin">if$</span>
+           }
+         <span class="builtin">if$</span>
+         }
+       <span class="builtin">if$</span>  
+     }
+  <span class="builtin">if$</span>
+  <span class="builtin">newline$</span>
+  before.all 'output.state <span class="constant">:=</span>
+  <span class="string">""</span>
+  <span class="comment">% number index</span>
+  bst.use.number.index #0 =
+     '<span class="builtin">skip$</span>
+     { index #10 &lt;
+         <span class="comment">% Insert spaces according to digit of number index.</span>
+         { preone }
+         { index #100 &lt;
+             { preten }
+             { <span class="string">""</span> }
+           <span class="builtin">if$</span>
+         }
+       <span class="builtin">if$</span>
+       bst.number.index.pre * index <span class="builtin">int.to.str$</span> * bst.number.index.post * <span class="builtin">write$</span>
+     }
+ <span class="builtin">if$</span>
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%        article</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">article</span>}
+{ output.bibitem
+  format.authors <span class="string">"author"</span> output.check.nocomma
+  bst.year.position #0 =
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  format.title <span class="string">"title"</span> output.check.nocomma
+
+  format.journal <span class="string">"journal"</span> output.check.nocomma
+  bst.year.position #2 =
+    { format.date output.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  format.vol.num.pages output.nocomma
+
+  bst.year.position #1 =
+    { format.date output.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+
+  format.url output.nocomma
+  format.doi output.nocomma
+
+  format.note output.nocomma
+  fin.entry
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%        book</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">book</span>}
+{ output.bibitem
+  <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { format.editors <span class="string">"author and editor"</span> output.check.nocomma }
+    { format.authors output.nonnull.nocomma
+      <span class="string">"author and editor"</span> <span class="variable-name">editor</span> either.or.check 
+    }
+  <span class="builtin">if$</span>
+  bst.year.position #0 =
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  format.book <span class="string">"title"</span> output.check.nocomma
+
+  format.bvolume output.nocomma
+  format.number.series output.nocomma
+  output.publisher.address
+
+  format.edition output.nocomma
+  format.book.pages output.nocomma
+
+  bst.year.position #0 = not
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+
+  format.url output.nocomma
+  format.doi output.nocomma
+
+  format.note output.nocomma
+  fin.entry
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%        booklet</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">booklet</span>}
+{ output.bibitem
+  format.authors output.nocomma
+  format.year output.nocomma
+  format.misc.title <span class="string">"title"</span> output.check.nocomma
+  format.howpublished output.nocomma
+  format.address output.nocomma
+
+  format.url output.nocomma
+  format.doi output.nocomma
+
+  format.note output.nocomma
+  fin.entry
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       inbook</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">inbook</span>}
+{ output.bibitem
+  <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { format.editors <span class="string">"author and editor"</span> output.check.nocomma }
+    { format.authors output.nonnull.nocomma
+      <span class="string">"author and editor"</span> <span class="variable-name">editor</span> either.or.check
+    }
+  <span class="builtin">if$</span>
+  bst.year.position #0 =
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+<span class="comment">%   format.book remove.pre.comma "title" output.check.nocomma</span>
+  format.book <span class="string">"title"</span> output.check.nocomma
+  format.edition output.nocomma
+
+  format.bvolume output.nocomma
+  format.chapter.pages <span class="string">"chapter and pages"</span> output.check.nocomma
+  format.number.series output.nocomma
+  output.publisher.address
+
+  bst.year.position #0 = not
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+
+  format.url output.nocomma
+  format.doi output.nocomma
+
+  format.note output.nocomma
+  fin.entry
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       incollection</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">incollection</span>}
+{ output.bibitem
+  format.authors <span class="string">"author"</span> output.check.nocomma
+  bst.year.position #0 =
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  format.title <span class="string">"title"</span> output.check.nocomma
+
+  format.in.ed.booktitle <span class="string">"booktitle"</span> output.check.nocomma
+  format.bvolume output.nocomma
+  output.address.organization.publisher
+  format.edition output.nocomma
+  format.chapter.pages output.nocomma
+
+  bst.year.position #0 = not
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+
+  format.url output.nocomma
+  format.doi output.nocomma
+
+  format.note output.nocomma
+  fin.entry
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       inproceedings</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">inproceedings</span>}
+{ output.bibitem
+  format.authors <span class="string">"author"</span> output.check.nocomma
+  bst.year.position #0 =
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  format.title <span class="string">"title"</span> output.check.nocomma
+
+  format.in.ed.booktitle <span class="string">"booktitle"</span> output.check.nocomma
+  format.bvolume output.nocomma
+  format.number.series output.nocomma
+  format.pages output.nocomma
+  output.address.organization.publisher
+
+  bst.year.position #0 = not
+    { format.date output.nocomma }
+    { format.month output.nocomma }
+  <span class="builtin">if$</span>
+
+  format.url output.nocomma
+  format.doi output.nocomma
+
+  format.note output.nocomma
+  fin.entry
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       conference</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">conference</span>}
+{ inproceedings }
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       manual</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">manual</span>}
+{ output.bibitem
+  <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">organization</span> <span class="builtin">empty$</span>
+        '<span class="builtin">skip$</span>
+        { <span class="variable-name">organization</span> output.nonnull.nocomma
+          <span class="variable-name">address</span> output.nocomma
+        }
+      <span class="builtin">if$</span>
+    }
+    { format.authors output.nonnull.nocomma }
+  <span class="builtin">if$</span>
+  bst.year.position #0 =
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  format.book <span class="string">"title"</span> output.check.nocomma
+  <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">organization</span> <span class="builtin">empty$</span>
+        { format.address new.block.check
+          format.address output.nocomma
+        }
+        '<span class="builtin">skip$</span>
+      <span class="builtin">if$</span>
+    }
+    { output.address.organization.publisher }
+  <span class="builtin">if$</span>
+  format.edition output.nocomma
+
+  bst.year.position #0 = not
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+
+  format.url output.nocomma
+  format.doi output.nocomma
+
+  format.note output.nocomma
+  fin.entry
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       mastersthesis</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">mastersthesis</span>}
+{ output.bibitem
+  format.authors <span class="string">"author"</span> output.check.nocomma
+  bst.year.position #0 =
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  format.title <span class="string">"title"</span> output.check.nocomma
+  format.mthesis format.thesis.type output.nonnull.nocomma
+  format.school <span class="string">"school"</span> output.check.nocomma
+  format.address output.nocomma
+
+  bst.year.position #0 = not
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+
+  format.url output.nocomma
+  format.doi output.nocomma
+
+  format.note output.nocomma
+  fin.entry
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       misc</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">misc</span>}
+{ output.bibitem
+  format.authors <span class="string">"author"</span> output.check.nocomma
+  bst.year.position #0 =
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  format.misc.title output.nocomma
+  format.howpublished output.nocomma
+
+  bst.year.position #0 = not
+    { format.date output.nocomma }
+    { format.month output.nocomma }
+  <span class="builtin">if$</span>
+
+  format.url output.nocomma
+  format.doi output.nocomma
+  
+  format.note output.nocomma
+  fin.entry
+  empty.misc.check
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       Online</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">online</span>}
+{ output.bibitem
+  format.authors <span class="string">"author"</span> output.check.nocomma
+  bst.year.position #0 =
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  format.misc.title output.nocomma
+  format.howpublished output.nocomma
+
+  bst.year.position #0 = not
+    { format.date output.nocomma }
+    { format.month output.nocomma }
+  <span class="builtin">if$</span>
+
+  format.url output.nocomma
+  format.doi output.nocomma
+  
+  format.note output.nocomma
+  fin.entry
+  empty.misc.check
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       phdthesis</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">phdthesis</span>}
+{ output.bibitem
+  format.authors <span class="string">"author"</span> output.check.nocomma
+  bst.year.position #0 =
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  format.title <span class="string">"title"</span> output.check.nocomma
+  format.phd
+  format.thesis.type output.nonnull.nocomma
+  format.school <span class="string">"school"</span> output.check.nocomma
+  <span class="variable-name">address</span> <span class="builtin">empty$</span>
+    '<span class="builtin">skip$</span>
+    { format.address output.nocomma }
+  <span class="builtin">if$</span>
+
+  bst.year.position #0 = not
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+
+  format.url output.nocomma
+  format.doi output.nocomma
+
+  format.note output.nocomma
+  fin.entry
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       proceedings</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">proceedings</span>}
+{ output.bibitem
+  <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">organization</span> output.nocomma }
+    { format.editors output.nonnull.nocomma }
+  <span class="builtin">if$</span>
+  bst.year.position #0 =
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  format.btitle remove.pre.comma <span class="string">"title"</span> output.check.nocomma
+  format.bvolume output.nocomma
+  format.number.series output.nocomma
+  output.address.organization.publisher
+
+  bst.year.position #0 = not
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+
+  format.url output.nocomma
+  format.doi output.nocomma
+
+  format.note output.nocomma
+  fin.entry
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       techreport</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">techreport</span>}
+{ output.bibitem
+  format.authors <span class="string">"author"</span> output.check.nocomma
+  bst.year.position #0 =
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  format.title <span class="string">"title"</span> output.check.nocomma
+  format.tr.number output.nonnull.nocomma
+  format.institution <span class="string">"institution"</span> output.check.nocomma
+  format.address output.nocomma
+
+  bst.year.position #0 = not
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+
+  format.note output.nocomma
+  fin.entry
+}
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       unpublished</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">unpublished</span>}
+{ output.bibitem
+  format.authors <span class="string">"author"</span> output.check.nocomma
+  bst.year.position #0 =
+    { format.year <span class="string">"year"</span> output.check.nocomma }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  format.title <span class="string">"title"</span> output.check.nocomma
+
+  bst.year.position #0 = not
+    { format.date remove.pre.comma output.nocomma }
+    { <span class="variable-name">month</span> <span class="builtin">empty$</span>
+        '<span class="builtin">skip$</span>
+        { format.month remove.pre.comma output.nocomma }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+
+  format.url output.nocomma
+  format.doi output.nocomma
+
+  format.note <span class="string">"note"</span> output.check.nocomma
+  fin.entry
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">default.type</span>}
+{ misc }
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">%       Alias for month names:</span>
+
+<span class="keyword">MACRO</span> {<span class="function-name">jan</span>} {<span class="string">"January"</span>}
+<span class="keyword">MACRO</span> {<span class="function-name">feb</span>} {<span class="string">"February"</span>}
+<span class="keyword">MACRO</span> {<span class="function-name">mar</span>} {<span class="string">"March"</span>}
+<span class="keyword">MACRO</span> {<span class="function-name">apr</span>} {<span class="string">"April"</span>}
+<span class="keyword">MACRO</span> {<span class="function-name">may</span>} {<span class="string">"May"</span>}
+<span class="keyword">MACRO</span> {<span class="function-name">jun</span>} {<span class="string">"June"</span>}
+<span class="keyword">MACRO</span> {<span class="function-name">jul</span>} {<span class="string">"July"</span>}
+<span class="keyword">MACRO</span> {<span class="function-name">aug</span>} {<span class="string">"August"</span>}
+<span class="keyword">MACRO</span> {<span class="function-name">sep</span>} {<span class="string">"September"</span>}
+<span class="keyword">MACRO</span> {<span class="function-name">oct</span>} {<span class="string">"October"</span>}
+<span class="keyword">MACRO</span> {<span class="function-name">nov</span>} {<span class="string">"November"</span>}
+<span class="keyword">MACRO</span> {<span class="function-name">dec</span>} {<span class="string">"December"</span>}
+
+<span class="comment">%%% Read entries:</span>
+<span class="keyword">READ</span>
+
+<span class="comment">%%% Variable for remembering the order of citation.</span>
+<span class="keyword">INTEGERS</span> { order.num }
+<span class="keyword">FUNCTION</span> {<span class="function-name">initialize.order.num</span>}
+{
+  #1 'order.num <span class="constant">:=</span>
+}
+<span class="comment">%%% Initialize a variables</span>
+<span class="keyword">EXECUTE</span> {<span class="function-name">initialize.order.num</span>}
+
+<span class="comment">%%% Variable for remembering the order of citation.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">set.order.cited</span>}
+{
+  order.num 'order.cited <span class="constant">:=</span>
+  #1 order.num <span class="constant">+</span> 'order.num <span class="constant">:=</span>
+}
+<span class="comment">%%% Iterate for all entries:</span>
+<span class="keyword">ITERATE</span> {<span class="function-name">set.order.cited</span>}
+  
+<span class="comment">%%% Remove symbols and convert to lowercase.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">sortify</span>}
+{ <span class="builtin">purify$</span> <span class="string">"l"</span> <span class="builtin">change.case$</span> }
+
+<span class="comment">%%% names for sorting</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">sort.format.names</span>}
+{ 's <span class="constant">:=</span>
+  #1 'nameptr <span class="constant">:=</span>
+  <span class="string">""</span>
+  s <span class="builtin">num.names$</span> 'numnames <span class="constant">:=</span>
+  numnames 'namesleft <span class="constant">:=</span>
+    { namesleft #0 &gt; }
+    { nameptr #1 &gt;
+        { <span class="string">", "</span> * }
+        '<span class="builtin">skip$</span>
+      <span class="builtin">if$</span>
+      s nameptr <span class="string">"{ll}{ f}{ j}"</span> <span class="builtin">format.name$</span> 't <span class="constant">:=</span>
+      nameptr numnames = t <span class="string">"others"</span> = and
+        { bst.and.others *}
+        { t sortify * }
+      <span class="builtin">if$</span>
+      nameptr #1 <span class="constant">+</span> 'nameptr <span class="constant">:=</span>
+      namesleft #1 - 'namesleft <span class="constant">:=</span>
+    }
+  <span class="builtin">while$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">sort.format.names.abb</span>}
+{ 's <span class="constant">:=</span>
+  s <span class="builtin">num.names$</span> 'numnames <span class="constant">:=</span>
+  numnames bst.and.others.num &lt;
+     { s sort.format.names }
+     { s #1 <span class="string">"{ll}{ f}{ j}"</span> <span class="builtin">format.name$</span> <span class="string">" zz "</span> * }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% Label for full author name.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.lab.names.full</span>}
+{ 's <span class="constant">:=</span>
+  #1 'nameptr <span class="constant">:=</span>
+  s <span class="builtin">num.names$</span> 'numnames <span class="constant">:=</span>
+  numnames 'namesleft <span class="constant">:=</span>
+  { namesleft #0 &gt; }
+      { s nameptr <span class="string">"{vv~}{ll}"</span> <span class="builtin">format.name$</span> 't <span class="constant">:=</span>
+        nameptr #1 &gt;
+          { namesleft #1 &gt;
+              { <span class="string">", "</span> * t * }
+              { t <span class="string">"others"</span> =
+                  { bst.and.others * }
+                  { numnames #2 &gt; 
+                      { bst.cite.ands * t * }
+                      { bst.cite.and * t * }
+                    <span class="builtin">if$</span>
+                  }
+                <span class="builtin">if$</span>
+              }   
+            <span class="builtin">if$</span>
+          }
+          't
+        <span class="builtin">if$</span>
+        nameptr #1 <span class="constant">+</span> 'nameptr <span class="constant">:=</span>
+        namesleft #1 - 'namesleft <span class="constant">:=</span>
+      }
+  <span class="builtin">while$</span>
+  numnames #1 &gt; #1 #2 = and {<span class="string">", eds"</span> *} {} <span class="builtin">if$</span>
+  numnames #1 = #1 #2 = and {<span class="string">", ed"</span> *} {} <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% laberl for abbreviated author name.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.lab.names.abb</span>}
+{ 's <span class="constant">:=</span>
+   s <span class="builtin">num.names$</span> 'numnames <span class="constant">:=</span>
+   numnames bst.and.others.num &lt;
+     <span class="comment">% if the number of authors is less than bst.and.others.num, full name.</span>
+     { s format.lab.names.full }
+     <span class="comment">% if the number of authors is equal or more than bst.and.others.num, abbreviated name.</span>
+     { s #1 <span class="string">"{ll}"</span> <span class="builtin">format.name$</span> bst.and.others * }
+   <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% abbreviated author</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">author.key.label.abb</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+        { <span class="builtin">cite$</span> #1 #3 <span class="builtin">substring$</span> }
+        { <span class="variable-name">key</span> #3 <span class="builtin">text.prefix$</span> }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">author</span> format.lab.names.abb }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% full author</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">author.key.label.full</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+        { <span class="builtin">cite$</span> #1 #3 <span class="builtin">substring$</span> }
+        { <span class="variable-name">key</span> #3 <span class="builtin">text.prefix$</span> }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">author</span> format.lab.names.full }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">format.names.full.wo.and</span>}
+{ 's <span class="constant">:=</span>
+  #1 'nameptr <span class="constant">:=</span>
+  s <span class="builtin">num.names$</span> 'numnames <span class="constant">:=</span>
+  numnames 'namesleft <span class="constant">:=</span>
+  { namesleft #0 &gt; }
+      { s nameptr <span class="string">"{ll}{, ff}{, jj}"</span> <span class="builtin">format.name$</span> 't <span class="constant">:=</span>
+        nameptr #1 &gt;
+          { namesleft #1 &gt;
+              { <span class="string">" "</span> * t * }
+              { t <span class="string">"others"</span> =
+                  { <span class="string">" "</span> * }
+                  { numnames #2 &gt; 
+                      { <span class="string">" "</span> * t * }
+                      { <span class="string">" "</span> * t * }
+                    <span class="builtin">if$</span>
+                  }
+                <span class="builtin">if$</span>
+              }   
+            <span class="builtin">if$</span>
+          }
+          't
+        <span class="builtin">if$</span>
+        nameptr #1 <span class="constant">+</span> 'nameptr <span class="constant">:=</span>
+        namesleft #1 - 'namesleft <span class="constant">:=</span>
+      }
+  <span class="builtin">while$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">author.key.full.wo.and</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+        { <span class="builtin">cite$</span> #1 #3 <span class="builtin">substring$</span> }
+        { <span class="variable-name">key</span> #3 <span class="builtin">text.prefix$</span> }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">author</span> format.names.full.wo.and }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">author.editor.key.full.wo.and</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+        { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+            { <span class="builtin">cite$</span> #1 #3 <span class="builtin">substring$</span> }
+            { <span class="variable-name">key</span> #3 <span class="builtin">text.prefix$</span> }
+          <span class="builtin">if$</span>
+        }
+        { <span class="variable-name">editor</span> format.names.full.wo.and }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">author</span> format.names.full.wo.and }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">editor.key.organization.key.full.wo.and</span>}
+{ <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+        { <span class="variable-name">organization</span> <span class="builtin">empty$</span>
+            { <span class="builtin">cite$</span> #1 #3 <span class="builtin">substring$</span> }
+            { <span class="string">"The "</span> #4 <span class="variable-name">organization</span> chop.word #3 <span class="builtin">text.prefix$</span> }
+          <span class="builtin">if$</span>
+        }
+        { <span class="variable-name">key</span> #3 <span class="builtin">text.prefix$</span> }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">editor</span> format.names.full.wo.and }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">author.key.organization.key.full.wo.and</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+        { <span class="variable-name">organization</span> <span class="builtin">empty$</span>
+            { <span class="builtin">cite$</span> #1 #3 <span class="builtin">substring$</span> }
+            { <span class="string">"The "</span> #4 <span class="variable-name">organization</span> chop.word #3 <span class="builtin">text.prefix$</span> }
+          <span class="builtin">if$</span>
+        }
+        { <span class="variable-name">key</span> #3 <span class="builtin">text.prefix$</span> }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">author</span> format.names.full.wo.and }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% abbreviated author</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">author.editor.key.label.abb</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+        { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+            { <span class="builtin">cite$</span> #1 #3 <span class="builtin">substring$</span> }
+            { <span class="variable-name">key</span> #3 <span class="builtin">text.prefix$</span> }
+          <span class="builtin">if$</span>
+        }
+        { <span class="variable-name">editor</span> format.lab.names.abb }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">author</span> format.lab.names.abb }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% full author</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">author.editor.key.label.full</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+        { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+            { <span class="builtin">cite$</span> #1 #3 <span class="builtin">substring$</span> }
+            { <span class="variable-name">key</span> #3 <span class="builtin">text.prefix$</span> }
+          <span class="builtin">if$</span>
+        }
+        { <span class="variable-name">editor</span> format.lab.names.full }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">author</span> format.lab.names.full }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">author.key.organization.label.full</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+        { <span class="variable-name">organization</span> <span class="builtin">empty$</span>
+            { <span class="builtin">cite$</span> #1 #3 <span class="builtin">substring$</span> }
+            { <span class="string">"The "</span> #4 <span class="variable-name">organization</span> chop.word #3 <span class="builtin">text.prefix$</span> }
+          <span class="builtin">if$</span>
+        }
+        { <span class="variable-name">key</span> #3 <span class="builtin">text.prefix$</span> }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">author</span> format.lab.names.full }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">author.key.organization.label.abb</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+        { <span class="variable-name">organization</span> <span class="builtin">empty$</span>
+            { <span class="builtin">cite$</span> #1 #3 <span class="builtin">substring$</span> }
+            { <span class="string">"The "</span> #4 <span class="variable-name">organization</span> chop.word #3 <span class="builtin">text.prefix$</span> }
+          <span class="builtin">if$</span>
+        }
+        { <span class="variable-name">key</span> #3 <span class="builtin">text.prefix$</span> }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">author</span> format.lab.names.abb }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">editor.key.organization.label.full</span>}
+{ <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+        { <span class="variable-name">organization</span> <span class="builtin">empty$</span>
+            { <span class="builtin">cite$</span> #1 #3 <span class="builtin">substring$</span> }
+            { <span class="string">"The "</span> #4 <span class="variable-name">organization</span> chop.word #3 <span class="builtin">text.prefix$</span> }
+          <span class="builtin">if$</span>
+        }
+        { <span class="variable-name">key</span> #3 <span class="builtin">text.prefix$</span> }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">editor</span> format.lab.names.full }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">editor.key.organization.label.abb</span>}
+{ <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+        { <span class="variable-name">organization</span> <span class="builtin">empty$</span>
+            { <span class="builtin">cite$</span> #1 #3 <span class="builtin">substring$</span> }
+            { <span class="string">"The "</span> #4 <span class="variable-name">organization</span> chop.word #3 <span class="builtin">text.prefix$</span> }
+          <span class="builtin">if$</span>
+        }
+        { <span class="variable-name">key</span> #3 <span class="builtin">text.prefix$</span> }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">editor</span> format.lab.names.abb }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% Convert numbers: 0-&gt;9, 1-&gt;8, 2-&gt;7,..., 9-&gt;0</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">reverse.num</span>}
+{ 's <span class="constant">:=</span>
+  s <span class="string">"1"</span> =
+    { <span class="string">"8"</span> 'year.num <span class="constant">:=</span> }
+    { s <span class="string">"2"</span> =
+        { <span class="string">"7"</span> 'year.num <span class="constant">:=</span> }
+        { s <span class="string">"3"</span> =
+            { <span class="string">"6"</span> 'year.num <span class="constant">:=</span> }
+            { s <span class="string">"4"</span> =
+                { <span class="string">"5"</span> 'year.num <span class="constant">:=</span> }
+                { s <span class="string">"5"</span> =
+                    { <span class="string">"4"</span> 'year.num <span class="constant">:=</span> }
+                    { s <span class="string">"6"</span> =
+                        { <span class="string">"3"</span> 'year.num <span class="constant">:=</span> }
+                        { s <span class="string">"7"</span> =
+                            { <span class="string">"2"</span> 'year.num <span class="constant">:=</span> }
+                            { s <span class="string">"8"</span> =
+                                { <span class="string">"1"</span> 'year.num <span class="constant">:=</span> }
+                                { s <span class="string">"9"</span> =
+                                    { <span class="string">"0"</span> 'year.num <span class="constant">:=</span> }
+                                    { s <span class="string">"0"</span> =
+                                        { <span class="string">"9"</span> 'year.num <span class="constant">:=</span> }
+                                        { <span class="string">"9"</span> 'year.num <span class="constant">:=</span> }
+                                    <span class="builtin">if$</span>
+                                    }
+                                <span class="builtin">if$</span>
+                                }
+                            <span class="builtin">if$</span>
+                            }
+                        <span class="builtin">if$</span>
+                        }
+                    <span class="builtin">if$</span>
+                    }
+                <span class="builtin">if$</span>
+                }
+            <span class="builtin">if$</span>
+            }
+        <span class="builtin">if$</span>
+        }
+    <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+  year.num
+}
+
+<span class="comment">%%% Convert year (large number -&gt; small number)</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">convert.year</span>}
+{ 't <span class="constant">:=</span> 
+  bst.reverse.year #0 =
+    { t 'tt <span class="constant">:=</span> }
+    { t #1 #1 <span class="builtin">substring$</span> reverse.num 
+      t #2 #1 <span class="builtin">substring$</span> reverse.num *
+      t #3 #1 <span class="builtin">substring$</span> reverse.num *
+      t #4 #1 <span class="builtin">substring$</span> reverse.num * 'tt <span class="constant">:=</span> }
+  <span class="builtin">if$</span>
+  tt
+}
+
+<span class="comment">%%% cyear</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">calc.cyear</span>}
+{ <span class="builtin">type$</span> <span class="string">"book"</span> =
+  <span class="builtin">type$</span> <span class="string">"inbook"</span> =
+  or
+    'author.editor.key.full.wo.and
+    { <span class="builtin">type$</span> <span class="string">"proceedings"</span> =
+        'editor.key.organization.key.full.wo.and
+        { <span class="builtin">type$</span> <span class="string">"manual"</span> =
+            'author.key.organization.key.full.wo.and
+            'author.key.full.wo.and
+          <span class="builtin">if$</span>
+        }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+  <span class="builtin">duplicate$</span>
+  <span class="variable-name">year</span> <span class="builtin">empty$</span>
+    { <span class="string">"2199"</span> 'cyear <span class="constant">:=</span> }
+    { <span class="variable-name">year</span> 'cyear <span class="constant">:=</span> }
+  <span class="builtin">if$</span>
+  <span class="variable-name">year</span> <span class="builtin">empty$</span>
+    { <span class="string">" "</span> <span class="string">"2199"</span> convert.year * field.or.null * }
+    { <span class="string">" "</span> <span class="variable-name">year</span> convert.year * field.or.null * }
+  <span class="builtin">if$</span>
+  sortify 'sort.label <span class="constant">:=</span>
+  <span class="comment">% For debug</span>
+  econ.debug #0 = not
+    { <span class="string">"sort.label = ``\texttt{"</span> <span class="builtin">write$</span>
+      sort.label <span class="builtin">write$</span>
+      <span class="string">"}''\\"</span> <span class="builtin">write$</span>
+      <span class="builtin">newline$</span>
+    }
+    '<span class="builtin">skip$</span>
+ <span class="builtin">if$</span>
+ <span class="builtin">pop$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">calc.sort.label.abb</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+       { <span class="string">""</span> }
+       { <span class="variable-name">editor</span> 's <span class="constant">:=</span> }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">author</span> 's <span class="constant">:=</span> }
+  <span class="builtin">if$</span>
+  s sort.format.names.abb 't <span class="constant">:=</span>
+  <span class="variable-name">year</span> <span class="builtin">empty$</span>
+    { t sortify <span class="string">" "</span> * <span class="string">"2199"</span> convert.year * 'sort.label.abb <span class="constant">:=</span> }
+    { t sortify <span class="string">" "</span> * <span class="variable-name">year</span> convert.year * 'sort.label.abb <span class="constant">:=</span> }
+  <span class="builtin">if$</span>
+  econ.debug #0 = not
+    { <span class="string">"sort.label.abb = ``\texttt{"</span> <span class="builtin">write$</span>
+      sort.label.abb <span class="builtin">write$</span>
+      <span class="string">"}''\\"</span> <span class="builtin">write$</span>
+      <span class="builtin">newline$</span>
+    }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% flabel</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">calc.flabel</span>}
+{ <span class="builtin">type$</span> <span class="string">"book"</span> =
+  <span class="builtin">type$</span> <span class="string">"inbook"</span> =
+  or
+    'author.editor.key.label.full
+    { <span class="builtin">type$</span> <span class="string">"proceedings"</span> =
+        'editor.key.organization.label.full
+        { <span class="builtin">type$</span> <span class="string">"manual"</span> =
+            'author.key.organization.label.full
+            'author.key.label.full
+          <span class="builtin">if$</span>
+        }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+  'flabel <span class="constant">:=</span>
+  <span class="comment">% For debug</span>
+  econ.debug #0 = not
+    { <span class="string">"flabel = ``\texttt{"</span> <span class="builtin">write$</span>
+      flabel <span class="builtin">write$</span>
+      <span class="string">"}''\\"</span> <span class="builtin">write$</span>
+      <span class="builtin">newline$</span>
+    }
+    '<span class="builtin">skip$</span>
+ <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% alabel</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">calc.alabel</span>}
+{ <span class="builtin">type$</span> <span class="string">"book"</span> =
+  <span class="builtin">type$</span> <span class="string">"inbook"</span> =
+  or
+    'author.editor.key.label.abb
+    { <span class="builtin">type$</span> <span class="string">"proceedings"</span> =
+        'editor.key.organization.label.abb
+        { <span class="builtin">type$</span> <span class="string">"manual"</span> =
+            'author.key.organization.label.abb
+            'author.key.label.abb
+          <span class="builtin">if$</span>
+        }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+  'alabel <span class="constant">:=</span>
+  <span class="comment">% For debug</span>
+  econ.debug #0 = not
+    { <span class="string">"alabel = ``\texttt{"</span> <span class="builtin">write$</span>
+      alabel <span class="builtin">write$</span>
+      <span class="string">"}''\\"</span> <span class="builtin">write$</span>
+      <span class="builtin">newline$</span>
+    }
+    '<span class="builtin">skip$</span>
+ <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% title for sorting</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">sort.format.title</span>}
+{ 't <span class="constant">:=</span>
+  <span class="string">"A "</span> #2
+    <span class="string">"An "</span> #3
+      <span class="string">"The "</span> #4 t chop.word
+    chop.word
+  chop.word
+  sortify
+  #1 <span class="builtin">global.max$</span> <span class="builtin">substring$</span>
+}
+
+<span class="comment">%%% author for sorting</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">author.sort</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+        { <span class="string">"to sort, need author or key in "</span> <span class="builtin">cite$</span> * <span class="builtin">warning$</span>
+          <span class="string">""</span>
+        }
+        { <span class="variable-name">key</span> sortify }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">author</span> sort.format.names }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% editor for sorting</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">author.editor.sort</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+        { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+            { <span class="string">"to sort, need author, editor, or key in "</span> <span class="builtin">cite$</span> * <span class="builtin">warning$</span>
+              <span class="string">""</span>
+            }
+            { <span class="variable-name">key</span> sortify }
+          <span class="builtin">if$</span>
+        }
+        { <span class="variable-name">editor</span> sort.format.names }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">author</span> sort.format.names }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">author.organization.sort</span>}
+{ <span class="variable-name">author</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">organization</span> <span class="builtin">empty$</span>
+        { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+            { <span class="string">"to sort, need author, organization, or key in "</span> <span class="builtin">cite$</span> * <span class="builtin">warning$</span>
+              <span class="string">""</span>
+            }
+            { <span class="variable-name">key</span> sortify }
+          <span class="builtin">if$</span>
+        }
+        { <span class="string">"The "</span> #4 <span class="variable-name">organization</span> chop.word sortify }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">author</span> sort.format.names }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">editor.organization.sort</span>}
+{ <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+    { <span class="variable-name">organization</span> <span class="builtin">empty$</span>
+        { <span class="variable-name">key</span> <span class="builtin">empty$</span>
+            { <span class="string">"to sort, need editor, organization, or key in "</span> <span class="builtin">cite$</span> * <span class="builtin">warning$</span>
+              <span class="string">""</span>
+            }
+            { <span class="variable-name">key</span> sortify }
+          <span class="builtin">if$</span>
+        }
+        { <span class="string">"The "</span> #4 <span class="variable-name">organization</span> chop.word sortify }
+      <span class="builtin">if$</span>
+    }
+    { <span class="variable-name">editor</span> sort.format.names }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% 1,...,9 -&gt; 001,...,009</span>
+<span class="comment">%%% 10,...,99 -&gt; 010,...,099</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">add.zero.to.number</span>}
+{ 's <span class="constant">:=</span>
+    s <span class="builtin">text.length$</span> #1 =
+      { <span class="string">"00"</span> s * }
+      { s <span class="builtin">text.length$</span> #2 =
+          { <span class="string">"0"</span> s * }
+          { s }
+        <span class="builtin">if$</span>
+      }
+   <span class="builtin">if$</span>
+}
+
+<span class="comment">%% entry type</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">bst.sort.entry.type.order</span>}
+{ 'item.type <span class="constant">:=</span>
+  item.type <span class="string">"article"</span> =
+    { <span class="string">"01"</span> }
+    { item.type <span class="string">"book"</span> =
+        { <span class="string">"02"</span> }
+        { item.type <span class="string">"booklet"</span> =
+            { <span class="string">"03"</span> }
+            { item.type <span class="string">"comment"</span> =
+                { <span class="string">"04"</span> }
+                { item.type <span class="string">"conference"</span> =
+                    { <span class="string">"05"</span> }
+                    { item.type <span class="string">"inbook"</span> =
+                        { <span class="string">"06"</span> }
+                        { item.type <span class="string">"incollection"</span> =
+                            { <span class="string">"07"</span> }
+                            { item.type <span class="string">"inproceedings"</span> =
+                                { <span class="string">"08"</span> }
+                                { item.type <span class="string">"manual"</span> =
+                                    { <span class="string">"09"</span> }
+                                    { item.type <span class="string">"masterthesis"</span> =
+                                        { <span class="string">"10"</span> }
+                                        { item.type <span class="string">"misc"</span> =
+                                           { <span class="string">"11"</span> }
+                                           { item.type <span class="string">"phdthesis"</span> =
+                                              { <span class="string">"12"</span> }
+                                              { item.type <span class="string">"proceedings"</span> =
+                                                 { <span class="string">"13"</span> }
+                                                 { item.type <span class="string">"techreport"</span> =
+                                                    { <span class="string">"14"</span> }
+                                                    { item.type <span class="string">"unpublished"</span> =
+                                                       { <span class="string">"15"</span> }
+                                                       { <span class="string">"16"</span> }
+                                                      <span class="builtin">if$</span>
+                                                    }
+                                                   <span class="builtin">if$</span>
+                                                 }
+                                                <span class="builtin">if$</span>
+                                              }
+                                             <span class="builtin">if$</span>
+                                           }
+                                          <span class="builtin">if$</span>
+                                        }
+                                      <span class="builtin">if$</span>
+                                    }
+                                <span class="builtin">if$</span>
+                                }
+                            <span class="builtin">if$</span>
+                            }
+                        <span class="builtin">if$</span>
+                        }
+                    <span class="builtin">if$</span>
+                    }
+                <span class="builtin">if$</span>
+                }
+            <span class="builtin">if$</span>
+            }
+        <span class="builtin">if$</span>
+        }
+    <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% Create sort.key$: absorder -&gt; author -&gt; year -&gt; order -&gt; month -&gt; title.</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">presort.one</span>}
+{
+  bst.no.sort #0 = not
+    { order.cited <span class="builtin">int.to.str$</span> add.zero.to.number <span class="string">" "</span> * }
+    { <span class="string">""</span> }
+  <span class="builtin">if$</span>
+  bst.sort.year #0 = not
+    <span class="comment">%% Use year field as the primary sorting key.</span>
+    { <span class="variable-name">year</span> convert.year * }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  bst.sort.entry.type #0 = not
+    { <span class="builtin">type$</span> bst.sort.entry.type.order * <span class="string">" "</span> * }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  <span class="variable-name">absorder</span> <span class="builtin">empty$</span>
+    { <span class="string">"/// "</span> * }
+    { bst.notuse.absorder.field #0 =
+       { <span class="variable-name">absorder</span> <span class="string">"999"</span> =
+          { <span class="string">"zzz "</span> * }
+          { <span class="variable-name">absorder</span> add.zero.to.number <span class="string">"000"</span> =
+             { <span class="string">"/// "</span> * }
+             { <span class="variable-name">absorder</span> add.zero.to.number * <span class="string">" "</span> * }
+            <span class="builtin">if$</span>
+          }
+         <span class="builtin">if$</span>
+       }
+       { <span class="string">"/// "</span> * }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+  <span class="string">" "</span> *
+  sort.label.abb *
+  <span class="string">" "</span> *  
+  <span class="builtin">type$</span> <span class="string">"book"</span> = <span class="builtin">type$</span> <span class="string">"inbook"</span> = or
+    'author.editor.sort
+    { <span class="builtin">type$</span> <span class="string">"proceedings"</span> =
+        'editor.organization.sort
+        { <span class="builtin">type$</span> <span class="string">"manual"</span> =
+            'author.organization.sort
+            'author.sort
+          <span class="builtin">if$</span>
+        }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+  * <span class="string">" "</span> *
+  <span class="string">" "</span>
+  <span class="variable-name">order</span> <span class="builtin">empty$</span>
+    { <span class="string">"/// "</span> * }
+    { bst.notuse.order.field #0 =
+       { <span class="variable-name">order</span> <span class="string">"999"</span> =
+          { <span class="string">"zzz "</span> * }
+          { <span class="variable-name">order</span> add.zero.to.number <span class="string">"000"</span> =
+             { <span class="string">"/// "</span> * }
+             { <span class="variable-name">order</span> add.zero.to.number * <span class="string">" "</span> * }
+            <span class="builtin">if$</span>
+          }
+         <span class="builtin">if$</span>
+       }
+       { <span class="string">"/// "</span> * }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+  <span class="variable-name">month</span> <span class="builtin">empty$</span>
+    { * <span class="string">"/// "</span> * }
+       { <span class="variable-name">month</span> <span class="string">"999"</span> =
+          { * <span class="variable-name">month</span> add.zero.to.number * <span class="string">"zzz "</span> * }
+          { <span class="variable-name">month</span> add.zero.to.number <span class="string">"000"</span> =
+             { * <span class="variable-name">month</span> add.zero.to.number * <span class="string">"/// "</span> * }
+             { * <span class="variable-name">month</span> add.zero.to.number * <span class="string">" "</span> * }
+            <span class="builtin">if$</span>
+          }
+         <span class="builtin">if$</span>
+       }
+  <span class="builtin">if$</span>
+  <span class="variable-name">title</span> field.or.null sort.format.title
+  *
+  #1 <span class="builtin">entry.max$</span> <span class="builtin">substring$</span>
+  '<span class="builtin">sort.key$</span> <span class="constant">:=</span>
+  <span class="comment">% For debug</span>
+  econ.debug #0 = not
+    { <span class="string">"``\texttt{"</span> <span class="builtin">write$</span>
+      <span class="builtin">sort.key$</span> <span class="builtin">write$</span>
+      <span class="string">"}''\\"</span> <span class="builtin">write$</span>
+      <span class="builtin">newline$</span>
+    }
+    '<span class="builtin">skip$</span>
+ <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">presort.two</span>}
+{
+  bst.no.sort #0 = not
+    { order.cited <span class="builtin">int.to.str$</span> add.zero.to.number <span class="string">" "</span> * }
+    { <span class="string">""</span> }
+  <span class="builtin">if$</span>
+  bst.sort.year #0 = not
+    <span class="comment">%% Use year field as the primary sorting key.</span>
+    { <span class="variable-name">year</span> convert.year * }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  bst.sort.entry.type #0 = not
+    { <span class="builtin">type$</span> bst.sort.entry.type.order * <span class="string">" "</span> * }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  <span class="variable-name">absorder</span> <span class="builtin">empty$</span>
+    { <span class="string">"/// "</span> * }
+    { bst.notuse.absorder.field #0 =
+       { <span class="variable-name">absorder</span> <span class="string">"999"</span> =
+          { <span class="string">"zzz "</span> * }
+          { <span class="variable-name">absorder</span> add.zero.to.number <span class="string">"000"</span> =
+             { <span class="string">"/// "</span> * }
+             { <span class="variable-name">absorder</span> add.zero.to.number * <span class="string">" "</span> * }
+            <span class="builtin">if$</span>
+          }
+         <span class="builtin">if$</span>
+       }
+       { <span class="string">"/// "</span> * }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+  <span class="string">" "</span> * sort.label * <span class="string">" "</span>
+  <span class="variable-name">order</span> <span class="builtin">empty$</span>
+    { <span class="string">"/// "</span> * }
+    { bst.notuse.order.field #0 =
+       { <span class="variable-name">order</span> <span class="string">"999"</span> =
+          { <span class="string">"zzz "</span> * }
+          { <span class="variable-name">order</span> add.zero.to.number <span class="string">"000"</span> =
+             { <span class="string">"/// "</span> * }
+             { <span class="variable-name">order</span> add.zero.to.number * <span class="string">" "</span> * }
+            <span class="builtin">if$</span>
+          }
+         <span class="builtin">if$</span>
+       }
+       { <span class="string">"/// "</span> * }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+  <span class="variable-name">month</span> <span class="builtin">empty$</span>
+    { * <span class="string">"/// "</span> * }
+       { <span class="variable-name">month</span> <span class="string">"999"</span> =
+          { * <span class="variable-name">month</span> add.zero.to.number * <span class="string">"zzz "</span> * }
+          { <span class="variable-name">month</span> add.zero.to.number <span class="string">"000"</span> =
+             { * <span class="variable-name">month</span> add.zero.to.number * <span class="string">"/// "</span> * }
+             { * <span class="variable-name">month</span> add.zero.to.number * <span class="string">" "</span> * }
+            <span class="builtin">if$</span>
+          }
+         <span class="builtin">if$</span>
+       }
+  <span class="builtin">if$</span>
+  <span class="variable-name">title</span> field.or.null sort.format.title
+  *
+  #1 <span class="builtin">entry.max$</span> <span class="builtin">substring$</span>
+  '<span class="builtin">sort.key$</span> <span class="constant">:=</span>
+  <span class="comment">% For debug</span>
+  econ.debug #0 = not
+    { <span class="string">"``\texttt{"</span> <span class="builtin">write$</span>
+      <span class="builtin">sort.key$</span> <span class="builtin">write$</span>
+      <span class="string">"}''\\"</span> <span class="builtin">write$</span>
+      <span class="builtin">newline$</span>
+    }
+    '<span class="builtin">skip$</span>
+ <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% Codes for debugging</span>
+<span class="keyword">FUNCTION</span> {<span class="function-name">calc.alabel.mess</span>}
+{ econ.debug #0 = not
+    { <span class="string">"\textbf{Iteration of calc.alabel: alabel = }\\"</span> <span class="builtin">write$</span>
+      <span class="builtin">newline$</span> }
+    '<span class="builtin">skip$</span>
+ <span class="builtin">if$</span>
+}
+<span class="keyword">FUNCTION</span> {<span class="function-name">calc.flabel.mess</span>}
+{ econ.debug #0 = not
+    { <span class="string">"\textbf{Iteration of calc.flabel: flabel = }\\"</span> <span class="builtin">write$</span>
+      <span class="builtin">newline$</span> }
+    '<span class="builtin">skip$</span>
+ <span class="builtin">if$</span>
+}
+<span class="keyword">FUNCTION</span> {<span class="function-name">presort.one.mess</span>}
+{ econ.debug #0 = not
+    { <span class="string">"\textbf{Iteration of presort (1st time): \$sort.key = }\\"</span> <span class="builtin">write$</span>
+      <span class="builtin">newline$</span> }
+    '<span class="builtin">skip$</span>
+ <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">presort.two.mess</span>}
+{ econ.debug #0 = not
+    { <span class="string">"\textbf{Iteration of presort (2nd time): \$sort.key = }\\"</span> <span class="builtin">write$</span>
+      <span class="builtin">newline$</span> }
+    '<span class="builtin">skip$</span>
+ <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">calc.cyear.mess</span>}
+{ econ.debug #0 = not
+    { <span class="string">"\textbf{Iteration of calc.cyear: sort.label = }\\"</span> <span class="builtin">write$</span>
+      <span class="builtin">newline$</span> }
+    '<span class="builtin">skip$</span>
+ <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">calc.sort.label.abb.mess</span>}
+{ econ.debug #0 = not
+    { <span class="string">"\textbf{Iteration of calc.sort.label.abb: sort.label.abb = }\\"</span> <span class="builtin">write$</span>
+      <span class="builtin">newline$</span> }
+    '<span class="builtin">skip$</span>
+ <span class="builtin">if$</span>
+}
+
+<span class="comment">%%% alabel</span>
+<span class="keyword">EXECUTE</span> {<span class="function-name">calc.alabel.mess</span>}
+<span class="keyword">ITERATE</span> {<span class="function-name">calc.alabel</span>}
+
+<span class="comment">%%% flabel</span>
+<span class="keyword">EXECUTE</span> {<span class="function-name">calc.flabel.mess</span>}
+<span class="keyword">ITERATE</span> {<span class="function-name">calc.flabel</span>}
+
+<span class="comment">%%% cyear and sort.label</span>
+<span class="keyword">EXECUTE</span> {<span class="function-name">calc.cyear.mess</span>}
+<span class="keyword">ITERATE</span> {<span class="function-name">calc.cyear</span>}
+
+<span class="comment">%%%</span>
+<span class="keyword">EXECUTE</span> {<span class="function-name">calc.sort.label.abb.mess</span>}
+<span class="keyword">ITERATE</span> {<span class="function-name">calc.sort.label.abb</span>}
+
+<span class="comment">%%% Sorting by $sort.key (first time)</span>
+<span class="comment">%</span>
+<span class="comment">% Sorting is done in two times. This is the first time.</span>
+<span class="comment">%</span>
+<span class="keyword">EXECUTE</span> {<span class="function-name">presort.one.mess</span>}
+<span class="keyword">ITERATE</span> {<span class="function-name">presort.one</span>}
+<span class="keyword">SORT</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">forward.pass</span>}
+{ bst.use.bysame #0 = bst.use.bysame #2 = or
+    <span class="comment">% Not use \bysame</span>
+    { last.sort.label sort.label.abb =
+        { last.extra.num #1 <span class="constant">+</span> 'last.extra.num <span class="constant">:=</span>
+          last.extra.num <span class="builtin">int.to.chr$</span> 'extra.label <span class="constant">:=</span>
+        }
+        { <span class="string">"a"</span> <span class="builtin">chr.to.int$</span> 'last.extra.num <span class="constant">:=</span>
+          <span class="string">""</span> 'extra.label <span class="constant">:=</span>
+          sort.label.abb 'last.sort.label <span class="constant">:=</span>
+        }
+      <span class="builtin">if$</span>
+    }
+    <span class="comment">% Use \bysame</span>
+    { last.sort.label sort.label.abb =
+        { last.extra.num #1 <span class="constant">+</span> 'last.extra.num <span class="constant">:=</span>
+          last.extra.num <span class="builtin">int.to.chr$</span> 'extra.label <span class="constant">:=</span>
+        }
+        { <span class="string">"a"</span> <span class="builtin">chr.to.int$</span> 'last.extra.num <span class="constant">:=</span>
+          <span class="string">""</span> 'extra.label <span class="constant">:=</span>
+          sort.label.abb 'last.sort.label <span class="constant">:=</span>
+        }
+      <span class="builtin">if$</span>
+      <span class="variable-name">author</span> <span class="builtin">empty$</span>
+        { <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+          { <span class="string">""</span> }
+          'format.editors.alt
+          <span class="builtin">if$</span>
+        }
+        'format.authors.alt
+      <span class="builtin">if$</span>
+      'this.author <span class="constant">:=</span>
+      <span class="comment">% format.names 'this.author :=</span>
+      this.author prev.author =
+        { <span class="string">"bysame"</span> 'extra.label.bysame <span class="constant">:=</span> }
+        { this.author <span class="string">""</span> =
+            { <span class="string">"abcxyz"</span> }
+            'this.author
+          <span class="builtin">if$</span>
+          'prev.author <span class="constant">:=</span>
+        }
+      <span class="builtin">if$</span>
+    }
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">reverse.pass</span>}
+{ next.extra <span class="string">"b"</span> =
+    { <span class="string">"a"</span> 'extra.label <span class="constant">:=</span> }
+    '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+  extra.label <span class="builtin">empty$</span> not
+    { cyear extra.label * }
+    { cyear <span class="string">""</span> * }
+  <span class="builtin">if$</span>
+  <span class="string">""</span> field.or.null *
+  'cyear <span class="constant">:=</span>
+  extra.label 'next.extra <span class="constant">:=</span>
+}
+
+<span class="comment">%%% \bysame</span>
+<span class="keyword">ITERATE</span> {<span class="function-name">forward.pass</span>}
+
+<span class="keyword">REVERSE</span> {<span class="function-name">reverse.pass</span>}
+
+<span class="comment">%%% Sorting by sort.key$ (second time)</span>
+<span class="keyword">EXECUTE</span> {<span class="function-name">presort.two.mess</span>}
+<span class="keyword">ITERATE</span> {<span class="function-name">presort.two</span>}
+<span class="keyword">SORT</span>
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">reset.prev.author</span>}
+{ <span class="string">"xxyyzz"</span> 'prev.author <span class="constant">:=</span> }
+
+<span class="keyword">EXECUTE</span> {<span class="function-name">reset.prev.author</span>}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">forward.pass.two</span>}
+{ bst.use.bysame #1 = 
+    { <span class="variable-name">author</span> <span class="builtin">empty$</span>
+        { <span class="variable-name">editor</span> <span class="builtin">empty$</span>
+          { <span class="string">""</span> }
+          'format.editors.alt
+          <span class="builtin">if$</span>
+        }
+        'format.authors.alt
+     <span class="builtin">if$</span>
+     'this.author <span class="constant">:=</span>
+     this.author prev.author =
+        { <span class="string">"bysame"</span> 'extra.label.bysame <span class="constant">:=</span> }
+        { this.author <span class="string">""</span> =
+            { <span class="string">"abcxyz"</span> }
+            'this.author
+          <span class="builtin">if$</span>
+          'prev.author <span class="constant">:=</span>
+        }
+     <span class="builtin">if$</span>
+    }
+   '<span class="builtin">skip$</span>
+  <span class="builtin">if$</span>
+}
+
+<span class="keyword">ITERATE</span> {<span class="function-name">forward.pass.two</span>}
+
+<span class="keyword">FUNCTION</span>{<span class="function-name">punctuation</span>}
+{
+  <span class="string">"</span><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  write$ newline$</span>
+  <span class="string">"</span><span class="comment">%  This bbl file is created by econ.bst ver." econ.version *       write$ newline$</span>
+  <span class="string">"</span><span class="comment">%  The latest econ.bst is available at"                              write$ newline$</span>
+  <span class="string">"</span><span class="comment">%  &lt;<a href="http://shirotakeda.org/home/tex/econ-bst.html">http://shirotakeda.org/home/tex/econ-bst.html</a>&gt;"             write$ newline$</span>
+  <span class="string">"</span><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"  write$ newline$</span>
+  <span class="builtin">newline$</span>
+}
+
+<span class="keyword">EXECUTE</span> {<span class="function-name">punctuation</span>}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">begin.bib</span>}
+{
+  <span class="builtin">preamble$</span> <span class="builtin">empty$</span>
+    '<span class="builtin">skip$</span>
+    { <span class="builtin">preamble$</span> <span class="builtin">write$</span> <span class="builtin">newline$</span> }
+  <span class="builtin">if$</span>
+  bst.use.bysame #0 =
+     <span class="comment">% Not use \bysame.</span>
+     '<span class="builtin">skip$</span>
+     <span class="comment">% Use \bysame.</span>
+     { <span class="string">"</span><span class="comment">%%% Definition of \bysame" write$ newline$</span>
+       <span class="string">"\ifx\undefined\bysame"</span> <span class="builtin">write$</span> <span class="builtin">newline$</span>
+       <span class="string">"\newcommand{\bysame}{"</span> bst.bysame.definition * <span class="string">"}"</span> *
+       <span class="builtin">write$</span> <span class="builtin">newline$</span>
+       <span class="string">"\fi"</span> <span class="builtin">write$</span> <span class="builtin">newline$</span> <span class="builtin">newline$</span> }
+  <span class="builtin">if$</span>
+  <span class="comment">%% When number index is attached to the beginning of each item.</span>
+  bst.use.number.index #0 =
+     '<span class="builtin">skip$</span>
+     { bst.number.index.digit <span class="string">"1"</span> =
+         <span class="comment">% one digit.</span>
+         { bst.number.index.bibhang.one }
+         { bst.number.index.digit <span class="string">"2"</span> =
+            <span class="comment">% two digits.</span>
+            { bst.number.index.bibhang.ten }
+            <span class="comment">% three or more digits.</span>
+            { bst.number.index.bibhang.hund }
+           <span class="builtin">if$</span>
+         }
+       <span class="builtin">if$</span>
+       'hang <span class="constant">:=</span>
+       <span class="string">"</span><span class="comment">%%% Redefinition of \bibhang" write$ newline$</span>
+       <span class="string">"\ifx\undefined\bibhang"</span> <span class="builtin">write$</span> <span class="builtin">newline$</span>
+       <span class="string">"\relax"</span> <span class="builtin">write$</span> <span class="builtin">newline$</span>
+       <span class="string">"\else"</span> <span class="builtin">write$</span> <span class="builtin">newline$</span>
+       <span class="string">"\setlength{\bibhang}{"</span>
+       hang * <span class="string">"}"</span> * <span class="builtin">write$</span> <span class="builtin">newline$</span> 
+       <span class="string">"\fi"</span> <span class="builtin">write$</span> <span class="builtin">newline$</span> <span class="builtin">newline$</span>
+       }
+  <span class="builtin">if$</span>
+  <span class="string">"\begin{thebibliography}{xxx}"</span> <span class="builtin">write$</span> <span class="builtin">newline$</span>
+
+  <span class="comment">%% Initialize the variable `index'.</span>
+  #0 'index <span class="constant">:=</span>
+}
+
+<span class="keyword">FUNCTION</span> {<span class="function-name">end.bib</span>}
+{ <span class="builtin">newline$</span> <span class="string">"\end{thebibliography}"</span> <span class="builtin">write$</span> <span class="builtin">newline$</span> }
+
+<span class="keyword">EXECUTE</span> {<span class="function-name">begin.bib</span>}
+
+<span class="keyword">EXECUTE</span> {<span class="function-name">init.state.consts</span>}
+
+<span class="keyword">ITERATE</span> <span class="builtin">{call.type$</span>}
+
+<span class="keyword">EXECUTE</span> {<span class="function-name">end.bib</span>}
+
+<span class="comment">%  --------------------</span>
+<span class="comment">%  Local Variables&#58;</span>
+<span class="comment">%  fill-column: 78</span>
+<span class="comment">%  mode: bst</span>
+<span class="comment">%  End:</span>
+</pre>
+  </body>
+</html>

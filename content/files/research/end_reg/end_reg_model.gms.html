@@ -1,0 +1,1156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+ <head>
+  <title>end_reg_model.gms</title>
+ <meta name="generator" content="emacs 21.4.1; htmlfontify 0.18">
+<style type="text/css"><!-- 
+body { background: rgb(0, 0, 48);  color: rgb(224, 255, 224);  font-style: normal;  font-weight: 500;  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.default   { background: rgb(0, 0, 48);  color: rgb(224, 255, 224);  font-style: normal;  font-weight: 500;  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.default a { background: rgb(0, 0, 48);  color: rgb(224, 255, 224);  font-style: normal;  font-weight: 500;  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-slash-face   { color: rgb(240, 160, 240);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-slash-face a { color: rgb(240, 160, 240);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-operator-face   { color: rgb(135, 206, 235);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-operator-face a { color: rgb(135, 206, 235);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-dollar-face   { color: rgb(255, 255, 0);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-dollar-face a { color: rgb(255, 255, 0);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-explanation-face   { color: rgb(240, 240, 144);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-explanation-face a { color: rgb(240, 240, 144);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-lst-warning-face   { color: rgb(255, 0, 0);  font-style: normal;  font-weight: 700;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-lst-warning-face a { color: rgb(255, 0, 0);  font-style: normal;  font-weight: 700;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-string-face   { color: rgb(255, 160, 160);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-string-face a { color: rgb(255, 160, 160);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-statement-face   { color: rgb(0, 255, 255);  font-style: normal;  font-weight: 700;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-statement-face a { color: rgb(0, 255, 255);  font-style: normal;  font-weight: 700;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+span.gams-title-face   { background: rgb(0, 0, 80);  color: rgb(255, 224, 224);  text-decoration: underline;  font-style: normal;  font-weight: 500;  font-stretch: normal;  font-family: *;  font-size: 11pt; }
+span.gams-title-face a { background: rgb(0, 0, 80);  color: rgb(255, 224, 224);  text-decoration: underline;  font-style: normal;  font-weight: 500;  font-stretch: normal;  font-family: *;  font-size: 11pt; }
+span.gams-comment-face   { color: rgb(64, 255, 32);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: none; }
+span.gams-comment-face a { color: rgb(64, 255, 32);  font-style: normal;  font-weight: 500;  background: rgb(0, 0, 48);  font-stretch: normal;  font-family: *;  font-size: 11pt;  text-decoration: underline; }
+ --></style>
+
+ </head>
+  <body>
+
+<pre>
+<span class="gams-comment-face">$ontext
+$Id: end_reg_model.gms,v 1.1.1.1 2006/03/09 08:58:42 st Exp $
+Time-stamp:	&lt;2004-10-22 16:32:48 Shiro Takeda&gt;
+Author:		Shiro Takeda
+First-written:	&lt;2003/04/24&gt;
+
+Commentary:
+
+In writing this code, I have greatly benefited from GAMS codes in GTAPinGAMS
+created by T. F. Rutherford and S. V. Paltsev.  I would express acknowledgment
+to them.
+
+$offtext
+</span><span class="gams-title-face">$title	Define the model:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Define the model:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Parameter to represent responsivness of regulation.</span>
+<span class="gams-statement-face">parameter</span>
+    ictax(r)		<span class="gams-explanation-face">Implicit carbon tax (inflated by p_u)</span>
+    inc_pc		<span class="gams-explanation-face">Per capita real income (thousand dollar)</span>
+    a_hat		<span class="gams-explanation-face">Least square estimate of intercept</span>
+    b_hat		<span class="gams-explanation-face">Least square estimate of coefficient</span>
+    proj_inctax		<span class="gams-explanation-face">Projected implicit carbon tax</span>
+    resi		<span class="gams-explanation-face">Residual</span>
+    pop_		<span class="gams-explanation-face">Population (mil)</span>
+
+    av_ictax		<span class="gams-explanation-face">Average of ictax</span>
+    av_inc		<span class="gams-explanation-face">Average of real income per capita (thousand dollar)</span>
+    n_o_r		<span class="gams-explanation-face">The number of regions</span>
+
+    const_tax(r)	<span class="gams-explanation-face">Real carbon tax</span>
+<span class="gams-lst-warning-face">;</span>
+n_o_r = <span class="gams-statement-face">card</span>(r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> n_o_r<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Set temporary values to initialize parameters.	All values have no</span>
+<span class="gams-comment-face">*	meaning here.</span>
+a_hat = 1<span class="gams-lst-warning-face">;</span>
+b_hat = 1<span class="gams-lst-warning-face">;</span>
+proj_inctax(r) = 1<span class="gams-lst-warning-face">;</span>
+resi(r) = 1<span class="gams-lst-warning-face">;</span>
+inc_pc(r) = 1<span class="gams-lst-warning-face">;</span>
+pop_(r) = 1<span class="gams-lst-warning-face">;</span>
+const_tax(r) = 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Cost parameters.</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Cost parameters.&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">parameter</span>
+    cost_o(i,r)		<span class="gams-explanation-face">Cost of production</span>
+    cost_il(i,r)	<span class="gams-explanation-face">Cost of non-resource inputs in xe</span>
+    cost_pfe(i,r)	<span class="gams-explanation-face">Cost of primary factor-energy composite</span>
+    cost_pf(i,r)	<span class="gams-explanation-face">Cost of primary factor composite</span>
+    cost_ea(i,r)	<span class="gams-explanation-face">Cost of energy inputs in nxe</span>
+    cost_nel(i,r)	<span class="gams-explanation-face">Cost of non-energy inputs in nxe</span>
+    cost_lqd(i,r)	<span class="gams-explanation-face">Cost of liquidity energy in nxe</span>
+
+    cost_ceg(r)		<span class="gams-explanation-face">Cost of energy goods in consumption</span>
+    cost_cneg(r)	<span class="gams-explanation-face">Cost of non-energy goods in consumption</span>
+<span class="gams-lst-warning-face">;</span>
+cost_il(xe,r)<span class="gams-dollar-face">$</span>vom(xe,r)
+    = <span class="gams-statement-face">sum</span>(j, pai0(j,xe,r) * vafm(j,xe,r)) + ld0(xe,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> cost_il<span class="gams-lst-warning-face">;</span>
+
+cost_pf(nxe,r)<span class="gams-dollar-face">$</span>vom(nxe,r) = ld0(nxe,r) + kd0(nxe,r)<span class="gams-lst-warning-face">;</span>
+cost_pfe(nxe,r)<span class="gams-dollar-face">$</span>vom(nxe,r)
+    = cost_pf(nxe,r) + <span class="gams-statement-face">sum</span>(eg, pai0(eg,nxe,r) * vafm(eg,nxe,r))<span class="gams-lst-warning-face">;</span>
+cost_pf(nxe,r) = <span class="gams-statement-face">round</span>(cost_pf(nxe,r), 4)<span class="gams-lst-warning-face">;</span>
+cost_pfe(nxe,r) = <span class="gams-statement-face">round</span>(cost_pfe(nxe,r), 4)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> cost_pf, cost_pfe<span class="gams-lst-warning-face">;</span>
+
+cost_o(i,r)<span class="gams-dollar-face">$</span>vom(i,r) = (1-ty(i,r)) * vom(i,r)<span class="gams-lst-warning-face">;</span>
+cost_o(nxe,r)<span class="gams-dollar-face">$</span>vom(nxe,r) = <span class="gams-statement-face">sum</span>(neg, pai0(neg,nxe,r)*vafm(neg,nxe,r))
+    + cost_pfe(nxe,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> cost_o<span class="gams-lst-warning-face">;</span>
+
+cost_ea(nxe,r)<span class="gams-dollar-face">$</span>vom(nxe,r) = voei(nxe,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> cost_ea<span class="gams-lst-warning-face">;</span>
+
+cost_nel(nxe,r)<span class="gams-dollar-face">$</span>vom(nxe,r) = <span class="gams-statement-face">sum</span>(nele, pai0(nele,nxe,r) * vafm(nele,nxe,r))<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> cost_nel<span class="gams-lst-warning-face">;</span>
+
+cost_lqd(nxe,r)<span class="gams-dollar-face">$</span>vom(nxe,r) = <span class="gams-statement-face">sum</span>(lqd, pai0(lqd,nxe,r) * vafm(lqd,nxe,r))<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> cost_lqd<span class="gams-lst-warning-face">;</span>
+
+cost_ceg(r) = <span class="gams-statement-face">sum</span>(eg, pc0(eg,r) * vcm(eg,r))<span class="gams-lst-warning-face">;</span>
+cost_cneg(r) = <span class="gams-statement-face">sum</span>(neg, pc0(neg,r) * vcm(neg,r))<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> cost_ceg, cost_cneg<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Share parameters.</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Share parameters.&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">parameter</span>
+    sh_x(i,r)		<span class="gams-explanation-face">Share of export supply in output</span>
+
+    sh_xer(i,r)		<span class="gams-explanation-face">Share of resource input in xe</span>
+    sh_xe(*,i,r)	<span class="gams-explanation-face">Share of non-resource inputs in xe</span>
+
+    sh_neg(j,i,r)	<span class="gams-explanation-face">Share of non-energy inpputs in nxe</span>
+    sh_pfe(i,r)		<span class="gams-explanation-face">Share of PFE composite in nxe</span>
+    sh_pf(i,r)		<span class="gams-explanation-face">Share of primary factor composite in nxe</span>
+    sh_lab(i,r)		<span class="gams-explanation-face">Share of primary factor in nxe</span>
+    sh_ele(i,r)		<span class="gams-explanation-face">Share of electricity in nxe</span>
+    sh_col(i,r)		<span class="gams-explanation-face">Share of coal in nxe</span>
+    sh_lqd(lqd, i,r)	<span class="gams-explanation-face">Share of liquidity energy in nxe</span>
+
+    sh_m(i,r)		<span class="gams-explanation-face">Share of import goods in Armington aggregation</span>
+    sh_mm(i,r,s)	<span class="gams-explanation-face">Share of import goods</span>
+    gamma(i,s,r)	<span class="gams-explanation-face">goods share of unit import cost</span>
+
+    sh_ce(r)		<span class="gams-explanation-face">Share of energy composite in consumption</span>
+    sh_cneg(i,r)	<span class="gams-explanation-face">Share of non-energy goods in consumption</span>
+    sh_ceg(i,r)		<span class="gams-explanation-face">Share of energy goods in consumption</span>
+
+    sh_t(i,r)		<span class="gams-explanation-face">Share of inputs in transport</span>
+
+    sh_cc(r)		<span class="gams-explanation-face">Share of aggregate consumption</span>
+    sh_inv(r)		<span class="gams-explanation-face">Share in global investment</span>
+<span class="gams-lst-warning-face">;</span>
+sh_x(i,r)<span class="gams-dollar-face">$</span>vom(i,r) = vxm(i,r) / vom(i,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_x<span class="gams-lst-warning-face">;</span>
+
+sh_xer(xe,r)<span class="gams-dollar-face">$</span>cost_o(xe,r) = rd0(xe,r) / cost_o(xe,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_xer<span class="gams-lst-warning-face">;</span>
+
+sh_xe(<span class="gams-string-face">&quot;l&quot;</span>,xe,r)<span class="gams-dollar-face">$</span>cost_il(xe,r) = ld0(xe,r) / cost_il(xe,r)<span class="gams-lst-warning-face">;</span>
+sh_xe(j,xe,r)<span class="gams-dollar-face">$</span>cost_il(xe,r) = pai0(j,xe,r) * vafm(j,xe,r) / cost_il(xe,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_xe<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">* parameter	chk_xe;</span>
+<span class="gams-comment-face">* chk_xe(xe,r) = sh_xer(xe,r) + 1-sh_xer(xe,r);</span>
+<span class="gams-comment-face">* option chk_xe:8;</span>
+<span class="gams-comment-face">* display chk_xe;</span>
+
+sh_neg(neg,nxe,r)<span class="gams-dollar-face">$</span>cost_o(nxe,r)
+    = pai0(neg,nxe,r) * vafm(neg,nxe,r) / cost_o(nxe,r)<span class="gams-lst-warning-face">;</span>
+sh_pfe(nxe,r)<span class="gams-dollar-face">$</span>cost_o(nxe,r)
+    = cost_pfe(nxe,r) / cost_o(nxe,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_neg, sh_pfe<span class="gams-lst-warning-face">;</span>
+
+sh_pf(nxe,r)<span class="gams-dollar-face">$</span>cost_pfe(nxe,r)
+    = cost_pf(nxe,r) / cost_pfe(nxe,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_pf<span class="gams-lst-warning-face">;</span>
+
+sh_lab(nxe,r)<span class="gams-dollar-face">$</span>cost_pf(nxe,r) = ld0(nxe,r) / cost_pf(nxe,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_lab<span class="gams-lst-warning-face">;</span>
+
+sh_ele(nxe,r)<span class="gams-dollar-face">$</span>cost_ea(nxe,r)
+    = pai0(<span class="gams-string-face">&quot;ele&quot;</span>,nxe,r) * vafm(<span class="gams-string-face">&quot;ele&quot;</span>,nxe,r) / cost_ea(nxe,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_ele<span class="gams-lst-warning-face">;</span>
+
+sh_col(nxe,r)<span class="gams-dollar-face">$</span>cost_nel(nxe,r)
+    = pai0(<span class="gams-string-face">&quot;col&quot;</span>,nxe,r) * vafm(<span class="gams-string-face">&quot;col&quot;</span>,nxe,r) / cost_nel(nxe,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_col<span class="gams-lst-warning-face">;</span>
+
+sh_lqd(lqd,nxe,r)<span class="gams-dollar-face">$</span>cost_lqd(nxe,r)
+    = pai0(lqd,nxe,r) * vafm(lqd,nxe,r) / cost_lqd(nxe,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_lqd<span class="gams-lst-warning-face">;</span>
+
+sh_m(i,r)<span class="gams-dollar-face">$</span>a0(i,r) = m0(i,r) / a0(i,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_m<span class="gams-lst-warning-face">;</span>
+
+sh_ce(r) = cost_ceg(r) / vc(r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_ce<span class="gams-lst-warning-face">;</span>
+
+sh_ceg(eg,r)<span class="gams-dollar-face">$</span>cost_ceg(r) = pc0(eg,r) * vcm(eg,r) / cost_ceg(r)<span class="gams-lst-warning-face">;</span>
+sh_cneg(neg,r)<span class="gams-dollar-face">$</span>cost_cneg(r) = pc0(neg,r) * vcm(neg,r) / cost_cneg(r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_ceg, sh_cneg<span class="gams-lst-warning-face">;</span>
+
+sh_t(i,r) = vst(i,r) / vt<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_t<span class="gams-lst-warning-face">;</span>
+
+sh_mm(i,s,r)<span class="gams-dollar-face">$</span>vim(i,r) =
+    (vxmd(i,s,r) * pmx0(i,s,r) + vtwr(i,s,r) * pmt0(i,s,r) ) / vim(i,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_mm<span class="gams-lst-warning-face">;</span>
+
+gamma(i,s,r)<span class="gams-dollar-face">$</span>vxmd(i,s,r) = vxmd(i,s,r) * pmx0(i,s,r) /
+    (vxmd(i,s,r) * pmx0(i,s,r) + vtwr(i,s,r) * pmt0(i,s,r) )<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> gamma<span class="gams-lst-warning-face">;</span>
+
+sh_cc(r) = vc(r) / u0(r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_cc<span class="gams-lst-warning-face">;</span>
+
+sh_inv(r) = ninv(r) / gninv<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> sh_inv<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Variable definitions.</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Variable definitions.&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">variables</span>
+<span class="gams-comment-face">*	Unit cost and price index</span>
+    c_y(i,r)		<span class="gams-explanation-face">Unit cost of production</span>
+    c_ea(i,r)		<span class="gams-explanation-face">Unit cost of energy aggregation</span>
+    c_a(i,r)		<span class="gams-explanation-face">Unit cost of Armington aggregation</span>
+    c_m(i,r)		<span class="gams-explanation-face">Unit cost of import aggregation</span>
+    c_c(r)		<span class="gams-explanation-face">Unit cost of consumption</span>
+    c_t			<span class="gams-explanation-face">Unit cost of transport services</span>
+    c_u(r)		<span class="gams-explanation-face">Unit cost of utility</span>
+    c_ginv		<span class="gams-explanation-face">Unit cost of global investment</span>
+    p_y(i,r)		<span class="gams-explanation-face">Price index of output</span>
+    p_il(i,r)		<span class="gams-explanation-face">Price index of intermediate input-labor composite</span>
+    p_pfe(i,r)		<span class="gams-explanation-face">Price index of primary factor-energy composite</span>
+    p_pf(i,r)		<span class="gams-explanation-face">Price index of primary factor composite</span>
+    p_nel(i,r)		<span class="gams-explanation-face">Price index of non-electricity energy composite</span>
+    p_lqd(i,r)		<span class="gams-explanation-face">Price index of liquidity energy composite</span>
+    p_mm(i,r,s)		<span class="gams-explanation-face">Price index of import</span>
+    p_cne(r)		<span class="gams-explanation-face">Price index of non-energy goods in consumption</span>
+    p_ce(r)		<span class="gams-explanation-face">Price index of energy goods in consumption</span>
+    p_e(i,j,r)		<span class="gams-explanation-face">Price of final energy for intermediate inputs</span>
+    p_efd(i,r)		<span class="gams-explanation-face">Price of final energy for final demand</span>
+    p_x(i,r)		<span class="gams-explanation-face">Price of export goods</span>
+    p_d(i,r)		<span class="gams-explanation-face">Price of domestic goods</span>
+    p_m(i,r)		<span class="gams-explanation-face">Price of import goods</span>
+    p_t			<span class="gams-explanation-face">Price of transport services</span>
+    p_ea(i,r)		<span class="gams-explanation-face">Price of energy composite</span>
+    p_l(r)		<span class="gams-explanation-face">Wage rate</span>
+    p_r(i,r)		<span class="gams-explanation-face">Price of resource inputs</span>
+    r_k(r)		<span class="gams-explanation-face">Rental price</span>
+    p_a(i,r)		<span class="gams-explanation-face">Price of Armington goods</span>
+    p_c(r)		<span class="gams-explanation-face">Price index of aggregate consumption</span>
+    p_inv		<span class="gams-explanation-face">Price of regional investment</span>
+    p_u(r)		<span class="gams-explanation-face">Price of utility</span>
+    p_save		<span class="gams-explanation-face">Price of savings</span>
+
+
+<span class="gams-comment-face">*	Demand and supply</span>
+    a_xer(i,r)		<span class="gams-explanation-face">Demand for resource inputs</span>
+    a_xel(i,r)		<span class="gams-explanation-face">Demand for labor</span>
+    a_xei(i,j,r)	<span class="gams-explanation-face">Demand for intermediate inputs</span>
+    a_fl(i,r)		<span class="gams-explanation-face">Demand for labor</span>
+    a_fk(i,r)		<span class="gams-explanation-face">Demand for capital</span>
+    a_ea(i,r)		<span class="gams-explanation-face">Demand for energy composite</span>
+    a_e(j,i,r)		<span class="gams-explanation-face">Demand for energy</span>
+    a_ad(i,r)		<span class="gams-explanation-face">Demand for domestic goods</span>
+    a_am(i,r)		<span class="gams-explanation-face">Demand for aggregate import</span>
+    a_mm(i,s,r)		<span class="gams-explanation-face">Demand for import goods</span>
+    a_cne(i,r)		<span class="gams-explanation-face">Demand for non-energy goods</span>
+    a_ce(i,r)		<span class="gams-explanation-face">Demand for energy goods</span>
+    a_x(i,r)		<span class="gams-explanation-face">Export supply</span>
+    a_d(i,r)		<span class="gams-explanation-face">Domestic supply</span>
+    a_t(i,r)		<span class="gams-explanation-face">Demand from transport sector</span>
+    a_cc(r)		<span class="gams-explanation-face">Demand for aggregate consumption</span>
+    a_s(r)		<span class="gams-explanation-face">Demand for savings</span>
+
+    d_ca(r)		<span class="gams-explanation-face">Total emissions</span>
+    d_c_e(i,j,r)	<span class="gams-explanation-face">Emissions from intermediate inputs</span>
+    d_c_fd(i,r)		<span class="gams-explanation-face">Emissions from final demand</span>
+
+<span class="gams-comment-face">*	Activity level</span>
+    y(i,r)		<span class="gams-explanation-face">Production level</span>
+    ea(i,r)		<span class="gams-explanation-face">Energy aggregation</span>
+    a(i,r)		<span class="gams-explanation-face">Armington aggregation</span>
+    m(i,r)		<span class="gams-explanation-face">Import aggregation</span>
+    c(r)		<span class="gams-explanation-face">Consumption aggregation</span>
+    yt			<span class="gams-explanation-face">Transport sector</span>
+    u(r)		<span class="gams-explanation-face">Price of utility</span>
+
+    r_c(r)		<span class="gams-explanation-face">Current rate of return from capital stock</span>
+    r_e(r)		<span class="gams-explanation-face">Expected rate of return from capital stock</span>
+    k_e(r)		<span class="gams-explanation-face">End-of-period capital stock</span>
+    r_g			<span class="gams-explanation-face">Global rate of return</span>
+
+    inc_ra(r)		<span class="gams-explanation-face">Income of representative agent</span>
+
+    ginv		<span class="gams-explanation-face">Global investment</span>
+    grossinv(r)		<span class="gams-explanation-face">Gross domestic investment</span>
+    netinv(r)		<span class="gams-explanation-face">Regional net investment (gross minus depreciation)</span>
+    rsave(r)		<span class="gams-explanation-face">Regional savings</span>
+
+    ic_tax(r)		<span class="gams-explanation-face">Implicit carbon tax</span>
+    c_tax(r)		<span class="gams-explanation-face">Endogenous carbon tax</span>
+    rc_tax(r)		<span class="gams-explanation-face">Endogenous carbon tax (real)</span>
+<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Equation definitions.</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Equation definitions.&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">equations</span>
+<span class="gams-comment-face">*	Unit cost and price index</span>
+    e_c_y(i,r)		<span class="gams-explanation-face">Unit cost of production</span>
+    e_p_y(i,r)		<span class="gams-explanation-face">Price index of output</span>
+    e_p_il(i,r)		<span class="gams-explanation-face">Price index of intermediate input-labor composite</span>
+    e_p_pfe(i,r)	<span class="gams-explanation-face">Price index of primary factor-energy composite</span>
+    e_p_pf(i,r)		<span class="gams-explanation-face">Price index of primary factor composite</span>
+    e_c_ea(i,r)		<span class="gams-explanation-face">Unit cost of energy aggregation</span>
+    e_p_nel(i,r)	<span class="gams-explanation-face">Price index of non-electricity energy composite</span>
+    e_p_lqd(i,r)	<span class="gams-explanation-face">Price index of liquidity energy composite</span>
+    e_c_a(i,r)		<span class="gams-explanation-face">Unit cost of Armington aggregation</span>
+    e_c_m(i,r)		<span class="gams-explanation-face">Unit cost of import aggregation</span>
+    e_p_mm(i,r,s)	<span class="gams-explanation-face">Price index of import</span>
+    e_c_c(r)		<span class="gams-explanation-face">Unit cost of consumption</span>
+    e_p_cne(r)		<span class="gams-explanation-face">Price index of non-energy goods in consumption</span>
+    e_p_ce(r)		<span class="gams-explanation-face">Price index of energy goods in consumption</span>
+    e_p_e(i,j,r)	<span class="gams-explanation-face">Price of final energy for intermediate inputs</span>
+    e_p_efd(i,r)	<span class="gams-explanation-face">Price of final energy for final demand</span>
+    e_c_t		<span class="gams-explanation-face">Cost of transport services</span>
+
+<span class="gams-comment-face">*	Activity level</span>
+    e_y(i,r)		<span class="gams-explanation-face">Production level</span>
+    e_ea(i,r)		<span class="gams-explanation-face">Energy aggregation</span>
+    e_a(i,r)		<span class="gams-explanation-face">Armington aggregation</span>
+    e_m(i,r)		<span class="gams-explanation-face">Import aggregation</span>
+    e_c(r)		<span class="gams-explanation-face">Consumption aggregation</span>
+    e_yt		<span class="gams-explanation-face">Transport sector</span>
+
+<span class="gams-comment-face">*	Demand and supply</span>
+    e_a_xer(i,r)	<span class="gams-explanation-face">Demand for resource inputs</span>
+    e_a_xel(i,r)	<span class="gams-explanation-face">Demand for labor</span>
+    e_a_xei(i,j,r)	<span class="gams-explanation-face">Demand for intermediate inputs</span>
+    e_a_fl(i,r)		<span class="gams-explanation-face">Demand for labor</span>
+    e_a_fk(i,r)		<span class="gams-explanation-face">Demand for capital</span>
+    e_a_ea(i,r)		<span class="gams-explanation-face">Demand for energy composite</span>
+    e_a_e(j,i,r)	<span class="gams-explanation-face">Demand for energy</span>
+    e_a_ad(i,r)		<span class="gams-explanation-face">Demand for domestic goods</span>
+    e_a_am(i,r)		<span class="gams-explanation-face">Demand for aggregate import</span>
+    e_a_mm(i,s,r)	<span class="gams-explanation-face">Demand for import goods</span>
+    e_a_cne(i,r)	<span class="gams-explanation-face">Demand for non-energy goods</span>
+    e_a_ce(i,r)		<span class="gams-explanation-face">Demand for energy goods</span>
+    e_a_x(i,r)		<span class="gams-explanation-face">Export supply</span>
+    e_a_d(i,r)		<span class="gams-explanation-face">Domestic supply</span>
+    e_a_cc(r)		<span class="gams-explanation-face">Demand for aggregate consumption</span>
+    e_a_s(r)		<span class="gams-explanation-face">Demand for savings</span>
+    e_a_t(i,r)		<span class="gams-explanation-face">Demand from transport sector</span>
+
+    e_d_ca(r)		<span class="gams-explanation-face">Total demand for emission permits</span>
+    e_d_c_e(i,j,r)	<span class="gams-explanation-face">Emissions from intermediate inputs</span>
+    e_d_c_fd(i,r)	<span class="gams-explanation-face">Emissions from final demand</span>
+
+<span class="gams-comment-face">*	Prices.</span>
+    e_p_x(i,r)		<span class="gams-explanation-face">Price of export goods</span>
+    e_p_d(i,r)		<span class="gams-explanation-face">Price of domestic goods</span>
+    e_p_m(i,r)		<span class="gams-explanation-face">Price of import goods</span>
+    e_p_t		<span class="gams-explanation-face">Price of transport services</span>
+    e_p_ea(i,r)		<span class="gams-explanation-face">Price of energy composite</span>
+    e_p_l(r)		<span class="gams-explanation-face">Wage rate</span>
+    e_p_r(i,r)		<span class="gams-explanation-face">Price of resource inputs</span>
+    e_r_k(r)		<span class="gams-explanation-face">Rental price</span>
+    e_p_a(i,r)		<span class="gams-explanation-face">Price of Armington goods</span>
+    e_p_c(r)		<span class="gams-explanation-face">Price index of aggregate consumption</span>
+
+    e_inc_ra(r)		<span class="gams-explanation-face">Income of representative agent</span>
+
+    e_u(r)		<span class="gams-explanation-face">Price of utility</span>
+    e_p_inv		<span class="gams-explanation-face">Price of regional investment</span>
+    e_c_u(r)		<span class="gams-explanation-face">Unit cost of utility</span>
+    e_p_u(r)		<span class="gams-explanation-face">Price of utility</span>
+    e_p_save		<span class="gams-explanation-face">Price of savings</span>
+    e_c_ginv		<span class="gams-explanation-face">Unit cost of global investment</span>
+    e_ginv		<span class="gams-explanation-face">Global investment</span>
+    e_grossinv		<span class="gams-explanation-face">Gross domestic investment</span>
+    e_r_c(r)		<span class="gams-explanation-face">Rate of return</span>
+    e_r_e(r)		<span class="gams-explanation-face">Expected rate of return</span>
+    e_k_e(r)		<span class="gams-explanation-face">End-of-period capital stock</span>
+    e_r_g		<span class="gams-explanation-face">Global rate of return</span>
+
+    e_netinv(r)		<span class="gams-explanation-face">Net investment</span>
+    e_rsave(r)		<span class="gams-explanation-face">Regional savings</span>
+
+    e_ic_tax(r)		<span class="gams-explanation-face">Implicit carbon tax</span>
+    e_c_tax(r)		<span class="gams-explanation-face">Endogenous carbon tax</span>
+    e_rc_tax(r)		<span class="gams-explanation-face">Endogenous carbon tax (real)</span>
+<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Unit cost and price index.</span>
+
+<span class="gams-comment-face">*	Unit cost of production.</span>
+e_c_y(i,r)<span class="gams-dollar-face">$</span>vom(i,r) ..
+
+    c_y(i,r) <span class="gams-operator-face">=e=</span>
+    ((sh_xer(i,r) * (p_r(i,r))**(1-sig_r(i,r))
+    + (1-sh_xer(i,r)) * (p_il(i,r))**(1-sig_r(i,r)))**(1/(1-sig_r(i,r)))
+    )<span class="gams-dollar-face">$</span>xe(i)
+    +
+    (<span class="gams-statement-face">sum</span>(neg<span class="gams-dollar-face">$</span>sh_neg(neg,i,r),
+    sh_neg(neg,i,r) * ((1+ti(neg,i,r))*p_a(neg,r)/pai0(neg,i,r)))
+    + sh_pfe(i,r) * p_pfe(i,r)
+    )<span class="gams-dollar-face">$</span>nxe(i)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Price index of output.</span>
+e_p_y(i,r)<span class="gams-dollar-face">$</span>vom(i,r) ..
+
+    p_y(i,r) <span class="gams-operator-face">=e=</span>
+    ((sh_x(i,r)*(p_x(i,r))**(1+eta_o))<span class="gams-dollar-face">$</span>sh_x(i,r)
+    + (1-sh_x(i,r))*(p_d(i,r))**(1+eta_o)
+    )**(1/(1+eta_o))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Price index of intermediate goods and labor.</span>
+e_p_il(i,r)<span class="gams-dollar-face">$</span>cost_il(i,r) ..
+
+    p_il(i,r) <span class="gams-operator-face">=e=</span>
+    sh_xe(<span class="gams-string-face">&quot;l&quot;</span>,i,r) * p_l(r)
+    + <span class="gams-statement-face">sum</span>(j<span class="gams-dollar-face">$</span>sh_xe(j,i,r),
+    sh_xe(j,i,r) * ((1+ti(j,i,r))*p_a(j,r)/pai0(j,i,r)))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Price index of primary factor-energy composite.</span>
+e_p_pfe(i,r)<span class="gams-dollar-face">$</span>cost_pfe(i,r) ..
+
+    p_pfe(i,r) <span class="gams-operator-face">=e=</span>
+    ((sh_pf(i,r)*(p_pf(i,r))**(1-sig_pfe)
+    + (1-sh_pf(i,r))*(p_ea(i,r))**(1-sig_pfe))**(1/(1-sig_pfe)))<span class="gams-dollar-face">$</span>(sig_pfe <span class="gams-statement-face">ne</span> 1)
+    +
+    (p_pf(i,r)**(sh_pf(i,r)) * (p_ea(i,r))**(1-sh_pf(i,r)))<span class="gams-dollar-face">$</span>(sig_pfe = 1)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Price index of primary factor composite.</span>
+e_p_pf(i,r)<span class="gams-dollar-face">$</span>cost_pf(i,r) ..
+
+    p_pf(i,r) <span class="gams-operator-face">=e=</span>
+    ((sh_lab(i,r)*(p_l(r)/tp_kl(r))**(1-sig_pf)
+    + (1-sh_lab(i,r))*(r_k(r)/tp_kl(r))**(1-sig_pf)
+    )**(1/(1-sig_pf)))<span class="gams-dollar-face">$</span>(sig_pf <span class="gams-statement-face">ne</span> 1)
+    +
+    ((p_l(r)/tp_kl(r))**(sh_lab(i,r))
+    * (r_k(r)/tp_kl(r))**(1-sh_lab(i,r)))<span class="gams-dollar-face">$</span>(sig_pf = 1)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Unit cost of energy aggregation.</span>
+e_c_ea(i,r)<span class="gams-dollar-face">$</span>cost_ea(i,r) ..
+
+    c_ea(i,r) <span class="gams-operator-face">=e=</span>
+    ((sh_ele(i,r)*((1+ti(<span class="gams-string-face">&quot;ele&quot;</span>,i,r))*p_a(<span class="gams-string-face">&quot;ele&quot;</span>,r)/pai0(<span class="gams-string-face">&quot;ele&quot;</span>,i,r))**(1-sig_e)
+    + (1-sh_ele(i,r))*(p_nel(i,r))**(1-sig_e))**(1/(1-sig_e)))<span class="gams-dollar-face">$</span>(sig_e <span class="gams-statement-face">ne</span> 1)
+    +
+    (((1+ti(<span class="gams-string-face">&quot;ele&quot;</span>,i,r))*p_a(<span class="gams-string-face">&quot;ele&quot;</span>,r)/pai0(<span class="gams-string-face">&quot;ele&quot;</span>,i,r))**(sh_ele(i,r))
+    * (p_nel(i,r))**(1-sh_ele(i,r)))<span class="gams-dollar-face">$</span>(sig_e = 1)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Price index of non-electricity energy.</span>
+e_p_nel(i,r)<span class="gams-dollar-face">$</span>cost_nel(i,r) ..
+
+    p_nel(i,r) <span class="gams-operator-face">=e=</span>
+    ((sh_col(i,r)*(p_e(<span class="gams-string-face">&quot;col&quot;</span>,i,r))**(1-sig_nel)
+    + (1-sh_col(i,r))*(p_lqd(i,r))**(1-sig_nel))**(1/(1-sig_nel)))<span class="gams-dollar-face">$</span>(sig_nel <span class="gams-statement-face">ne</span> 1)
+    +
+    ((((p_e(<span class="gams-string-face">&quot;col&quot;</span>,i,r))**(sh_col(i,r)))<span class="gams-dollar-face">$</span>sh_col(i,r) + 1<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> sh_col(i,r)))
+    * (p_lqd(i,r))**(1-sh_col(i,r)))<span class="gams-dollar-face">$</span>(sig_nel = 1)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Price index of liquidity energy.</span>
+e_p_lqd(i,r)<span class="gams-dollar-face">$</span>cost_lqd(i,r) ..
+
+    p_lqd(i,r) <span class="gams-operator-face">=e=</span>
+    ((<span class="gams-statement-face">sum</span>(lqd<span class="gams-dollar-face">$</span>sh_lqd(lqd,i,r),
+    sh_lqd(lqd,i,r)*(p_e(lqd,i,r))**(1-sig_lqd)
+    ))**(1/(1-sig_lqd)))<span class="gams-dollar-face">$</span>(sig_lqd <span class="gams-statement-face">ne</span> 1)
+    +
+    (<span class="gams-statement-face">prod</span>(lqd<span class="gams-dollar-face">$</span>sh_lqd(lqd,i,r),
+    (p_e(lqd,i,r))**(sh_lqd(lqd,i,r))
+    ))<span class="gams-dollar-face">$</span>(sig_lqd = 1)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Unit cost of Armington aggregation.</span>
+e_c_a(i,r)<span class="gams-dollar-face">$</span>a0(i,r) ..
+
+    c_a(i,r) <span class="gams-operator-face">=e=</span>
+    (((sh_m(i,r)*(p_m(i,r))**(1-sig_a))<span class="gams-dollar-face">$</span>sh_m(i,r)
+    + ((1-sh_m(i,r))*(p_d(i,r))**(1-sig_a))<span class="gams-dollar-face">$</span>(sh_m(i,r) <span class="gams-statement-face">ne</span> 1)
+    )**(1/(1-sig_a)))<span class="gams-dollar-face">$</span>(sig_a <span class="gams-statement-face">ne</span> 1)
+    +
+    ((1<span class="gams-dollar-face">$</span>(sh_m(i,r) = 0) +  ((p_m(i,r))**(sh_m(i,r)))<span class="gams-dollar-face">$</span>sh_m(i,r))
+    * (1<span class="gams-dollar-face">$</span>(sh_m(i,r) = 1) +  ((p_d(i,r))**(1-sh_m(i,r)))<span class="gams-dollar-face">$</span>(sh_m(i,r) <span class="gams-statement-face">ne</span> 1))
+    )<span class="gams-dollar-face">$</span>(sig_a = 1)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Unit cost of import aggregation.</span>
+e_c_m(i,r)<span class="gams-dollar-face">$</span>m0(i,r) ..
+
+    c_m(i,r) <span class="gams-operator-face">=e=</span>
+    ((<span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>sh_mm(i,s,r),
+    sh_mm(i,s,r)*(p_mm(i,s,r))**(1-sig_m)))**(1/(1-sig_m)))<span class="gams-dollar-face">$</span>(sig_m <span class="gams-statement-face">ne</span> 1)
+    +
+    (<span class="gams-statement-face">prod</span>(s<span class="gams-dollar-face">$</span>sh_mm(i,s,r), (p_mm(i,s,r))**(sh_mm(i,s,r))))<span class="gams-dollar-face">$</span>(sig_m = 1)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Price index of import goods.</span>
+e_p_mm(i,r,s)<span class="gams-dollar-face">$</span>vxmd(i,r,s) ..
+
+    p_mm(i,r,s) <span class="gams-operator-face">=e=</span>
+    gamma(i,r,s)*(1+tm(i,r,s))*(1+tx(i,r,s))*p_x(i,r)/pmx0(i,r,s)
+    + (1-gamma(i,r,s))*(1+tm(i,r,s))*p_t/pmt0(i,r,s)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Unit cost of consumption aggregation.</span>
+e_c_c(r) ..
+
+    c_c(r) <span class="gams-operator-face">=e=</span>
+    ((sh_ce(r)*(p_ce(r))**(1-sig_c) + (1-sh_ce(r))*(p_cne(r))**(1-sig_c)
+    )**(1/(1-sig_c)))<span class="gams-dollar-face">$</span>(sig_c <span class="gams-statement-face">ne</span> 1)
+    +
+    ((p_ce(r))**sh_ce(r) * (p_cne(r))**(1-sh_ce(r)))<span class="gams-dollar-face">$</span>(sig_c = 1)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Price index of non-energy consumption goods.</span>
+e_p_cne(r) ..
+
+    p_cne(r) <span class="gams-operator-face">=e=</span>
+    ((<span class="gams-statement-face">sum</span>(neg<span class="gams-dollar-face">$</span>sh_cneg(neg,r),
+    sh_cneg(neg,r)*((1+tc(neg,r))*p_a(neg,r)/pc0(neg,r))**(1-sig_cne)
+    ))**(1/(1-sig_cne)))<span class="gams-dollar-face">$</span>(sig_cne <span class="gams-statement-face">ne</span> 1)
+    +
+    (<span class="gams-statement-face">prod</span>(neg<span class="gams-dollar-face">$</span>sh_cneg(neg,r),
+    ((1+tc(neg,r))*p_a(neg,r)/pc0(neg,r))**(sh_cneg(neg,r)))
+    )<span class="gams-dollar-face">$</span>(sig_cne = 1)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Price index of energy consumption goods.</span>
+e_p_ce(r) ..
+
+    p_ce(r) <span class="gams-operator-face">=e=</span>
+    ((sh_ceg(<span class="gams-string-face">&quot;ele&quot;</span>,r)*((1+tc(<span class="gams-string-face">&quot;ele&quot;</span>,r))*p_a(<span class="gams-string-face">&quot;ele&quot;</span>,r)/pc0(<span class="gams-string-face">&quot;ele&quot;</span>,r))**(1-sig_ce)
+    + <span class="gams-statement-face">sum</span>(fe<span class="gams-dollar-face">$</span>sh_ceg(fe,r),
+    sh_ceg(fe,r)*(p_efd(fe,r))**(1-sig_ce))
+    )**(1/(1-sig_ce)))<span class="gams-dollar-face">$</span>(sig_ce <span class="gams-statement-face">ne</span> 1)
+    +
+    (((1+tc(<span class="gams-string-face">&quot;ele&quot;</span>,r))*p_a(<span class="gams-string-face">&quot;ele&quot;</span>,r)/pc0(<span class="gams-string-face">&quot;ele&quot;</span>,r))**(sh_ceg(<span class="gams-string-face">&quot;ele&quot;</span>,r))
+    * <span class="gams-statement-face">prod</span>(fe<span class="gams-dollar-face">$</span>sh_ceg(fe,r),
+    (p_efd(fe,r))**(sh_ceg(fe,r)))
+    )<span class="gams-dollar-face">$</span>(sig_ce = 1)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Price index of energy for intermediate inputs:</span>
+e_p_e(fe,nxe,r)<span class="gams-dollar-face">$</span>vafm(fe,nxe,r) ..
+
+    p_e(fe,nxe,r) <span class="gams-operator-face">=e=</span> (1+ti(fe,nxe,r))*p_a(fe,r) / (pai0(fe,nxe,r)*tp_fe(r))
+    + (delta(fe,nxe,r)
+    * (ic_tax(r)<span class="gams-dollar-face">$</span>fl_it + c_tax(r)<span class="gams-dollar-face">$</span>fl_et + (rc_tax(r) * p_u(r))<span class="gams-dollar-face">$</span>fl_ct) / tp_fe(r)
+    )<span class="gams-dollar-face">$</span>delta(fe,nxe,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Price index of energy for final demand:</span>
+e_p_efd(fe,r)<span class="gams-dollar-face">$</span>vcm(fe,r) ..
+
+    p_efd(fe,r) <span class="gams-operator-face">=e=</span> (1+tc(fe,r))*p_a(fe,r) / pc0(fe,r)
+    + (delta(fe,<span class="gams-string-face">&quot;fd&quot;</span>,r)
+    * (ic_tax(r)<span class="gams-dollar-face">$</span>fl_it + c_tax(r)<span class="gams-dollar-face">$</span>fl_et + (rc_tax(r) * p_u(r))<span class="gams-dollar-face">$</span>fl_ct)
+    )<span class="gams-dollar-face">$</span>delta(fe,<span class="gams-string-face">&quot;fd&quot;</span>,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Unit cost of transport services.</span>
+e_c_t ..
+
+    c_t <span class="gams-operator-face">=e=</span>
+    ((<span class="gams-statement-face">sum</span>((i,r)<span class="gams-dollar-face">$</span>sh_t(i,r),
+    sh_t(i,r)*(p_x(i,r))**(1-sig_t)))**(1/(1-sig_t))
+    )<span class="gams-dollar-face">$</span>(sig_t <span class="gams-statement-face">ne</span> 1)
+    +
+    (<span class="gams-statement-face">prod</span>((i,r)<span class="gams-dollar-face">$</span>sh_t(i,r), (p_x(i,r))**(sh_t(i,r))))<span class="gams-dollar-face">$</span>(sig_t = 1)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Unit cost of utility:</span>
+e_c_u(r) ..
+
+    c_u(r) <span class="gams-operator-face">=e=</span>
+    ((sh_cc(r) * (p_c(r))**(1-sig_u) + (1-sh_cc(r)) * (p_save)**(1-sig_u)
+    )**(1/(1-sig_u))
+    )<span class="gams-dollar-face">$</span>(sig_u <span class="gams-statement-face">ne</span> 1)
+    +
+    ((p_c(r))**(sh_cc(r)) * (p_save)**(1-sh_cc(r)))<span class="gams-dollar-face">$</span>(sig_u = 1)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Zero profit conditions</span>
+
+<span class="gams-comment-face">*	Production activity.</span>
+e_y(i,r)<span class="gams-dollar-face">$</span>vom(i,r) ..
+
+    c_y(i,r) <span class="gams-operator-face">=g=</span> (1-ty(i,r)) * p_y(i,r) / py0(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Energy aggregation.</span>
+e_ea(i,r)<span class="gams-dollar-face">$</span>cost_ea(i,r) ..
+
+    c_ea(i,r) <span class="gams-operator-face">=g=</span> p_ea(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Armington aggregation.</span>
+e_a(i,r)<span class="gams-dollar-face">$</span>a0(i,r) ..
+
+    c_a(i,r) <span class="gams-operator-face">=g=</span> p_a(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Import aggregation.</span>
+e_m(i,r)<span class="gams-dollar-face">$</span>m0(i,r) ..
+
+    c_m(i,r) <span class="gams-operator-face">=g=</span> p_m(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Consumption aggregation.</span>
+e_c(r) ..
+
+    c_c(r) <span class="gams-operator-face">=g=</span> p_c(r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Transport services.</span>
+e_yt ..
+
+    c_t <span class="gams-operator-face">=g=</span> p_t<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Utility:</span>
+e_u(r) ..
+
+    c_u(r) <span class="gams-operator-face">=g=</span> p_u(r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Demand and supply.</span>
+
+<span class="gams-comment-face">*	Export supply.</span>
+e_a_x(i,r)<span class="gams-dollar-face">$</span>vxm(i,r) ..
+
+    a_x(i,r) <span class="gams-operator-face">=e=</span> vxm(i,r) * (p_x(i,r)/p_y(i,r))**(eta_o)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Domestic supply.</span>
+e_a_d(i,r)<span class="gams-dollar-face">$</span>vdm(i,r) ..
+
+    a_d(i,r) <span class="gams-operator-face">=e=</span> vdm(i,r) * (p_d(i,r)/p_y(i,r))**(eta_o)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for natural resource.</span>
+e_a_xer(i,r)<span class="gams-dollar-face">$</span>(xe(i) <span class="gams-statement-face">and</span> rd0(i,r)) ..
+
+    a_xer(i,r) <span class="gams-operator-face">=e=</span> rd0(i,r) * (c_y(i,r)/p_r(i,r))**(sig_r(i,r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for labor from fossil fuel production.</span>
+e_a_xel(i,r)<span class="gams-dollar-face">$</span>(xe(i) <span class="gams-statement-face">and</span> ld0(i,r)) ..
+
+    a_xel(i,r) <span class="gams-operator-face">=e=</span>
+    ld0(i,r) * (c_y(i,r)/p_il(i,r))**(sig_r(i,r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for intermediate goods from fossil fuel production.</span>
+e_a_xei(j,i,r)<span class="gams-dollar-face">$</span>(xe(i) <span class="gams-statement-face">and</span> vafm(j,i,r)) ..
+
+    a_xei(j,i,r) <span class="gams-operator-face">=e=</span>
+    vafm(j,i,r) * (c_y(i,r)/p_il(i,r))**(sig_r(i,r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for labor from non-fossil fuel production.</span>
+e_a_fl(i,r)<span class="gams-dollar-face">$</span>(nxe(i) <span class="gams-statement-face">and</span> ld0(i,r)) ..
+
+    a_fl(i,r)
+    <span class="gams-operator-face">=e=</span> ld0(i,r) * (p_pf(i,r)/p_l(r))**(sig_pf) * (tp_kl(r))**(sig_pf - 1)
+    * (p_pfe(i,r)/p_pf(i,r))**(sig_pfe)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for capital from non-fossil fuel production.</span>
+e_a_fk(i,r)<span class="gams-dollar-face">$</span>(nxe(i) <span class="gams-statement-face">and</span> kd0(i,r)) ..
+
+    a_fk(i,r)
+    <span class="gams-operator-face">=e=</span> kd0(i,r) * (p_pf(i,r)/r_k(r))**(sig_pf) * (tp_kl(r))**(sig_pf - 1)
+    * (p_pfe(i,r)/p_pf(i,r))**(sig_pfe)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for energy composite from non-fossil fuel production.</span>
+e_a_ea(i,r)<span class="gams-dollar-face">$</span>(nxe(i) <span class="gams-statement-face">and</span> voei(i,r)) ..
+
+    a_ea(i,r) <span class="gams-operator-face">=e=</span> voei(i,r) * (p_pfe(i,r)/p_ea(i,r))**(sig_pfe)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for energy goods.</span>
+e_a_e(eg,i,r)<span class="gams-dollar-face">$</span>(cost_ea(i,r) <span class="gams-statement-face">and</span> vafm(eg,i,r)) ..
+
+    a_e(eg,i,r) <span class="gams-operator-face">=e=</span>
+
+    (vafm(eg,i,r)
+    * (c_ea(i,r)/((1+ti(eg,i,r))*p_a(eg,r)/pai0(eg,i,r)))**(sig_e)
+    )<span class="gams-dollar-face">$</span>ele(eg)
+    +
+    (vafm(eg,i,r) * (tp_fe(r))**(-1)
+    * (p_nel(i,r)/p_e(eg,i,r))**(sig_nel)
+    * (c_ea(i,r)/p_nel(i,r))**(sig_e)
+    )<span class="gams-dollar-face">$</span>col(eg)
+    +
+    (vafm(eg,i,r) * (tp_fe(r))**(-1)
+    * (p_lqd(i,r)/p_e(eg,i,r))**(sig_lqd)
+    * (p_nel(i,r)/p_lqd(i,r))**(sig_nel)
+    * (c_ea(i,r)/p_nel(i,r))**(sig_e)
+    )<span class="gams-dollar-face">$</span>lqd(eg)
+    <span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for domestic goods.</span>
+e_a_ad(i,r)<span class="gams-dollar-face">$</span>d0(i,r) ..
+
+    a_ad(i,r) <span class="gams-operator-face">=e=</span> d0(i,r) * (c_a(i,r)/p_d(i,r))**(sig_a)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for aggregate import.</span>
+e_a_am(i,r)<span class="gams-dollar-face">$</span>m0(i,r) ..
+
+    a_am(i,r) <span class="gams-operator-face">=e=</span> m0(i,r) * (c_a(i,r)/p_m(i,r))**(sig_a)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for import goods.</span>
+e_a_mm(i,r,s)<span class="gams-dollar-face">$</span>vxmd(i,r,s) ..
+
+    a_mm(i,r,s) <span class="gams-operator-face">=e=</span>
+    vxmd(i,r,s) * (c_m(i,s) / p_mm(i,r,s))**(sig_m)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for non-energy consumption.</span>
+e_a_cne(i,r)<span class="gams-dollar-face">$</span>(neg(i) <span class="gams-statement-face">and</span> vcm(i,r)) ..
+
+    a_cne(i,r) <span class="gams-operator-face">=e=</span> vcm(i,r)
+    * (p_cne(r)/((1+tc(i,r))*p_a(i,r)/pc0(i,r)))**(sig_cne)
+    * (c_c(r)/p_cne(r))**(sig_c)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for energy consumption.</span>
+e_a_ce(i,r)<span class="gams-dollar-face">$</span>(eg(i) <span class="gams-statement-face">and</span> vcm(i,r)) ..
+
+    a_ce(i,r) <span class="gams-operator-face">=e=</span>
+
+    (vcm(i,r)
+    * (p_ce(r)/((1+tc(i,r))*p_a(i,r)/pc0(i,r)))**(sig_ce)
+    * (c_c(r)/p_ce(r))**(sig_c))<span class="gams-dollar-face">$</span>ele(i)
+    +
+    (vcm(i,r)
+    * (p_ce(r)/p_efd(i,r))**(sig_ce)
+    * (c_c(r)/p_ce(r))**(sig_c))<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> ele(i))<span class="gams-lst-warning-face">;</span>
+<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Demand from transport sector.</span>
+e_a_t(i,r)<span class="gams-dollar-face">$</span>vst(i,r) ..
+
+    a_t(i,r) <span class="gams-operator-face">=e=</span> vst(i,r) * (c_t / p_x(i,r))**(sig_t)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for aggregation consumption:</span>
+e_a_cc(r) ..
+
+    a_cc(r) <span class="gams-operator-face">=e=</span> vc(r) * (p_u(r) / p_c(r))**(sig_u)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Demand for savings:</span>
+e_a_s(r) ..
+
+    a_s(r) <span class="gams-operator-face">=e=</span> save(r) * (p_u(r) / p_save)**(sig_u)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Emissions from intermediate inputs:</span>
+e_d_c_e(fe,nxe,r)<span class="gams-dollar-face">$</span>delta_(fe,nxe,r) ..
+
+    d_c_e(fe,nxe,r) <span class="gams-operator-face">=e=</span>
+    delta_(fe,nxe,r) * a_e(fe,nxe,r) * ea(nxe,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Emissions from final demand:</span>
+e_d_c_fd(fe,r)<span class="gams-dollar-face">$</span>delta_(fe,<span class="gams-string-face">&quot;fd&quot;</span>,r) ..
+
+    d_c_fd(fe,r) <span class="gams-operator-face">=e=</span> delta_(fe,<span class="gams-string-face">&quot;fd&quot;</span>,r) * a_ce(fe,r) * c(r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Total demand for emission permits:</span>
+e_d_ca(r) ..
+
+    d_ca(r) <span class="gams-operator-face">=e=</span> <span class="gams-statement-face">sum</span>((fe,nxe)<span class="gams-dollar-face">$</span>delta(fe,nxe,r), d_c_e(fe,nxe,r))
+    + <span class="gams-statement-face">sum</span>(fe<span class="gams-dollar-face">$</span>delta(fe,<span class="gams-string-face">&quot;fd&quot;</span>,r), d_c_fd(fe,r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Market clearing conditions</span>
+
+<span class="gams-comment-face">*	Export goods.</span>
+e_p_x(i,r)<span class="gams-dollar-face">$</span>vxm(i,r) ..
+
+    a_x(i,r)*y(i,r) <span class="gams-operator-face">=g=</span>
+    <span class="gams-statement-face">sum</span>(s<span class="gams-dollar-face">$</span>vxmd(i,r,s), a_mm(i,r,s) * m(i,s))
+    + (a_t(i,r) * yt)<span class="gams-dollar-face">$</span>vst(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Domestic goods.</span>
+e_p_d(i,r)<span class="gams-dollar-face">$</span>vdm(i,r) ..
+
+    a_d(i,r) * y(i,r) <span class="gams-operator-face">=g=</span>
+    ( a_ad(i,r)*a(i,r) )<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> cgd(i))
+    +
+    (ninv(r)*netinv(r) + scale_k(r) * depr(r) * k_b(r))<span class="gams-dollar-face">$</span>cgd(i)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Import goods.</span>
+e_p_m(i,r)<span class="gams-dollar-face">$</span>vim(i,r) ..
+
+    m0(i,r) * m(i,r) <span class="gams-operator-face">=g=</span> a_am(i,r) * a(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Transport services.</span>
+e_p_t ..
+
+    vt * yt <span class="gams-operator-face">=g=</span> <span class="gams-statement-face">sum</span>((i,r,s)<span class="gams-dollar-face">$</span>vxmd(i,r,s), tau(i,r,s) * a_mm(i,r,s) * m(i,s))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Energy composite.</span>
+e_p_ea(i,r)<span class="gams-dollar-face">$</span>voei(i,r) ..
+
+    voei(i,r) * ea(i,r) <span class="gams-operator-face">=g=</span> a_ea(i,r) * y(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Labor.</span>
+e_p_l(r) ..
+
+    scale_l(r) * end_l(r) <span class="gams-operator-face">=e=</span>
+    <span class="gams-statement-face">sum</span>(xe<span class="gams-dollar-face">$</span>ld0(xe,r), a_xel(xe,r) * y(xe,r))
+    + <span class="gams-statement-face">sum</span>(nxe<span class="gams-dollar-face">$</span>ld0(nxe,r), a_fl(nxe,r) * y(nxe,r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Capital.</span>
+e_r_k(r) ..
+
+    scale_k(r) * end_k(r) <span class="gams-operator-face">=g=</span> <span class="gams-statement-face">sum</span>(nxe<span class="gams-dollar-face">$</span>kd0(nxe,r), a_fk(nxe,r) * y(nxe,r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Natural resource.</span>
+e_p_r(i,r)<span class="gams-dollar-face">$</span>(xe(i) <span class="gams-statement-face">and</span> rd0(i,r)) ..
+
+    scale_r(r) * rd0(i,r) <span class="gams-operator-face">=g=</span> a_xer(i,r) * y(i,r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Armington goods.</span>
+e_p_a(i,r)<span class="gams-dollar-face">$</span>a0(i,r) ..
+
+    a0(i,r) * a(i,r) <span class="gams-operator-face">=g=</span>
+
+    ( <span class="gams-statement-face">sum</span>(xe<span class="gams-dollar-face">$</span>vafm(i,xe,r), a_xei(i,xe,r) * y(xe,r))
+    + <span class="gams-statement-face">sum</span>(nxe<span class="gams-dollar-face">$</span>vafm(i,nxe,r), vafm(i,nxe,r) * y(nxe,r))
+    + (a_cne(i,r) * c(r))<span class="gams-dollar-face">$</span>vcm(i,r)
+    )<span class="gams-dollar-face">$</span>neg(i)
+    +
+    ( <span class="gams-statement-face">sum</span>(xe<span class="gams-dollar-face">$</span>vafm(i,xe,r), a_xei(i,xe,r) * y(xe,r))
+    + <span class="gams-statement-face">sum</span>(nxe<span class="gams-dollar-face">$</span>vafm(i,nxe,r), a_e(i,nxe,r) * ea(nxe,r))
+    + (a_ce(i,r) * c(r))<span class="gams-dollar-face">$</span>vcm(i,r)
+    )<span class="gams-dollar-face">$</span>eg(i)
+    <span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Aggregate consumption.</span>
+e_p_c(r) ..
+
+    vc(r) * c(r) <span class="gams-operator-face">=g=</span> a_cc(r) * u(r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Carbon emissions.</span>
+e_ic_tax(r)<span class="gams-dollar-face">$</span>fl_it ..
+
+    carblim(r) <span class="gams-operator-face">=g=</span> d_ca(r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Utility:</span>
+e_p_u(r) ..
+
+    inc_ra(r) <span class="gams-operator-face">=g=</span> p_u(r) * u0(r) * u(r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Market for savings:</span>
+e_p_save ..
+
+    gninv * ginv <span class="gams-operator-face">=g=</span> <span class="gams-statement-face">sum</span>(r, save(r) * rsave(r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Income.</span>
+
+e_inc_ra(r) ..
+
+    inc_ra(r) <span class="gams-operator-face">=e=</span>
+
+    <span class="gams-statement-face">sum</span>(i<span class="gams-dollar-face">$</span>vom(i,r), ty(i,r) * p_y(i,r) * vom(i,r) * y(i,r))
+
+    + <span class="gams-statement-face">sum</span>((xe,j)<span class="gams-dollar-face">$</span>vafm(j,xe,r), ti(j,xe,r) * p_a(j,r) * a_xei(j,xe,r) * y(xe,r))
+
+    + <span class="gams-statement-face">sum</span>((nxe,fe)<span class="gams-dollar-face">$</span>vafm(fe,nxe,r),
+    ti(fe,nxe,r) * p_a(fe,r) * a_e(fe,nxe,r) * ea(nxe,r))
+
+    + <span class="gams-statement-face">sum</span>(nxe<span class="gams-dollar-face">$</span>vafm(<span class="gams-string-face">&quot;ele&quot;</span>,nxe,r),
+    ti(<span class="gams-string-face">&quot;ele&quot;</span>,nxe,r) * p_a(<span class="gams-string-face">&quot;ele&quot;</span>,r) * a_e(<span class="gams-string-face">&quot;ele&quot;</span>,nxe,r) * ea(nxe,r))
+
+    + <span class="gams-statement-face">sum</span>((nxe,neg)<span class="gams-dollar-face">$</span>vafm(neg,nxe,r),
+    ti(neg,nxe,r) * p_a(neg,r) * vafm(neg,nxe,r) * y(nxe,r))
+
+    + <span class="gams-statement-face">sum</span>((i,s)<span class="gams-dollar-face">$</span>vxmd(i,r,s), tx(i,r,s) * p_x(i,r) * a_mm(i,r,s) * m(i,s))
+
+    + <span class="gams-statement-face">sum</span>((i,s)<span class="gams-dollar-face">$</span>vxmd(i,s,r),
+    tm(i,s,r) * ((1+tx(i,s,r)) * p_x(i,s) + p_t * tau(i,s,r))
+    * a_mm(i,s,r) * m(i,r))
+
+    + <span class="gams-statement-face">sum</span>(neg<span class="gams-dollar-face">$</span>vcm(neg,r), tc(neg,r) * p_a(neg,r) * a_cne(neg,r) * c(r))
+
+    + <span class="gams-statement-face">sum</span>(fe<span class="gams-dollar-face">$</span>vcm(fe,r), tc(fe,r) * p_a(fe,r) * a_ce(fe,r) * c(r))
+    + tc(<span class="gams-string-face">&quot;ele&quot;</span>,r) * p_a(<span class="gams-string-face">&quot;ele&quot;</span>,r) * a_ce(<span class="gams-string-face">&quot;ele&quot;</span>,r) * c(r)
+
+    + p_l(r) * scale_l(r) * end_l(r)
+
+    + r_k(r) * scale_k(r) * end_k(r)
+
+    + <span class="gams-statement-face">sum</span>(xe, p_r(xe,r) * scale_r(r) * rd0(xe,r))
+
+    - <span class="gams-statement-face">sum</span>(cgd, p_d(cgd,r) * scale_k(r) * depr(r) * k_b(r))
+
+    + (ic_tax(r) * carblim(r))<span class="gams-dollar-face">$</span>fl_it
+
+    + (c_tax(r) * d_ca(r))<span class="gams-dollar-face">$</span>fl_et
+
+    + (p_u(r) * rc_tax(r) * d_ca(r))<span class="gams-dollar-face">$</span>fl_ct
+<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Investment:</span>
+
+<span class="gams-comment-face">*	Price of regional investment:</span>
+e_p_inv(r) ..
+
+    p_inv(r) <span class="gams-operator-face">=e=</span> <span class="gams-statement-face">sum</span>(cgd, p_d(cgd,r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Unit cost of global investment:</span>
+e_c_ginv<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> rordelta) ..
+
+    c_ginv <span class="gams-operator-face">=e=</span> <span class="gams-statement-face">sum</span>(r, sh_inv(r) * p_inv(r))<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Global investment:</span>
+e_ginv ..
+
+    (gninv * ginv - <span class="gams-statement-face">sum</span>(r, ninv(r) * netinv(r)))<span class="gams-dollar-face">$</span>rordelta
+    +
+    (c_ginv - p_save)<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> rordelta)
+    <span class="gams-operator-face">=e=</span> 0
+    <span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Regional gross investment:</span>
+e_grossinv(r) ..
+
+    inv(r) * grossinv(r)
+    <span class="gams-operator-face">=e=</span> ninv(r) * netinv(r) + scale_k(r) * depr(r) * k_b(r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	The current rate of return from capital stock:</span>
+e_r_c(r)<span class="gams-dollar-face">$</span>rordelta ..
+
+    r_c(r) <span class="gams-operator-face">=e=</span> r_k(r) / p_inv(r) - depr(r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	The expected rate of return from capital stock:</span>
+e_r_e(r)<span class="gams-dollar-face">$</span>rordelta ..
+
+    r_e0(r) * r_e(r) <span class="gams-operator-face">=e=</span>
+    r_c(r) * (k_e(r)/(scale_k(r) * k_b(r)))**(-rorflex(r))<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*     log(r_e0(r) * r_e(r)) =e=</span>
+<span class="gams-comment-face">*     log(r_c(r)) - rorflex(r) * (log(k_e(r)/(scale_k(r) * k_b(r))));</span>
+
+<span class="gams-comment-face">*	The global rate of return:</span>
+e_r_g<span class="gams-dollar-face">$</span>rordelta ..
+
+    <span class="gams-statement-face">sum</span>(r, p_inv(r) * ninv(r) * netinv(r)) <span class="gams-operator-face">=e=</span> p_save * gninv * ginv<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	The end-of-period capital stock:</span>
+e_k_e(r) ..
+
+    k_e(r) <span class="gams-operator-face">=e=</span> scale_k(r) * k_b(r) + ninv(r) * netinv(r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Regional net investment:</span>
+e_netinv(r) ..
+
+    (r_g - r_e(r))<span class="gams-dollar-face">$</span>rordelta
+    +
+    (netinv(r) - ginv)<span class="gams-dollar-face">$</span>(<span class="gams-statement-face">not</span> rordelta)
+    <span class="gams-operator-face">=e=</span> 0<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Regional savings:</span>
+e_rsave(r) ..
+
+    save(r) * rsave(r) <span class="gams-operator-face">=e=</span> a_s(r) * u(r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Carbon tax:</span>
+
+<span class="gams-comment-face">*	Endogenous carbon tax:</span>
+e_c_tax(r)<span class="gams-dollar-face">$</span>fl_et ..
+
+    rc_tax(r) <span class="gams-operator-face">=e=</span>
+    resi(r) + a_hat + c_reg * b_hat * inc_ra(r) * 10 / (pop_(r) * p_u(r))
+    + (1 - c_reg) * b_hat * inc_pc(r)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	Real carbon tax:</span>
+e_rc_tax(r)<span class="gams-dollar-face">$</span>(fl_it <span class="gams-statement-face">or</span> fl_et <span class="gams-statement-face">or</span> fl_ct) ..
+
+    rc_tax(r) <span class="gams-operator-face">=e=</span>
+    (ic_tax(r)<span class="gams-dollar-face">$</span>fl_it + c_tax(r)<span class="gams-dollar-face">$</span>fl_et) / p_u(r) + const_tax(r)<span class="gams-dollar-face">$</span>fl_ct<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Model definition.</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Model definition.&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">model</span> end_reg_mcp <span class="gams-explanation-face">A multi-region recursive model for carbon tax analysis</span> <span class="gams-slash-face">/
+
+      e_c_y.c_y, e_p_y.p_y, e_p_il.p_il, e_p_pfe.p_pfe, e_p_pf.p_pf,
+      e_c_ea.c_ea, e_p_nel.p_nel, e_p_lqd.p_lqd, e_c_a.c_a, e_c_m.c_m,
+      e_p_mm.p_mm, e_c_c.c_c, e_p_cne.p_cne, e_p_ce.p_ce, e_p_e.p_e,
+      e_p_efd.p_efd, e_c_t.c_t,
+
+      e_y.y, e_ea.ea, e_a.a, e_m.m, e_c.c, e_yt.yt,
+
+      e_a_x.a_x, e_a_d.a_d, e_a_xer.a_xer, e_a_xel.a_xel, e_a_xei.a_xei,
+      e_a_fl.a_fl, e_a_fk.a_fk, e_a_ea.a_ea, e_a_e.a_e, e_a_ad.a_ad,
+      e_a_am.a_am, e_a_mm.a_mm, e_a_cne.a_cne, e_a_ce.a_ce, e_a_t.a_t,
+
+      e_d_ca.d_ca, e_d_c_e.d_c_e, e_d_c_fd.d_c_fd,
+
+      e_p_x.p_x, e_p_d.p_d, e_p_m.p_m, e_p_t.p_t, e_p_ea.p_ea, e_p_l.p_l,
+      e_p_r.p_r, e_r_k.r_k, e_p_a.p_a, e_p_c.p_c, e_ic_tax.ic_tax,
+
+      e_inc_ra.inc_ra,
+
+      e_p_inv.p_inv, e_c_u.c_u, e_p_u.p_u, e_u.u, e_p_save.p_save,
+      e_ginv.ginv, e_grossinv.grossinv, e_c_ginv.c_ginv, e_r_c.r_c, e_r_e.r_e,
+      e_k_e.k_e, e_r_g.r_g, e_netinv.netinv, e_rsave.rsave, e_a_cc.a_cc,
+      e_a_s.a_s, e_c_tax.c_tax, e_rc_tax.rc_tax
+
+      /</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Set lower bounds and initial values</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Set lower bounds and initial values&quot;</span><span class="gams-lst-warning-face">;</span>
+<span class="gams-dollar-face">$include</span> end_reg_initial.gms
+
+<span class="gams-comment-face">*	Fix income:</span>
+inc_ra.fx(<span class="gams-string-face">&quot;usa&quot;</span>) = inc_ra.l(<span class="gams-string-face">&quot;usa&quot;</span>)<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Fix irrelevant values.</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Fix irrelevant values.&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">parameter</span>
+    res_u		<span class="gams-explanation-face">Utility</span>
+    res_p_u		<span class="gams-explanation-face">Price of utility</span>
+    res_inc		<span class="gams-explanation-face">Income</span>
+    res_inc_pc		<span class="gams-explanation-face">Per capita income</span>
+    res_c		<span class="gams-explanation-face">Consumption</span>
+    res_gdp		<span class="gams-explanation-face">GDP</span>
+    res_k		<span class="gams-explanation-face">Total capital stock</span>
+    res_kst		<span class="gams-explanation-face">Total capital stock (capital earnings)</span>
+    res_save		<span class="gams-explanation-face">Savings</span>
+    res_ninv		<span class="gams-explanation-face">Regional net investment</span>
+    res_inv		<span class="gams-explanation-face">Regional gross investment</span>
+    res_ginv		<span class="gams-explanation-face">Global net investment</span>
+    res_carb		<span class="gams-explanation-face">Carbon emissions (BtC)</span>
+    res_carb_fe		<span class="gams-explanation-face">Carbon emissions (BtC)</span>
+    res_ene_fe		<span class="gams-explanation-face">Energy (EJ)</span>
+    res_carb_sec	<span class="gams-explanation-face">Carbon emissions by sector (BtC)</span>
+    res_c_tax		<span class="gams-explanation-face">Carbon tax</span>
+    res_c_tax_		<span class="gams-explanation-face">Carbon tax</span>
+    res_leakage		<span class="gams-explanation-face">Leakage rate in 2010 (%)</span>
+    res_y		<span class="gams-explanation-face">Output</span>
+
+    rc_carb		<span class="gams-explanation-face">The rate of change in carbon emissions (%)</span>
+
+    pc_gdp		<span class="gams-explanation-face">% change in GDP from BAU</span>
+    pc_carb		<span class="gams-explanation-face">% change in carbon emissions from BAU</span>
+<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">parameter</span>
+    chk_carb		<span class="gams-explanation-face">Carbon emissions (BtC)</span>
+    chk_carb_fe		<span class="gams-explanation-face">Carbon emissions (BtC)</span>
+    chk_carb_o		<span class="gams-explanation-face">Carbon emissions from oil (BtC)</span>
+    chk_carb_c		<span class="gams-explanation-face">Carbon emissions from coal (BtC)</span>
+    chk_carb_g		<span class="gams-explanation-face">Carbon emissions from gas (BtC)</span>
+    chk_gdp		<span class="gams-explanation-face">GDP</span>
+<span class="gams-lst-warning-face">;</span>
+<span class="gams-comment-face">*	Declaration of parameters:</span>
+<span class="gams-dollar-face">$include</span> par_result_2010bau.gms
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Benchmark replication in 1997:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Benchmark replication in 1997:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	No carbon taxes in the benchmark:</span>
+carblim(r) = 500000<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> carblim<span class="gams-lst-warning-face">;</span>
+
+end_reg_mcp.iterlim = 0<span class="gams-lst-warning-face">;</span>
+end_reg_mcp.optfile = 1<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">solve</span> end_reg_mcp <span class="gams-statement-face">using</span> mcp<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Cleanup calculation in 1997:</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Cleanup calculation in 1997:&quot;</span><span class="gams-lst-warning-face">;</span>
+end_reg_mcp.iterlim = 8000<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">solve</span> end_reg_mcp <span class="gams-statement-face">using</span> mcp<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;Benchmark tolerance:&quot;</span>, end_reg_mcp.objval<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">abort</span><span class="gams-dollar-face">$</span>(end_reg_mcp.modelstat &lt;&gt; 1)
+     <span class="gams-string-face">&quot;Model not normally completed&quot;</span>, end_reg_mcp.modelstat<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">abort</span><span class="gams-dollar-face">$</span>(end_reg_mcp.solvestat &lt;&gt; 1)
+     <span class="gams-string-face">&quot;No local optimum found&quot;</span>, end_reg_mcp.solvestat<span class="gams-lst-warning-face">;</span>
+
+res_carb(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997&quot;</span>,r) = d_ca.l(r)<span class="gams-lst-warning-face">;</span>
+res_carb(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997&quot;</span>,<span class="gams-string-face">&quot;world&quot;</span>) = <span class="gams-statement-face">sum</span>(r, res_carb(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997&quot;</span>,r))<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> res_carb, carbon95<span class="gams-lst-warning-face">;</span>
+
+res_carb_fe(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997&quot;</span>,fe,r)
+    = <span class="gams-statement-face">sum</span>(nxe<span class="gams-dollar-face">$</span>delta_(fe,nxe,r), d_c_e.l(fe,nxe,r)) + d_c_fd.l(fe,r)<span class="gams-lst-warning-face">;</span>
+res_carb_fe(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997&quot;</span>,<span class="gams-string-face">&quot;total&quot;</span>,r) = <span class="gams-statement-face">sum</span>(fe, res_carb_fe(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997&quot;</span>,fe,r))<span class="gams-lst-warning-face">;</span>
+res_carb_sec(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997&quot;</span>,i,r) =
+    <span class="gams-statement-face">sum</span>(fe<span class="gams-dollar-face">$</span>delta_(fe,i,r), d_c_e.l(fe,i,r))<span class="gams-lst-warning-face">;</span>
+res_carb_sec(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997&quot;</span>,<span class="gams-string-face">&quot;fd&quot;</span>,r) = <span class="gams-statement-face">sum</span>(fe<span class="gams-dollar-face">$</span>delta_(fe,<span class="gams-string-face">&quot;fd&quot;</span>,r), d_c_fd.l(fe,r))<span class="gams-lst-warning-face">;</span>
+res_carb_sec(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997&quot;</span>,<span class="gams-string-face">&quot;total&quot;</span>,r) = <span class="gams-statement-face">sum</span>(i, res_carb_sec(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997&quot;</span>,i,r))
+    + res_carb_sec(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997&quot;</span>,<span class="gams-string-face">&quot;fd&quot;</span>,r)<span class="gams-lst-warning-face">;</span>
+<span class="gams-statement-face">display</span> res_carb_fe, res_carb_sec<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-statement-face">if</span>(scale_ch,
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Scale check</span>
+    <span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Scale check:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+    scale_k(r) = 1.1<span class="gams-lst-warning-face">;</span>
+    scale_l(r) = 1.1<span class="gams-lst-warning-face">;</span>
+    scale_r(r) = 1.1<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">solve</span> end_reg_mcp <span class="gams-statement-face">using</span> mcp<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;Tolerance:&quot;</span>, end_reg_mcp.objval<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">abort</span><span class="gams-dollar-face">$</span>(end_reg_mcp.modelstat &lt;&gt; 1)
+	 <span class="gams-string-face">&quot;Model not normally completed&quot;</span>, end_reg_mcp.modelstat<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">abort</span><span class="gams-dollar-face">$</span>(end_reg_mcp.solvestat &lt;&gt; 1)
+	 <span class="gams-string-face">&quot;No local optimum found&quot;</span>, end_reg_mcp.solvestat<span class="gams-lst-warning-face">;</span>
+    scale_k(r) = 1<span class="gams-lst-warning-face">;</span>
+    scale_l(r) = 1<span class="gams-lst-warning-face">;</span>
+    scale_r(r) = 1<span class="gams-lst-warning-face">;</span>
+
+)<span class="gams-lst-warning-face">;</span>
+<span class="gams-dollar-face">$if</span> %scale_ch%==1 <span class="gams-dollar-face">$goto</span> end
+
+<span class="gams-statement-face">if</span>(fl_test,
+<span class="gams-comment-face">*	----------------------------------------------------------------------</span>
+<span class="gams-comment-face">*	Test solve:</span>
+    <span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;com: Test solve:&quot;</span><span class="gams-lst-warning-face">;</span>
+
+    fl_it = 1<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">display</span> fl_it<span class="gams-lst-warning-face">;</span>
+    carblim(r)<span class="gams-dollar-face">$</span>annexb(r) = 0.9 * res_carb(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997&quot;</span>,r)<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">display</span> carblim<span class="gams-lst-warning-face">;</span>
+
+<span class="gams-comment-face">*     tp_kl(r) = 1.1;</span>
+<span class="gams-comment-face">*     tp_fe(r) = 1.5;</span>
+
+    <span class="gams-statement-face">solve</span> end_reg_mcp <span class="gams-statement-face">using</span> mcp<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">display</span> <span class="gams-string-face">&quot;Tolerance:&quot;</span>, end_reg_mcp.objval<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">abort</span><span class="gams-dollar-face">$</span>(end_reg_mcp.modelstat &lt;&gt; 1)
+	 <span class="gams-string-face">&quot;Model not normally completed&quot;</span>, end_reg_mcp.modelstat<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">abort</span><span class="gams-dollar-face">$</span>(end_reg_mcp.solvestat &lt;&gt; 1)
+	 <span class="gams-string-face">&quot;No local optimum found&quot;</span>, end_reg_mcp.solvestat<span class="gams-lst-warning-face">;</span>
+
+    res_carb_fe(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997_&quot;</span>,fe,r)
+	= <span class="gams-statement-face">sum</span>(nxe<span class="gams-dollar-face">$</span>delta_(fe,nxe,r), d_c_e.l(fe,nxe,r)) + d_c_fd.l(fe,r)<span class="gams-lst-warning-face">;</span>
+    res_carb_fe(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997_&quot;</span>,<span class="gams-string-face">&quot;total&quot;</span>,r)
+	= <span class="gams-statement-face">sum</span>(fe, res_carb_fe(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997_&quot;</span>,fe,r))<span class="gams-lst-warning-face">;</span>
+    res_carb_sec(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997_&quot;</span>,i,r) =
+	<span class="gams-statement-face">sum</span>(fe<span class="gams-dollar-face">$</span>delta_(fe,i,r), d_c_e.l(fe,i,r))<span class="gams-lst-warning-face">;</span>
+    res_carb_sec(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997_&quot;</span>,<span class="gams-string-face">&quot;fd&quot;</span>,r)
+	= <span class="gams-statement-face">sum</span>(fe<span class="gams-dollar-face">$</span>delta_(fe,<span class="gams-string-face">&quot;fd&quot;</span>,r), d_c_fd.l(fe,r))<span class="gams-lst-warning-face">;</span>
+    res_carb_sec(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997_&quot;</span>,<span class="gams-string-face">&quot;total&quot;</span>,r)
+	= <span class="gams-statement-face">sum</span>(i, res_carb_sec(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997_&quot;</span>,i,r))
+	+ res_carb_sec(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997_&quot;</span>,<span class="gams-string-face">&quot;fd&quot;</span>,r)<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">display</span> res_carb_fe<span class="gams-lst-warning-face">;</span>
+
+    res_carb(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997_&quot;</span>,r) = d_ca.l(r)<span class="gams-lst-warning-face">;</span>
+    res_carb(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997_&quot;</span>,<span class="gams-string-face">&quot;world&quot;</span>) = <span class="gams-statement-face">sum</span>(r, res_carb(<span class="gams-string-face">&quot;bau&quot;</span>,<span class="gams-string-face">&quot;1997_&quot;</span>,r))<span class="gams-lst-warning-face">;</span>
+    <span class="gams-statement-face">display</span> res_carb<span class="gams-lst-warning-face">;</span>
+
+)<span class="gams-lst-warning-face">;</span>
+<span class="gams-dollar-face">$if</span> %fl_test%==1 <span class="gams-dollar-face">$goto</span> end
+
+<span class="gams-dollar-face">$label</span> end
+
+<span class="gams-comment-face">* --------------------</span>
+<span class="gams-comment-face">* Local Variables:</span>
+<span class="gams-comment-face">* mode: gams</span>
+<span class="gams-comment-face">* fill-column: 78</span>
+<span class="gams-comment-face">* End:</span>
+
+</pre>
+
+ </body>
+</html>

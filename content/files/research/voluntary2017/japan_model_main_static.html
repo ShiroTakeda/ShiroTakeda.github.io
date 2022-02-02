@@ -1,0 +1,1379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Created by htmlize-1.51 in css mode. -->
+<html>
+  <head>
+    <title>japan_model_main_static.gms</title>
+    <style type="text/css">
+    <!--
+      body {
+        color: #ffffff;
+        background-color: #000000;
+        font-size: 100%;
+      }
+      .gams-comment {
+        /* gams-comment-face */
+        color: #00ff00;
+      }
+      .gams-dollar {
+        /* gams-dollar-face */
+        color: #ffff00;
+      }
+      .gams-explanation {
+        /* gams-explanation-face */
+        color: #f0e68c;
+      }
+      .gams-lst-warning {
+        /* gams-lst-warning-face */
+        color: #ff0000;
+        font-weight: bold;
+      }
+      .gams-mpsge {
+        /* gams-mpsge-face */
+        color: #ff69b4;
+      }
+      .gams-operator {
+        /* gams-operator-face */
+        color: #ccaaff;
+      }
+      .gams-slash {
+        /* gams-slash-face */
+        color: #ffb6c1;
+      }
+      .gams-statement {
+        /* gams-statement-face */
+        color: #00ffff;
+      }
+      .gams-string {
+        /* gams-string-face */
+        color: #ffa500;
+      }
+      .gams-title {
+        /* gams-title-face */
+        color: #ffd0ff;
+      }
+
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <pre>
+<span class="gams-title">$title &#26085;&#26412;&#12398;CGE&#12514;&#12487;&#12523;</span>
+<span class="gams-statement">display</span> <span class="gams-string">"@ &#26085;&#26412;&#12398;CGE&#12514;&#12487;&#12523;"</span><span class="gams-lst-warning">;</span>
+<span class="gams-comment">$ontext
+Time-stamp:     &lt;2017-04-22 15:25:33 st&gt;
+First-written:  &lt;2016/10/01&gt;
+
+Unit (&#21336;&#20301;):
++ &#37329;&#38989;&#12487;&#12540;&#12479;&#12399;&#12300;10&#20740;&#20870;&#12301;
++ CO2&#25490;&#20986;&#37327;&#12399;&#12300;MtCO2 (&#20108;&#37240;&#21270;&#28845;&#32032;&#30334;&#19975;&#12488;&#12531;)&#12301;
++ &#25490;&#20986;&#27177;&#20385;&#26684; (&#28845;&#32032;&#31246;) &#12399;&#12300;1000&#20870;/CO2&#12488;&#12531;&#12301;
+
+$offtext
+*       ------------------------------------------------------------</span>
+<span class="gams-comment">*       &#12467;&#12531;&#12488;&#12525;&#12540;&#12523;&#22793;&#25968;&#12398;&#35373;&#23450;</span>
+
+<span class="gams-comment">*       &#12471;&#12490;&#12522;&#12458;&#21517;</span>
+<span class="gams-dollar">$if</span> <span class="gams-statement">not</span> setglobal scn_name <span class="gams-dollar">$setglobal</span> scn_name scn_default
+
+<span class="gams-comment">*       &#12487;&#12540;&#12479;&#12398;&#25351;&#23450;</span>
+<span class="gams-dollar">$if</span> <span class="gams-statement">not</span> setglobal data_name <span class="gams-dollar">$setglobal</span> data_name japan_48x40
+<span class="gams-comment">* $setglobal data_name japan_25x17</span>
+
+<span class="gams-comment">*       &#12487;&#12540;&#12479;&#12501;&#12449;&#12452;&#12523;&#21517;</span>
+<span class="gams-dollar">$setglobal</span> data_file ./aggr_data/%data_name%.gdx
+
+<span class="gams-comment">*       Debug&#12514;&#12540;&#12489;</span>
+<span class="gams-dollar">$if</span> <span class="gams-statement">not</span> setglobal debug_mode <span class="gams-dollar">$setglobal</span> debug_mode 0
+
+<span class="gams-comment">*       BAU&#12398;&#12481;&#12455;&#12483;&#12463;</span>
+<span class="gams-dollar">$if</span> <span class="gams-statement">not</span> setglobal bau_check <span class="gams-dollar">$setglobal</span> bau_check 0
+
+<span class="gams-comment">*       &#25237;&#36039;&#12364;&#21487;&#22793;&#12394;&#12425;1</span>
+<span class="gams-dollar">$if</span> <span class="gams-statement">not</span> setglobal fl_vinv <span class="gams-dollar">$setglobal</span> fl_vinv 1
+
+<span class="gams-comment">*       Energy&#38306;&#20418;&#12398;EOS</span>
+<span class="gams-dollar">$if</span> <span class="gams-statement">not</span> setglobal eos_ene <span class="gams-dollar">$setglobal</span> eos_ene 1
+
+<span class="gams-comment">*       &#38750;&#12476;&#12525;&#12394;&#12425; Wage curve model</span>
+<span class="gams-dollar">$if</span> <span class="gams-statement">not</span> setglobal fl_wc <span class="gams-dollar">$setglobal</span> fl_wc 1
+
+<span class="gams-comment">*       Wage curve&#24382;&#21147;&#24615;&#12398;&#20516;</span>
+<span class="gams-dollar">$if</span> <span class="gams-statement">not</span> setglobal wc_elas <span class="gams-dollar">$setglobal</span> wc_elas (-0.1)
+
+<span class="gams-comment">*       &#22833;&#26989;&#29575;&#12395;&#23550;&#12377;&#12427;&#12473;&#12465;&#12540;&#12523;&#12497;&#12521;&#12513;&#12540;&#12479;</span>
+<span class="gams-dollar">$if</span> <span class="gams-statement">not</span> setglobal wc_urate_sc <span class="gams-dollar">$setglobal</span> wc_urate_sc 1
+
+<span class="gams-comment">*       CO2&#21066;&#28187;&#29575;&#65288;%&#65289;</span>
+<span class="gams-dollar">$if</span> <span class="gams-statement">not</span> setglobal co2_rd <span class="gams-dollar">$setglobal</span> co2_rd 25
+
+<span class="gams-comment">*       Potential Labor / Actual labor force</span>
+<span class="gams-dollar">$if</span> <span class="gams-statement">not</span> setglobal fl_lf <span class="gams-dollar">$setglobal</span> fl_lf 0.667
+
+<span class="gams-comment">*       &#28040;&#36027;&#12392;&#20313;&#26247;&#12398;&#38291;&#12398;EOS</span>
+<span class="gams-dollar">$if</span> <span class="gams-statement">not</span> setglobal elas_lf <span class="gams-dollar">$setglobal</span> elas_lf 0.66
+
+<span class="gams-statement">parameter</span>
+    fl_vinv     <span class="gams-explanation">&#25237;&#36039;&#12364;&#21487;&#22793;&#12394;&#12425;&#38750;&#12476;&#12525;</span>
+    fl_wc       <span class="gams-explanation">&#38750;&#12476;&#12525;&#12394;&#12425; Wage curve model</span>
+    co2_rd      <span class="gams-explanation">CO2&#12398;&#21066;&#28187;&#29575;&#65288;%&#65289;</span>
+<span class="gams-lst-warning">;</span>
+fl_vinv = %fl_vinv%<span class="gams-lst-warning">;</span>
+fl_wc = %fl_wc%<span class="gams-lst-warning">;</span>
+co2_rd = %co2_rd% / 100<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> fl_vinv, fl_wc, co2_rd<span class="gams-lst-warning">;</span>
+               
+<span class="gams-comment">*       File name for displaying title in DOS window.</span>
+<span class="gams-statement">file</span> titlemaker <span class="gams-slash">/'titlemaker_%scn_name%.cmd'/</span><span class="gams-lst-warning">;</span>
+<span class="gams-statement">putclose</span> titlemaker <span class="gams-string">'@title Solving scenario = %scn_name%'</span> /<span class="gams-lst-warning">;</span>
+<span class="gams-statement">execute</span> <span class="gams-string">'titlemaker_%scn_name%.cmd'</span><span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       &#38598;&#21512;&#12398;&#23450;&#32681;</span>
+
+<span class="gams-comment">*       &#38598;&#21512;&#12501;&#12449;&#12452;&#12523;&#21517;</span>
+<span class="gams-dollar">$setglobal</span> set_file ./<span class="gams-statement">set</span>/%data_name%.<span class="gams-statement">set</span>
+
+<span class="gams-comment">*       &#38598;&#21512;&#12501;&#12449;&#12452;&#12523;&#21517;</span>
+<span class="gams-dollar">$setglobal</span> set_file_sub ./<span class="gams-statement">set</span>/%data_name%_sub.<span class="gams-statement">set</span>
+
+<span class="gams-comment">*       &#38598;&#21512;&#12501;&#12449;&#12452;&#12523;&#12398;&#35501;&#12415;&#36796;&#12415;</span>
+<span class="gams-comment">* gams-include-file: ./set/japan_48x40.set </span>
+<span class="gams-dollar">$include</span> %set_file% 
+
+<span class="gams-comment">*       &#38598;&#21512;&#12501;&#12449;&#12452;&#12523;&#12398;&#35501;&#12415;&#36796;&#12415;</span>
+<span class="gams-comment">* gams-include-file: ./set/japan_48x40_sub.set </span>
+<span class="gams-dollar">$include</span> %set_file_sub% 
+
+<span class="gams-statement">display</span> row, col, va, fd<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> es, agr, f_f, ely_s, ene, sen<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> e_ene_c, e_ene_nc<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       Alias&#12398;&#23450;&#32681;</span>
+<span class="gams-statement">alias</span> (row,i), (row,ii), (col,j), (col,jj), (es,ess)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> i, j<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">set</span> oth_s(j)    <span class="gams-explanation">&#12381;&#12398;&#20182;&#12398;&#37096;&#38272;</span><span class="gams-lst-warning">;</span>
+oth_s(j) = <span class="gams-statement">no</span><span class="gams-lst-warning">;</span>
+oth_s(j)<span class="gams-dollar">$</span>((<span class="gams-statement">not</span> agr(j)) <span class="gams-statement">and</span> (<span class="gams-statement">not</span> f_f(j)) <span class="gams-statement">and</span> (<span class="gams-statement">not</span> ely_s(j)) <span class="gams-statement">and</span> (<span class="gams-statement">not</span> sen(j))) = <span class="gams-statement">yes</span><span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> oth_s<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">set</span>     so      <span class="gams-explanation">&#12477;&#12540;&#12473;</span>  <span class="gams-slash">/ dom   &#22269;&#20869;
+                          imp   &#36664;&#20837;
+                          oth   &#12381;&#12398;&#20182; /</span>
+        set_vt(i,j)
+        reg_f(j)        <span class="gams-explanation">&#35215;&#21046;&#12373;&#12428;&#12427;&#37096;&#38272;&#12398;&#38598;&#21512;</span>
+<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> so<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       &#21021;&#26399;&#35373;&#23450;&#65309;&#20840;&#12390;&#12398;&#37096;&#38272;&#12434;&#35215;&#21046;</span>
+reg_f(j) = <span class="gams-statement">yes</span><span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> reg_f<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       GDX &#12501;&#12449;&#12452;&#12523;&#12363;&#12425;&#12398;&#12487;&#12540;&#12479;&#12398;&#35501;&#12415;&#36796;&#12415;</span>
+<span class="gams-statement">parameter</span>
+    io_u(*,*,*)         <span class="gams-string">"Aggregated IO table (U table)"</span>
+    io_v(*,*)           <span class="gams-string">"Aggregated IO table (V table)"</span>
+    io_fd(*,*,*)        <span class="gams-string">"Aggregated IO table (final demand)"</span>
+    io_va(*,*)          <span class="gams-string">"Aggregated IO table (value added)"</span>
+    io_co2(*,*)         <span class="gams-string">"CO2 emissions (MtCO2)"</span>
+
+    io_u_(*,*,*)        <span class="gams-string">"Aggregated IO table (U table)"</span>
+    io_v_(*,*)          <span class="gams-string">"Aggregated IO table (V table)"</span>
+    io_fd_(*,*,*)       <span class="gams-string">"Aggregated IO table (final demand)"</span>
+    io_va_(*,*)         <span class="gams-string">"Aggregated IO table (value added)"</span>
+<span class="gams-lst-warning">;</span>
+<span class="gams-comment">*       GDX &#12501;&#12449;&#12452;&#12523;&#12398;&#35501;&#12415;&#36796;&#12415;</span>
+<span class="gams-dollar">$gdxin</span> <span class="gams-string">'%data_file%'</span>
+<span class="gams-dollar">$load</span> io_u, io_v, io_fd, io_va, io_co2, set_vt
+
+<span class="gams-statement">display</span> io_u, io_v, io_fd, io_va, io_co2, set_vt<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       &#21336;&#20301;&#12398;&#22793;&#25563;&#65288;100&#19975;&#20870; &#8594; 10&#20740;&#20870;&#65289;</span>
+<span class="gams-statement">scalar</span>  sf_data <span class="gams-explanation">&#12487;&#12540;&#12479;&#12398;&#21336;&#20301;&#22793;&#25563;&#12398;&#12383;&#12417;&#12398;&#20418;&#25968;</span>    <span class="gams-slash">/ 1e+3 /</span><span class="gams-lst-warning">;</span>
+
+io_u_(row,col,so) = io_u(row,col,so) / sf_data<span class="gams-lst-warning">;</span>
+io_fd_(row,fd,so) = io_fd(row,fd,so) / sf_data<span class="gams-lst-warning">;</span>
+io_va_(va,col) = io_va(va,col) / sf_data<span class="gams-lst-warning">;</span>
+io_v_(row,col) = io_v(row,col) / sf_data<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> io_u_, io_v_, io_fd_, io_va_<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">$ontext
+&#20197;&#19979;&#12391;&#12487;&#12540;&#12479;&#12398;&#25972;&#21512;&#24615;&#12398;&#12481;&#12455;&#12483;&#12463;&#12290;
+
+$offtext
+*       &#12487;&#12540;&#12479;&#12481;&#12455;&#12483;&#12463;&#12398;&#12383;&#12417;&#12398;&#12497;&#12521;&#12513;&#12540;&#12479;</span>
+<span class="gams-statement">parameters</span>
+    chk_io
+    chk_va_fd
+    chk_imp
+    chk_sign_io         <span class="gams-explanation">&#12510;&#12452;&#12490;&#12473;&#12398;&#35201;&#32032;&#12434;&#34920;&#31034;</span>
+    chk_io_
+<span class="gams-lst-warning">;</span>
+<span class="gams-dollar">$macro</span> mc_chk_io \
+    chk_io(col,<span class="gams-string">"col_sum"</span>) = \
+    <span class="gams-statement">sum</span>((row,so), io_u_(row,col,so)) + <span class="gams-statement">sum</span>(va, io_va_(va,col))<span class="gams-lst-warning">;</span> \
+    chk_io(row,<span class="gams-string">"row_sum"</span>) = \
+    <span class="gams-statement">sum</span>((col,so), io_u_(row,col,so)) + <span class="gams-statement">sum</span>((fd,so), io_fd_(row,fd,so))<span class="gams-lst-warning">;</span> \
+    chk_io(<span class="gams-string">"sum"</span>,<span class="gams-string">"col_sum"</span>) = <span class="gams-statement">sum</span>(col, chk_io(col,<span class="gams-string">"col_sum"</span>))<span class="gams-lst-warning">;</span> \
+    chk_io(<span class="gams-string">"sum"</span>,<span class="gams-string">"row_sum"</span>) = <span class="gams-statement">sum</span>(row, chk_io(row,<span class="gams-string">"row_sum"</span>))<span class="gams-lst-warning">;</span> \
+    <span class="gams-statement">display</span> chk_io<span class="gams-lst-warning">;</span>
+
+<span class="gams-dollar">$macro</span> mc_chk_va_fd \
+    chk_va_fd(col,<span class="gams-string">"va"</span>) = <span class="gams-statement">sum</span>(va, io_va_(va,col))<span class="gams-lst-warning">;</span> \
+    chk_va_fd(row,<span class="gams-string">"fd"</span>) = <span class="gams-statement">sum</span>((fd,so), io_fd_(row,fd,so))<span class="gams-lst-warning">;</span> \
+    chk_va_fd(<span class="gams-string">"sum"</span>,<span class="gams-string">"va"</span>) = <span class="gams-statement">sum</span>(col, chk_va_fd(col,<span class="gams-string">"va"</span>))<span class="gams-lst-warning">;</span> \
+    chk_va_fd(<span class="gams-string">"sum"</span>,<span class="gams-string">"fd"</span>) = <span class="gams-statement">sum</span>(row, chk_va_fd(row,<span class="gams-string">"fd"</span>))<span class="gams-lst-warning">;</span> \
+    <span class="gams-statement">display</span> chk_va_fd<span class="gams-lst-warning">;</span>
+
+<span class="gams-dollar">$macro</span> mc_chk_imp \
+    chk_imp(row,<span class="gams-string">"imp"</span>) \
+    = <span class="gams-statement">sum</span>(col, io_u_(row,col,<span class="gams-string">"imp"</span>)) + <span class="gams-statement">sum</span>(fd, io_fd_(row,fd,<span class="gams-string">"imp"</span>))<span class="gams-lst-warning">;</span> \
+    chk_imp(row,<span class="gams-string">"imp_"</span>) = \
+    - (io_fd_(row,<span class="gams-string">"imp"</span>,<span class="gams-string">"oth"</span>) + io_fd_(row,<span class="gams-string">"imt"</span>,<span class="gams-string">"oth"</span>))<span class="gams-lst-warning">;</span> \
+    chk_imp(row,<span class="gams-string">"imp-imp_"</span>) = chk_imp(row,<span class="gams-string">"imp"</span>) - chk_imp(row,<span class="gams-string">"imp_"</span>)<span class="gams-lst-warning">;</span> \
+    <span class="gams-statement">display</span> chk_imp<span class="gams-lst-warning">;</span>
+
+<span class="gams-dollar">$macro</span> mc_chk_sign_io \
+    chk_sign_io(row,col,so) = 0<span class="gams-lst-warning">;</span> \
+    chk_sign_io(va,col,so) = 0<span class="gams-lst-warning">;</span> \
+    chk_sign_io(row,fd,so) = 0<span class="gams-lst-warning">;</span> \
+    chk_sign_io(row,col,so)<span class="gams-dollar">$</span>(io_u_(row,col,so) &lt; 0) = io_u_(row,col,so)<span class="gams-lst-warning">;</span> \
+    chk_sign_io(<span class="gams-string">"cap"</span>,col,<span class="gams-string">"oth"</span>)<span class="gams-dollar">$</span>(io_va_(<span class="gams-string">"cap"</span>,col) &lt; 0) = io_va_(<span class="gams-string">"cap"</span>,col)<span class="gams-lst-warning">;</span> \
+    chk_sign_io(row,fd,so)<span class="gams-dollar">$</span>(io_fd_(row,fd,so) &lt; 0) = io_fd_(row,fd,so)<span class="gams-lst-warning">;</span> \
+    chk_sign_io(row,<span class="gams-string">"imp"</span>,so) = 0<span class="gams-lst-warning">;</span> \
+    chk_sign_io(row,<span class="gams-string">"imt"</span>,so) = 0<span class="gams-lst-warning">;</span> \
+    <span class="gams-statement">display</span> chk_sign_io<span class="gams-lst-warning">;</span>
+
+<span class="gams-dollar">$macro</span> mc_chk_io_ \
+    chk_io_(col,<span class="gams-string">"col_sum"</span>) = \
+    <span class="gams-statement">sum</span>((row,so), io_u_(row,col,so)) + <span class="gams-statement">sum</span>(va, io_va_(va,col))<span class="gams-lst-warning">;</span> \
+    chk_io_(row,<span class="gams-string">"row_sum"</span>) = \
+    <span class="gams-statement">sum</span>((col,so), io_u_(row,col,so)) + <span class="gams-statement">sum</span>((fd,so), io_fd_(row,fd,so))<span class="gams-lst-warning">;</span> \
+    chk_io_(<span class="gams-string">"sum"</span>,<span class="gams-string">"col_sum"</span>) = <span class="gams-statement">sum</span>(col, chk_io_(col,<span class="gams-string">"col_sum"</span>))<span class="gams-lst-warning">;</span> \
+    chk_io_(<span class="gams-string">"sum"</span>,<span class="gams-string">"row_sum"</span>) = <span class="gams-statement">sum</span>(row, chk_io_(row,<span class="gams-string">"row_sum"</span>))<span class="gams-lst-warning">;</span>\
+    chk_io_(col,<span class="gams-string">"col_sum_"</span>) = <span class="gams-statement">sum</span>(row, io_v_(row,col))<span class="gams-lst-warning">;</span>\
+    chk_io_(row,<span class="gams-string">"row_sum_"</span>) = <span class="gams-statement">sum</span>(col, io_v_(row,col))<span class="gams-lst-warning">;</span>\
+    chk_io_(<span class="gams-string">"sum"</span>,<span class="gams-string">"col_sum_"</span>) = <span class="gams-statement">sum</span>(col, chk_io_(col,<span class="gams-string">"col_sum_"</span>))<span class="gams-lst-warning">;</span> \
+    chk_io_(<span class="gams-string">"sum"</span>,<span class="gams-string">"row_sum_"</span>) = <span class="gams-statement">sum</span>(row, chk_io_(row,<span class="gams-string">"row_sum_"</span>))<span class="gams-lst-warning">;</span>\
+    chk_io_(col,<span class="gams-string">"col_diff"</span>) = chk_io_(col,<span class="gams-string">"col_sum"</span>) - chk_io_(col,<span class="gams-string">"col_sum_"</span>)<span class="gams-lst-warning">;</span> \
+    chk_io_(row,<span class="gams-string">"row_diff"</span>) = chk_io_(row,<span class="gams-string">"row_sum"</span>) - chk_io_(row,<span class="gams-string">"row_sum_"</span>)<span class="gams-lst-warning">;</span> \
+    chk_io_(<span class="gams-string">"sum"</span>,<span class="gams-string">"col_diff"</span>) = chk_io_(<span class="gams-string">"sum"</span>,<span class="gams-string">"col_sum"</span>) - chk_io_(<span class="gams-string">"sum"</span>,<span class="gams-string">"col_sum_"</span>)<span class="gams-lst-warning">;</span> \
+    chk_io_(<span class="gams-string">"sum"</span>,<span class="gams-string">"row_diff"</span>) = chk_io_(<span class="gams-string">"sum"</span>,<span class="gams-string">"row_sum"</span>) - chk_io_(<span class="gams-string">"sum"</span>,<span class="gams-string">"row_sum_"</span>)<span class="gams-lst-warning">;</span> \
+    <span class="gams-statement">display</span> chk_io_<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">display</span> <span class="gams-string">"@ &#12487;&#12540;&#12479;&#20462;&#27491;&#21069;"</span><span class="gams-lst-warning">;</span>
+mc_chk_io<span class="gams-lst-warning">;</span>
+mc_chk_va_fd<span class="gams-lst-warning">;</span>
+mc_chk_imp<span class="gams-lst-warning">;</span>
+mc_chk_sign_io<span class="gams-lst-warning">;</span>
+mc_chk_io_<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">parameter</span>
+    chk_byproduct       <span class="gams-explanation">&#21103;&#29987;&#29289;&#12398;&#12481;&#12455;&#12483;&#12463;</span><span class="gams-lst-warning">;</span>
+
+chk_byproduct(row,col)<span class="gams-dollar">$</span>(<span class="gams-statement">sum</span>(so, chk_sign_io(row,col,so)) &lt; 0)
+    = - <span class="gams-statement">sum</span>(so, chk_sign_io(row,col,so))<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> chk_byproduct<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       &#20197;&#19979;&#12391;&#12487;&#12540;&#12479;&#12434;&#20462;&#27491;</span>
+<span class="gams-comment">$ontext
+&#12539;&#26368;&#32066;&#38656;&#35201;&#12363;&#12425;&#12510;&#12452;&#12490;&#12473;&#12398;&#35201;&#32032;&#12434;&#38500;&#21435;&#12377;&#12427;&#12290;
+$offtext
+</span><span class="gams-statement">display</span> io_fd_<span class="gams-lst-warning">;</span>
+io_fd_(row,fd,so)<span class="gams-dollar">$</span>chk_sign_io(row,fd,so) = 0<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">$ontext
+&#12539;&#36664;&#20837;&#38656;&#35201;&#12434;&#22679;&#21152;&#12373;&#12379;&#12383;&#12371;&#12392;&#12395;&#23550;&#24540;&#12375;&#12289;&#21508;&#36001;&#12398;&#36664;&#20837;&#37327;&#12434;&#22679;&#21152;&#12373;&#12379;&#12427;&#12290;
+$offtext
+</span>io_fd_(row,<span class="gams-string">"imp"</span>,<span class="gams-string">"oth"</span>)
+    = io_fd_(row,<span class="gams-string">"imp"</span>,<span class="gams-string">"oth"</span>)
+    + <span class="gams-statement">sum</span>(fd, chk_sign_io(row,fd,<span class="gams-string">"imp"</span>))<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> io_fd_<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">$ontext
+&#12539;&#22269;&#20869;&#36001;&#12395;&#23550;&#12377;&#12427;&#38656;&#35201;&#12364;&#22679;&#21152;&#12375;&#12383;&#20998;&#12395;&#12388;&#12356;&#12390;&#12399;&#12289;&#23478;&#35336;&#12398;&#36001;&#12398;&#36070;&#23384;&#37327;&#12392;&#12375;&#12390;&#32068;&#26367;&#12360;&#12427;&#12290;
+$offtext
+</span>io_fd_(row,<span class="gams-string">"hhc"</span>,<span class="gams-string">"oth"</span>)
+    = <span class="gams-statement">sum</span>(fd, chk_sign_io(row,fd,<span class="gams-string">"dom"</span>))<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> io_fd_<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">$ontext
++ &#20013;&#38291;&#25237;&#20837;&#12395;&#12362;&#12369;&#12427;&#36000;&#12398;&#35201;&#32032;&#12434;&#38500;&#21435;&#12290;
++ &#21103;&#29987;&#29289;&#12375;&#12390;&#25201;&#12358;&#12290;
++ U&#34920;&#12392;V&#34920;&#12434;&#20462;&#27491;&#12290;
+$offtext
+</span>io_v_(row,col)<span class="gams-dollar">$</span>chk_byproduct(row,col)
+    = io_v_(row,col) + chk_byproduct(row,col)<span class="gams-lst-warning">;</span>
+io_u_(row,col,<span class="gams-string">"dom"</span>)<span class="gams-dollar">$</span>chk_byproduct(row,col) = 0<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">display</span> <span class="gams-string">"@ &#12487;&#12540;&#12479;&#20462;&#27491;&#24460;"</span><span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       &#12418;&#12358;&#19968;&#24230;&#12487;&#12540;&#12479;&#12398;&#25972;&#21512;&#24615;&#12398;&#12481;&#12455;&#12483;&#12463;&#12290;&#12510;&#12463;&#12525;&#12398;&#21628;&#20986;&#12375;&#12290;</span>
+mc_chk_io<span class="gams-lst-warning">;</span>
+mc_chk_va_fd<span class="gams-lst-warning">;</span>
+mc_chk_imp<span class="gams-lst-warning">;</span>
+mc_chk_sign_io<span class="gams-lst-warning">;</span>
+mc_chk_io_<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       ----------------------------------------------------------------------</span>
+<span class="gams-comment">*       &#21172;&#20685;&#24066;&#22580;&#29992;&#12398;&#12497;&#12521;&#12513;&#12540;&#12479;</span>
+<span class="gams-statement">display</span> <span class="gams-string">"@ &#21172;&#20685;&#24066;&#22580;&#29992;&#12398;&#12497;&#12521;&#12513;&#12540;&#12479;"</span><span class="gams-lst-warning">;</span>
+<span class="gams-comment">$ontext
+&#22833;&#26989;&#29575;&#12487;&#12540;&#12479;
+&#8594; &#12300;&#21172;&#20685;&#21147;&#35519;&#26619;&#12301;&#12398;2005&#24180;12&#26376;: 4.4%
+$offtext
+</span><span class="gams-statement">parameter</span>
+    wc_elas     <span class="gams-explanation">Wage curve&#24382;&#21147;&#24615;&#12398;&#20516;</span>
+    v0          <span class="gams-explanation">&#12505;&#12531;&#12481;&#12510;&#12540;&#12463;&#12398;&#23455;&#36074;&#36035;&#37329;</span>
+    ur0         <span class="gams-explanation">&#12505;&#12531;&#12481;&#12510;&#12540;&#12463;&#12398;&#22833;&#26989;&#29575;</span>
+    unempr0     <span class="gams-explanation">&#12505;&#12531;&#12481;&#12510;&#12540;&#12463;&#12398;&#22833;&#26989;</span>
+<span class="gams-lst-warning">;</span>
+wc_elas = %wc_elas%<span class="gams-lst-warning">;</span>
+v0 = 1<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> wc_elas, v0<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       &#22833;&#26989;&#29575;</span>
+ur0 = 4.4 / 100<span class="gams-lst-warning">;</span>
+ur0 = ur0 * %wc_urate_sc%<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> ur0<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       &#12497;&#12521;&#12513;&#12540;&#12479;&#12398;&#23450;&#32681;</span>
+<span class="gams-statement">display</span> <span class="gams-string">"@ &#12497;&#12521;&#12513;&#12540;&#12479;&#12398;&#23450;&#32681;"</span><span class="gams-lst-warning">;</span>
+<span class="gams-statement">parameter</span>
+        vqq0(*,*)       <span class="gams-explanation">&#29983;&#29987;&#38989;</span>
+        vq0(*)          <span class="gams-explanation">&#37096;&#38272;&#21029;&#29983;&#29987;&#38989;</span>
+<span class="gams-lst-warning">;</span>
+vqq0(i,j) = io_v_(i,j)<span class="gams-lst-warning">;</span>
+vq0(j) = <span class="gams-statement">sum</span>(i, vqq0(i,j))<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vqq0, vq0<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">parameters</span>
+    vintd0(i,j)         <span class="gams-explanation">&#20013;&#38291;&#25237;&#20837;&#38989;</span>
+    vintdd0(i,j)        <span class="gams-explanation">&#20013;&#38291;&#25237;&#20837;&#38989;&#65288;&#22269;&#20869;&#36001;&#65289;</span>
+    vintdi0(i,j)        <span class="gams-explanation">&#20013;&#38291;&#25237;&#20837;&#38989;&#65288;&#36664;&#20837;&#36001;&#65289;</span>
+    vkd0(j)             <span class="gams-explanation">&#36039;&#26412;&#25237;&#20837;&#38989;</span>
+    vld0(j)             <span class="gams-explanation">&#21172;&#21205;&#25237;&#20837;&#38989;</span>
+    vltax0(j)           <span class="gams-explanation">&#21172;&#20685;&#31246;</span>
+    vqtax0(j)           <span class="gams-explanation">&#29983;&#29987;&#31246;&#38989;</span>
+<span class="gams-lst-warning">;</span>
+vintdd0(i,j)<span class="gams-dollar">$</span>(io_u_(i,j,<span class="gams-string">"dom"</span>) &gt; 0) = io_u_(i,j,<span class="gams-string">"dom"</span>)<span class="gams-lst-warning">;</span>
+vintdi0(i,j)<span class="gams-dollar">$</span>(io_u_(i,j,<span class="gams-string">"imp"</span>) &gt; 0)  = io_u_(i,j,<span class="gams-string">"imp"</span>)<span class="gams-lst-warning">;</span>
+vintd0(i,j) = vintdd0(i,j) + vintdi0(i,j)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vintdd0, vintdi0, vintd0<span class="gams-lst-warning">;</span>
+
+vkd0(j) = io_va_(<span class="gams-string">"cap"</span>,j)<span class="gams-lst-warning">;</span>
+vld0(j) = io_va_(<span class="gams-string">"lab"</span>,j)<span class="gams-lst-warning">;</span>
+vltax0(j) = io_va_(<span class="gams-string">"ltx"</span>,j)<span class="gams-lst-warning">;</span>
+vqtax0(j) = io_va_(<span class="gams-string">"idt"</span>,j)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vkd0, vld0, vltax0, vqtax0<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">parameters</span>
+    sh_nd(j)            <span class="gams-explanation">&#22303;&#22320;&#25237;&#20837;&#12471;&#12455;&#12450;</span>
+    sh_rd(j)            <span class="gams-explanation">&#36039;&#28304;&#25237;&#20837;&#12471;&#12455;&#12450;</span>
+    vnd0(j)             <span class="gams-explanation">&#22303;&#22320;&#25237;&#20837;</span>
+    vrd0(j)             <span class="gams-explanation">&#36039;&#28304;&#25237;&#20837;</span>
+<span class="gams-lst-warning">;</span>
+<span class="gams-comment">*       &#22303;&#22320;&#12289;&#36039;&#28304;&#12398;&#25237;&#20837;&#38989;&#12471;&#12455;&#12450;&#12398;&#20206;&#23450;</span>
+sh_nd(j)<span class="gams-dollar">$</span>agr(j) = 0.5<span class="gams-lst-warning">;</span>
+sh_rd(j)<span class="gams-dollar">$</span>f_f(j) = 0.5<span class="gams-lst-warning">;</span>
+sh_rd(j)<span class="gams-dollar">$</span>ely_s(j) = 0.5<span class="gams-lst-warning">;</span>
+
+vnd0(j) = sh_nd(j) * vkd0(j)<span class="gams-lst-warning">;</span>
+vkd0(j) = vkd0(j) - vnd0(j)<span class="gams-lst-warning">;</span>
+
+vrd0(j) = sh_rd(j) * vkd0(j)<span class="gams-lst-warning">;</span>
+vkd0(j) = vkd0(j) - vrd0(j)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vkd0, vnd0, vkd0<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">parameters</span>
+    vcdd0(i)            <span class="gams-explanation">&#27665;&#38291;&#28040;&#36027;&#38989;&#65288;&#22269;&#20869;&#36001;&#65289;</span>
+    vcdi0(i)            <span class="gams-explanation">&#27665;&#38291;&#28040;&#36027;&#38989;&#65288;&#36664;&#20837;&#36001;&#65289;</span>
+    vcd0(i)             <span class="gams-explanation">&#27665;&#38291;&#28040;&#36027;&#38989;</span>
+    vcon0               <span class="gams-explanation">&#32207;&#28040;&#36027;&#38989;</span>
+<span class="gams-lst-warning">;</span>
+vcdd0(i) = io_fd_(i,<span class="gams-string">"hhc"</span>,<span class="gams-string">"dom"</span>)<span class="gams-lst-warning">;</span>
+vcdi0(i) = io_fd_(i,<span class="gams-string">"hhc"</span>,<span class="gams-string">"imp"</span>)<span class="gams-lst-warning">;</span>
+vcd0(i) = vcdd0(i) + vcdi0(i)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vcdd0, vcdi0, vcd0<span class="gams-lst-warning">;</span>
+
+vcon0 = <span class="gams-statement">sum</span>(i, vcd0(i))<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vcon0<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">$ontext
+&#12539;&#35519;&#25972;&#38917;&#12392;&#12375;&#12390;&#12398;&#24441;&#21106;&#12434;&#26524;&#12383;&#12377;&#22793;&#25968;&#12434;&#23566;&#20837;
+$offtext
+</span><span class="gams-statement">parameters</span>
+    vdem_hh0            <span class="gams-explanation">&#23478;&#35336;&#12398;&#36001;&#12398;&#38656;&#35201;&#37327;&#65288;&#12371;&#12428;&#12399;&#22806;&#29983;&#65289;</span>
+<span class="gams-lst-warning">;</span>
+vdem_hh0(i) = io_fd_(i,<span class="gams-string">"hhc"</span>,<span class="gams-string">"oth"</span>)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vdem_hh0<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">parameters</span>
+    vgdd0(i)            <span class="gams-explanation">&#25919;&#24220;&#28040;&#36027;&#38989;&#65288;&#22269;&#20869;&#36001;&#65289;</span>
+    vgdi0(i)            <span class="gams-explanation">&#25919;&#24220;&#28040;&#36027;&#38989;&#65288;&#36664;&#20837;&#36001;&#65289;</span>
+    vgd0(i)             <span class="gams-explanation">&#25919;&#24220;&#28040;&#36027;&#38989;</span>
+    vgov0               <span class="gams-explanation">&#32207;&#25919;&#24220;&#28040;&#36027;&#38989;</span>
+<span class="gams-lst-warning">;</span>
+vgdd0(i) = io_fd_(i,<span class="gams-string">"gvc"</span>,<span class="gams-string">"dom"</span>)<span class="gams-lst-warning">;</span>
+vgdi0(i) = io_fd_(i,<span class="gams-string">"gvc"</span>,<span class="gams-string">"imp"</span>)<span class="gams-lst-warning">;</span>
+vgd0(i) = vgdd0(i) + vgdi0(i)<span class="gams-lst-warning">;</span>
+vgov0 = <span class="gams-statement">sum</span>(i, vgd0(i))<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vgdd0, vgdi0, vgd0, vgov0<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">parameters</span>
+    vidd0(i)            <span class="gams-explanation">&#25237;&#36039;&#38989;&#65288;&#22269;&#20869;&#36001;&#65289;</span>
+    vidi0(i)            <span class="gams-explanation">&#25237;&#36039;&#38989;&#65288;&#36664;&#20837;&#36001;&#65289;</span>
+    vid0(i)             <span class="gams-explanation">&#25237;&#36039;&#38989;</span>
+    vinv0               <span class="gams-explanation">&#32207;&#25237;&#36039;&#38989;</span>
+<span class="gams-lst-warning">;</span>
+vidd0(i) = io_fd_(i,<span class="gams-string">"inv"</span>,<span class="gams-string">"dom"</span>)<span class="gams-lst-warning">;</span>
+vidi0(i) = io_fd_(i,<span class="gams-string">"inv"</span>,<span class="gams-string">"imp"</span>)<span class="gams-lst-warning">;</span>
+vid0(i) = vidd0(i) + vidi0(i)<span class="gams-lst-warning">;</span>
+vinv0 = <span class="gams-statement">sum</span>(i, vid0(i))<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vidd0, vidi0, vid0, vinv0<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">parameters</span>
+    vexp0(i)            <span class="gams-explanation">&#36664;&#20986;&#38989;</span>
+    vimp0(i)            <span class="gams-explanation">&#36664;&#20837;&#38989;</span>
+    vimptax0(i)         <span class="gams-explanation">&#38306;&#31246;&#38989;</span>
+    vimp_0(i)           <span class="gams-explanation">&#36664;&#20837;&#38989;&#65288;&#38306;&#31246;&#38989;&#36796;&#12415;&#65289;</span>
+<span class="gams-lst-warning">;</span>
+vexp0(i) = io_fd_(i,<span class="gams-string">"exp"</span>,<span class="gams-string">"oth"</span>)<span class="gams-lst-warning">;</span>
+vimp0(i) = - io_fd_(i,<span class="gams-string">"imp"</span>,<span class="gams-string">"oth"</span>)<span class="gams-lst-warning">;</span>
+vimptax0(i) = - io_fd_(i,<span class="gams-string">"imt"</span>,<span class="gams-string">"oth"</span>)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vexp0, vimp0, vimptax0<span class="gams-lst-warning">;</span>
+
+vimp_0(i) = vimp0(i) + vimptax0(i)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vimp_0<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">parameters</span>
+    vdo0(i)             <span class="gams-explanation">&#22269;&#20869;&#29983;&#29987;</span>
+    vdd0(i)             <span class="gams-string">"&#22269;&#20869;&#29983;&#29987;&#8594;&#22269;&#20869;"</span>
+    vdx0(i)             <span class="gams-string">"&#22269;&#20869;&#29983;&#29987;&#8594;&#36664;&#20986;"</span>
+<span class="gams-lst-warning">;</span>
+vdo0(i) = <span class="gams-statement">sum</span>(j, vqq0(i,j))<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vdo0<span class="gams-lst-warning">;</span>
+
+vdx0(i) = vexp0(i)<span class="gams-lst-warning">;</span>
+vdd0(i) = vdo0(i) - vdx0(i)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vdx0, vdd0<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">parameter</span>
+    end_res(j)          <span class="gams-explanation">&#36039;&#28304;&#36070;&#23384;&#37327;</span>
+    end_lnd(j)          <span class="gams-explanation">&#22303;&#22320;&#36070;&#23384;&#37327;</span>
+    end_cap             <span class="gams-explanation">&#36039;&#26412;&#36070;&#23384;&#37327;</span>
+    end_res0(j)         <span class="gams-explanation">&#36039;&#28304;&#36070;&#23384;&#37327;&#65288;&#21021;&#26399;&#20516;&#65289;</span>
+    end_lnd0(j)         <span class="gams-explanation">&#22303;&#22320;&#36070;&#23384;&#37327;&#65288;&#21021;&#26399;&#20516;&#65289;</span>
+    end_cap0            <span class="gams-explanation">&#36039;&#26412;&#36070;&#23384;&#37327;&#65288;&#21021;&#26399;&#20516;&#65289;</span>
+<span class="gams-lst-warning">;</span>
+end_res(j) = vrd0(j)<span class="gams-lst-warning">;</span>
+end_lnd(j) = vnd0(j)<span class="gams-lst-warning">;</span>
+end_cap = <span class="gams-statement">sum</span>(j, vkd0(j))<span class="gams-lst-warning">;</span>
+end_res0(j) = end_res(j)<span class="gams-lst-warning">;</span>
+end_lnd0(j) = end_lnd(j)<span class="gams-lst-warning">;</span>
+end_cap0 = end_cap<span class="gams-lst-warning">;</span>
+<span class="gams-lst-warning">;</span>
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       &#20313;&#26247;&#12539;&#21172;&#21205;</span>
+<span class="gams-statement">parameter</span>
+    end_lab     <span class="gams-explanation">&#21172;&#21205;&#36070;&#23384;</span>
+    end_lab_    <span class="gams-explanation">&#21172;&#21205;&#36070;&#23384;&#65288;Wage curve&#12514;&#12487;&#12523;&#29992;&#65289;</span>
+    vsup0       <span class="gams-explanation">&#21172;&#21205;&#20379;&#32102;</span>
+    vlei0       <span class="gams-explanation">&#20313;&#26247;&#38656;&#35201;</span>
+<span class="gams-lst-warning">;</span>
+<span class="gams-comment">*       &#21172;&#21205;&#20379;&#32102;</span>
+vsup0 = <span class="gams-statement">sum</span>(j, vld0(j))<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       &#21172;&#21205;&#36070;&#23384;</span>
+end_lab = vsup0<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       &#20313;&#26247;&#38656;&#35201;</span>
+vlei0 = end_lab - vsup0<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vsup0, end_lab, vlei0<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       Adjustment labor supply:</span>
+end_lab_ = end_lab / (1 - ur0)<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       Benchmark unemployment:</span>
+unempr0 = ur0 * end_lab_<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> end_lab, end_lab_, unempr0<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">parameter</span>
+    vca0_       <span class="gams-explanation">&#32076;&#24120;&#21454;&#25903;&#65288;&#65309;&#36031;&#26131;&#21454;&#25903;&#65289;</span>
+    vca0        <span class="gams-explanation">&#32076;&#24120;&#21454;&#25903;&#65288;&#65309;&#36031;&#26131;&#21454;&#25903;&#65289;</span>
+<span class="gams-lst-warning">;</span>
+vca0_(i,<span class="gams-string">"exp"</span>) = vexp0(i)<span class="gams-lst-warning">;</span>
+vca0_(i,<span class="gams-string">"imp"</span>) = vimp0(i)<span class="gams-lst-warning">;</span>
+vca0_(i,<span class="gams-string">"exp-imp"</span>) = vexp0(i) - vimp0(i)<span class="gams-lst-warning">;</span>
+vca0_(<span class="gams-string">"sum"</span>,<span class="gams-string">"exp"</span>) = <span class="gams-statement">sum</span>(i, vexp0(i))<span class="gams-lst-warning">;</span>
+vca0_(<span class="gams-string">"sum"</span>,<span class="gams-string">"imp"</span>) = <span class="gams-statement">sum</span>(i, vimp0(i))<span class="gams-lst-warning">;</span>
+vca0_(<span class="gams-string">"sum"</span>,<span class="gams-string">"exp-imp"</span>) = <span class="gams-statement">sum</span>(i, vexp0(i) - vimp0(i))<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vca0_<span class="gams-lst-warning">;</span>
+
+vca0 = vca0_(<span class="gams-string">"sum"</span>,<span class="gams-string">"exp-imp"</span>)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vca0<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">parameters</span>
+    vsave0      <span class="gams-explanation">&#22269;&#20869;&#12408;&#12398;&#36015;&#33988;&#38989;&#65288;&#65309;&#22269;&#20869;&#25237;&#36039;&#38989;&#65289;</span>
+<span class="gams-lst-warning">;</span>
+vsave0 = vinv0<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">parameters</span>
+    vutil0      <span class="gams-explanation">&#20206;&#24819;&#30340;&#12394;&#21177;&#29992;</span>
+<span class="gams-lst-warning">;</span>
+vutil0 = vsave0<span class="gams-dollar">$</span>fl_vinv + vcon0<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vutil0<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">parameters</span>
+    rt_m        <span class="gams-explanation">&#38306;&#31246;&#29575;</span>
+    rt_q        <span class="gams-explanation">&#29983;&#29987;&#31246;&#29575;</span>
+    rt_l        <span class="gams-explanation">&#21172;&#21205;&#31246;&#29575;</span>
+    rt_li       <span class="gams-explanation">&#21172;&#21205;&#25152;&#24471;&#31246;&#29575;</span>
+    rt_m0       <span class="gams-explanation">&#38306;&#31246;&#29575;&#65288;&#21021;&#26399;&#20516;&#65289;</span>
+    rt_q0       <span class="gams-explanation">&#29983;&#29987;&#31246;&#29575;&#65288;&#21021;&#26399;&#20516;&#65289;</span>
+    rt_l0       <span class="gams-explanation">&#21172;&#21205;&#31246;&#29575;&#65288;&#21021;&#26399;&#20516;&#65289;</span>
+    rt_li0      <span class="gams-explanation">&#21172;&#21205;&#25152;&#24471;&#31246;&#29575;&#65288;&#21021;&#26399;&#20516;&#65289;</span>
+<span class="gams-lst-warning">;</span>
+rt_m(i) = 0<span class="gams-lst-warning">;</span>
+rt_m(i)<span class="gams-dollar">$</span>vimp0(i) = vimptax0(i) / vimp0(i)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> rt_m<span class="gams-lst-warning">;</span>
+
+rt_q(j) = 0<span class="gams-lst-warning">;</span>
+rt_q(j)<span class="gams-dollar">$</span>vq0(j) = vqtax0(j) / vq0(j)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> rt_q<span class="gams-lst-warning">;</span>
+
+rt_l(j) = 0<span class="gams-lst-warning">;</span>
+rt_l(j)<span class="gams-dollar">$</span>vld0(j) = vltax0(j) / vld0(j)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> rt_l<span class="gams-lst-warning">;</span>
+
+rt_li = 0<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> rt_li<span class="gams-lst-warning">;</span>
+
+rt_m0(i) = rt_m(i)<span class="gams-lst-warning">;</span>
+rt_q0(j) = rt_q(j)<span class="gams-lst-warning">;</span>
+rt_l0(j) = rt_l(j)<span class="gams-lst-warning">;</span>
+rt_li0 = rt_li<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       &#12487;&#12540;&#12479;&#12398;&#12481;&#12455;&#12483;&#12463;</span>
+<span class="gams-statement">parameter</span> chk_sec_, chk_goods_, chk_va_fd_, chk_imp_<span class="gams-lst-warning">;</span>
+
+chk_sec_(j,<span class="gams-string">"cost"</span>)
+    = <span class="gams-statement">sum</span>(i, vintd0(i,j)) + vld0(j) + vltax0(j) + vkd0(j)
+    + vnd0(j) + vrd0(j) + vqtax0(j)<span class="gams-lst-warning">;</span>
+chk_sec_(j,<span class="gams-string">"reve"</span>)
+    = vq0(j)<span class="gams-lst-warning">;</span>
+chk_sec_(j,<span class="gams-string">"profit"</span>) = chk_sec_(j,<span class="gams-string">"reve"</span>) - chk_sec_(j,<span class="gams-string">"cost"</span>)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> chk_sec_<span class="gams-lst-warning">;</span>
+
+chk_goods_(i,<span class="gams-string">"dem"</span>)
+    = <span class="gams-statement">sum</span>(j, vintd0(i,j)) + vcd0(i) + vgd0(i) + vid0(i) + vexp0(i)
+    + vdem_hh0(i)<span class="gams-lst-warning">;</span>
+chk_goods_(i,<span class="gams-string">"sup"</span>)
+    = <span class="gams-statement">sum</span>(j, vqq0(i,j)) + vimp0(i) + vimptax0(i)<span class="gams-lst-warning">;</span>
+chk_goods_(i,<span class="gams-string">"dem-sup"</span>) = chk_goods_(i,<span class="gams-string">"dem"</span>) - chk_goods_(i,<span class="gams-string">"sup"</span>)<span class="gams-lst-warning">;</span>
+
+chk_goods_(i,<span class="gams-string">"dem_d"</span>)
+    = <span class="gams-statement">sum</span>(j, vintdd0(i,j)) + vcdd0(i) + vgdd0(i) + vidd0(i)
+    + vexp0(i) + vdem_hh0(i)<span class="gams-lst-warning">;</span>
+chk_goods_(i,<span class="gams-string">"sup_d"</span>) = <span class="gams-statement">sum</span>(j, vqq0(i,j))<span class="gams-lst-warning">;</span>
+chk_goods_(i,<span class="gams-string">"dem-sup_d"</span>) = chk_goods_(i,<span class="gams-string">"dem_d"</span>) - chk_goods_(i,<span class="gams-string">"sup_d"</span>)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> chk_goods_<span class="gams-lst-warning">;</span>
+
+chk_va_fd_(j,<span class="gams-string">"va"</span>) = vld0(j) + vkd0(j) + vltax0(j) + vqtax0(j) + vnd0(j) + vrd0(j)<span class="gams-lst-warning">;</span>
+chk_va_fd_(i,<span class="gams-string">"fd"</span>) = vcd0(i) + vgd0(i) + vid0(i) + vexp0(i)
+    - vimp0(i) - vimptax0(i) + vdem_hh0(i)<span class="gams-lst-warning">;</span>
+chk_va_fd_(<span class="gams-string">"sum"</span>,<span class="gams-string">"va"</span>) = <span class="gams-statement">sum</span>(j, chk_va_fd_(j,<span class="gams-string">"va"</span>))<span class="gams-lst-warning">;</span>
+chk_va_fd_(<span class="gams-string">"sum"</span>,<span class="gams-string">"fd"</span>) = <span class="gams-statement">sum</span>(i, chk_va_fd_(i,<span class="gams-string">"fd"</span>))<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> chk_va_fd_<span class="gams-lst-warning">;</span>
+
+chk_imp_(i,<span class="gams-string">"imp"</span>)
+    = <span class="gams-statement">sum</span>(j, vintdi0(i,j)) + vcdi0(i) + vgdi0(i) + vidi0(i)<span class="gams-lst-warning">;</span>
+chk_imp_(i,<span class="gams-string">"imp_"</span>) = vimp0(i) + vimptax0(i)<span class="gams-lst-warning">;</span>
+chk_imp_(i,<span class="gams-string">"diff"</span>) = chk_imp_(i,<span class="gams-string">"imp"</span>) - chk_imp_(i,<span class="gams-string">"imp_"</span>)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> chk_imp_<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       &#19968;&#25324;&#31246;&#38989;&#12398;&#27770;&#23450;</span>
+<span class="gams-comment">$ontext
+&#19968;&#25324;&#31246;&#38989;&#12399;&#25919;&#24220;&#12398;&#36001;&#25919;&#21454;&#25903;&#12364;&#22343;&#34913;&#12377;&#12427;&#12424;&#12358;&#12395;&#27770;&#23450;&#12290;
+
+$offtext
+</span><span class="gams-statement">parameter</span>
+    vlumpt0     <span class="gams-explanation">&#19968;&#25324;&#31246;&#65288;Lump-sum tax&#65289;</span>
+    v_g_chk     <span class="gams-explanation">&#25919;&#24220;&#21454;&#20837;&#12539;&#25903;&#20986;&#12398;&#12481;&#12455;&#12483;&#12463;</span>
+<span class="gams-lst-warning">;</span>
+v_g_chk(<span class="gams-string">"exp"</span>) = vgov0<span class="gams-lst-warning">;</span>
+v_g_chk(<span class="gams-string">"rev"</span>) =
+    <span class="gams-statement">sum</span>(i, rt_m0(i)*vimp0(i))
+    + <span class="gams-statement">sum</span>(j, rt_l0(j)*vld0(j))
+    + <span class="gams-statement">sum</span>(j, rt_q0(j)*vq0(j))<span class="gams-lst-warning">;</span>
+v_g_chk(<span class="gams-string">"exp-rev"</span>) = v_g_chk(<span class="gams-string">"exp"</span>) - v_g_chk(<span class="gams-string">"rev"</span>)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> v_g_chk<span class="gams-lst-warning">;</span>
+
+vlumpt0 = v_g_chk(<span class="gams-string">"exp-rev"</span>)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vlumpt0<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       &#12456;&#12493;&#12523;&#12462;&#12540;&#25237;&#20837;</span>
+<span class="gams-statement">parameters</span>
+    vae0(j)     <span class="gams-explanation">&#12456;&#12493;&#12523;&#12462;&#12540;&#25237;&#20837;</span>
+    vkle0(j)    <span class="gams-explanation">&#12456;&#12493;&#12523;&#12462;&#12540;&#25237;&#20837;&#65291;KL&#25237;&#20837;</span>
+<span class="gams-lst-warning">;</span>
+vae0(j) = <span class="gams-statement">sum</span>(i<span class="gams-dollar">$</span>ene(i), vintd0(i,j))<span class="gams-lst-warning">;</span>
+vae0(j)<span class="gams-dollar">$</span>sen(j) = <span class="gams-statement">sum</span>(i<span class="gams-dollar">$</span>e_ene_c(i,j), vintd0(i,j)) + <span class="gams-statement">sum</span>(i<span class="gams-dollar">$</span>ely(i), vintd0(i,j))<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vae0<span class="gams-lst-warning">;</span>
+
+vkle0(j) = vae0(j) + vkd0(j) + vld0(j)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> vkle0<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       CO2&#12487;&#12540;&#12479;</span>
+<span class="gams-statement">display</span> <span class="gams-string">"@ CO2&#12487;&#12540;&#12479;"</span><span class="gams-lst-warning">;</span>
+<span class="gams-comment">$ontext
+CO2 &#12487;&#12540;&#12479;&#12399; 3EID &#12487;&#12540;&#12479;&#12398;&#12418;&#12398;&#12434;&#21033;&#29992;&#12290;
+$offtext
+</span><span class="gams-statement">parameter</span>
+    qco2(i,j)   <span class="gams-string">"&#29987;&#26989;&#12363;&#12425;&#12398;CO2"</span>
+    qco2c(i)    <span class="gams-string">"&#23478;&#35336;&#12363;&#12425;&#12398;CO2"</span>
+    co2use(*)   <span class="gams-string">"CO2&#65288;&#29992;&#36884;&#21029;&#65289;"</span>
+    co2so(i)    <span class="gams-string">"CO2&#65288;&#12456;&#12493;&#12523;&#12462;&#12540;&#21029;&#65289;"</span>
+    co2_2005    <span class="gams-string">"&#32207;&#25490;&#20986;&#37327; (MtCO2)"</span>
+    co2_lim     <span class="gams-string">"CO2&#12408;&#12398;&#12461;&#12515;&#12483;&#12503;&#65288;MtCO2&#65289;"</span>
+    co2_lim0    <span class="gams-string">"CO2&#12408;&#12398;&#12461;&#12515;&#12483;&#12503;&#65288;MtCO2&#65289;"</span>
+    co2_lim_f0(j)       <span class="gams-explanation">&#29987;&#26989;&#12408;&#12398;CO2&#12461;&#12515;&#12483;&#12503;</span>
+    co2_lim_c0          <span class="gams-explanation">&#23478;&#35336;&#12408;&#12398;CO2&#12461;&#12515;&#12483;&#12503;</span>
+    co2_lim_f(j)        <span class="gams-explanation">&#29987;&#26989;&#12408;&#12398;CO2&#12461;&#12515;&#12483;&#12503;</span>
+    co2_lim_c           <span class="gams-explanation">&#23478;&#35336;&#12408;&#12398;CO2&#12461;&#12515;&#12483;&#12503;</span>
+    chk_qco2            <span class="gams-explanation">&#12481;&#12455;&#12483;&#12463;&#29992;</span>
+<span class="gams-lst-warning">;</span>
+qco2(es,j) = io_co2(es,j)<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">$ontext
+&#25237;&#20837;&#37329;&#38989;&#12364;0&#12398;&#12392;&#12371;&#12429;&#12399;CO2&#25490;&#20986;&#37327;&#12418;0&#12395;&#12377;&#12427;&#12290;
+$offtext
+</span>chk_qco2(i,j) = 0<span class="gams-lst-warning">;</span>
+<span class="gams-statement">loop</span>((i,j),
+    <span class="gams-statement">if</span>((io_co2(i,j) <span class="gams-statement">and</span> (<span class="gams-statement">not</span> vintd0(i,j))),
+        chk_qco2(i,j) = io_co2(i,j)<span class="gams-lst-warning">;</span>
+    )<span class="gams-lst-warning">;</span>
+)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> chk_qco2<span class="gams-lst-warning">;</span>
+qco2(i,j)<span class="gams-dollar">$</span>chk_qco2(i,j) = 0<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> qco2<span class="gams-lst-warning">;</span>
+
+qco2c(es) = io_co2(es,<span class="gams-string">"hhc"</span>)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> qco2c<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       CO2&#65288;&#29992;&#36884;&#21029;&#65289;</span>
+co2use(j) = <span class="gams-statement">sum</span>(i, qco2(i,j))<span class="gams-lst-warning">;</span>
+co2use(<span class="gams-string">"CON"</span>) = <span class="gams-statement">sum</span>(i, qco2c(i))<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> co2use<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       CO2&#65288;&#12456;&#12493;&#12523;&#12462;&#12540;&#21029;&#65289;</span>
+co2so(i) = <span class="gams-statement">sum</span>(j, qco2(i,j)) + qco2c(i)<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> co2so<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       &#32207;&#25490;&#20986;&#37327; (MtCO2)</span>
+co2_2005 = <span class="gams-statement">sum</span>(i, co2so(i))<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> co2_2005<span class="gams-lst-warning">;</span>
+
+co2_lim_f0(j) = <span class="gams-statement">sum</span>(i, qco2(i,j))<span class="gams-lst-warning">;</span>
+co2_lim_c0 = <span class="gams-statement">sum</span>(i, qco2c(i))<span class="gams-lst-warning">;</span>
+co2_lim_f(j) = co2_lim_f0(j)<span class="gams-lst-warning">;</span>
+co2_lim_c = co2_lim_c0<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> co2_lim_f0, co2_lim_c0<span class="gams-lst-warning">;</span>
+
+co2_lim0 = co2_2005<span class="gams-lst-warning">;</span>
+co2_lim = co2_lim0 * 10<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> co2_lim<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       &#24382;&#21147;&#24615;&#12497;&#12521;&#12513;&#12540;&#12479;</span>
+<span class="gams-statement">display</span> <span class="gams-string">"@ &#24382;&#21147;&#24615;&#12497;&#12521;&#12513;&#12540;&#12479;"</span><span class="gams-lst-warning">;</span>
+<span class="gams-statement">parameters</span>
+    e_cc        <span class="gams-string">"EOS: &#28040;&#36027;"</span>
+    e_ec        <span class="gams-string">"EOS: &#12456;&#12493;&#12523;&#12462;&#12540;&#28040;&#36027;&#36001;"</span>
+    e_nec       <span class="gams-string">"EOS: &#38750;&#12456;&#12493;&#12523;&#12462;&#12540;&#28040;&#36027;&#36001;"</span>
+    e_kl        <span class="gams-string">"EOS: &#36039;&#26412; vs &#21172;&#21205;"</span>
+    e_res       <span class="gams-string">"EOS: &#36039;&#28304; vs &#38750;&#36039;&#28304;"</span>
+    e_lnd       <span class="gams-string">"EOS: &#22303;&#22320; vs &#38750;&#22303;&#22320;"</span>
+    e_kle       <span class="gams-string">"EOS: &#36039;&#26412;&#12539;&#21172;&#21205; vs &#12456;&#12493;&#12523;&#12462;&#12540;"</span>
+    e_ely       <span class="gams-string">"EOS: &#38651;&#21147; vs &#38750;&#38651;&#21147;&#12456;&#12493;&#12523;&#12462;&#12540;&#25237;&#20837;"</span>
+    e_ene       <span class="gams-string">"EOS: &#12456;&#12493;&#12523;&#12462;&#12540;&#25237;&#20837;"</span>
+    e_dm        <span class="gams-string">"EOS: Armington&#24382;&#21147;&#24615;"</span>
+    e_des       <span class="gams-string">"EOS: &#22269;&#20869;&#20379;&#32102; vs &#36664;&#20986;&#20379;&#32102;"</span>
+<span class="gams-lst-warning">;</span>
+e_cc = 0.5<span class="gams-lst-warning">;</span>
+e_ec = 1<span class="gams-lst-warning">;</span>
+e_nec = 1<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> e_cc, e_ec, e_nec<span class="gams-lst-warning">;</span>
+
+e_kl(j) = 1.0<span class="gams-lst-warning">;</span>
+e_ely(j) = 0.5 * %eos_ene%<span class="gams-lst-warning">;</span>
+e_ene(j) = 1.0 * %eos_ene%<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> e_kl, e_ely, e_ene<span class="gams-lst-warning">;</span>
+
+e_kle(j) = 0.5<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> e_kle<span class="gams-lst-warning">;</span>
+
+e_res(j)<span class="gams-dollar">$</span>f_f(j) = 0.1<span class="gams-lst-warning">;</span>
+e_res(<span class="gams-string">"e_f"</span>) = 0.1<span class="gams-lst-warning">;</span>
+e_res(<span class="gams-string">"e_h"</span>) = 0.0<span class="gams-lst-warning">;</span>
+e_res(<span class="gams-string">"e_n"</span>) = 0.0<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> e_res<span class="gams-lst-warning">;</span>
+
+e_lnd(j) = 0.5<span class="gams-lst-warning">;</span>
+e_dm(i) = 4<span class="gams-lst-warning">;</span>
+e_des(i) = 2<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> e_lnd, e_dm, e_des<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       &#22806;&#29983;&#22793;&#25968;&#29992;&#12398;&#12497;&#12521;&#12513;&#12540;&#12479;</span>
+<span class="gams-statement">parameters</span>
+    s_f         <span class="gams-explanation">Scale factor</span>
+    s_f_g       <span class="gams-explanation">Scale factor for gov consumption</span>
+    s_f_lab     <span class="gams-explanation">Scale factor for labo endowment</span>
+<span class="gams-lst-warning">;</span>
+s_f = 1<span class="gams-lst-warning">;</span>
+s_f_g = 1<span class="gams-lst-warning">;</span>
+s_f_lab = 1<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       Benchmark data check</span>
+<span class="gams-statement">parameters</span>
+    chk_VA_sec          <span class="gams-explanation">Value added by sector</span>
+    chk_out_sec         <span class="gams-explanation">Output by sector</span>
+    chk_CO2_use         <span class="gams-explanation">CO2 emissions by sector</span>
+    chk_CO2_use_int     <span class="gams-string">"tCO2/Million Yen"</span>
+    chk_ely_use
+    chk_ind_CO2
+    chk_ind_CO2_use     <span class="gams-explanation">CO2 emissions by sector</span>
+    chk_ind_CO2_use_int <span class="gams-explanation">CO2 emissions by sector</span>
+<span class="gams-lst-warning">;</span>
+
+chk_ely_use(j,<span class="gams-string">"Value"</span>) = vintd0(<span class="gams-string">"ely"</span>,j)<span class="gams-lst-warning">;</span>
+chk_ely_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"Value"</span>) = vcd0(<span class="gams-string">"ely"</span>)<span class="gams-lst-warning">;</span>
+chk_ely_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"Value"</span>) = <span class="gams-statement">sum</span>(j, chk_ely_use(j,<span class="gams-string">"Value"</span>)) + chk_ely_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"Value"</span>)<span class="gams-lst-warning">;</span>
+
+chk_ely_use(j,<span class="gams-string">"%"</span>) = 100 * chk_ely_use(j,<span class="gams-string">"Value"</span>) / chk_ely_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"Value"</span>)<span class="gams-lst-warning">;</span>
+chk_ely_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"%"</span>) = 100 * chk_ely_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"Value"</span>) / chk_ely_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"Value"</span>)<span class="gams-lst-warning">;</span>
+chk_ely_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"%"</span>) = 100 * chk_ely_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"Value"</span>) / chk_ely_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"Value"</span>)<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">display</span> chk_ely_use<span class="gams-lst-warning">;</span>
+
+chk_ind_CO2 = <span class="gams-statement">sum</span>(i, qco2(i,<span class="gams-string">"e_f"</span>))<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">display</span> chk_ind_CO2<span class="gams-lst-warning">;</span>
+
+chk_VA_sec(j,<span class="gams-string">"Value"</span>) = vld0(j) + vkd0(j) + vltax0(j) + vqtax0(j) + vnd0(j) + vrd0(j)<span class="gams-lst-warning">;</span>
+chk_VA_sec(<span class="gams-string">"sum"</span>,<span class="gams-string">"Value"</span>) = <span class="gams-statement">sum</span>(j, chk_VA_sec(j,<span class="gams-string">"Value"</span>))<span class="gams-lst-warning">;</span>
+
+chk_VA_sec(j,<span class="gams-string">"%"</span>) = 100 * chk_VA_sec(j,<span class="gams-string">"Value"</span>) / chk_VA_sec(<span class="gams-string">"sum"</span>,<span class="gams-string">"Value"</span>)<span class="gams-lst-warning">;</span>
+chk_VA_sec(<span class="gams-string">"sum"</span>,<span class="gams-string">"%"</span>) = 100 * chk_VA_sec(<span class="gams-string">"sum"</span>,<span class="gams-string">"Value"</span>) / chk_VA_sec(<span class="gams-string">"sum"</span>,<span class="gams-string">"Value"</span>)<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">display</span> chk_VA_sec<span class="gams-lst-warning">;</span>
+
+chk_out_sec(j,<span class="gams-string">"Value"</span>) = <span class="gams-statement">sum</span>(i, vqq0(i,j))<span class="gams-lst-warning">;</span>
+chk_out_sec(<span class="gams-string">"sum"</span>,<span class="gams-string">"Value"</span>) = <span class="gams-statement">sum</span>(j, chk_out_sec(j,<span class="gams-string">"Value"</span>))<span class="gams-lst-warning">;</span>
+
+chk_out_sec(j,<span class="gams-string">"%"</span>) = 100 * chk_out_sec(j,<span class="gams-string">"Value"</span>) / chk_out_sec(<span class="gams-string">"sum"</span>,<span class="gams-string">"Value"</span>)<span class="gams-lst-warning">;</span>
+chk_out_sec(<span class="gams-string">"sum"</span>,<span class="gams-string">"%"</span>) = 100 * chk_out_sec(<span class="gams-string">"sum"</span>,<span class="gams-string">"Value"</span>) / chk_out_sec(<span class="gams-string">"sum"</span>,<span class="gams-string">"Value"</span>)<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">display</span> chk_out_sec<span class="gams-lst-warning">;</span>
+
+chk_CO2_use(j,<span class="gams-string">"MtCO2"</span>) = <span class="gams-statement">sum</span>(i, qco2(i,j))<span class="gams-lst-warning">;</span>
+chk_CO2_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"MtCO2"</span>) = <span class="gams-statement">sum</span>(i, qco2c(i))<span class="gams-lst-warning">;</span>
+chk_CO2_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"MtCO2"</span>) = <span class="gams-statement">sum</span>(j, chk_CO2_use(j,<span class="gams-string">"MtCO2"</span>)) + chk_CO2_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"MtCO2"</span>)<span class="gams-lst-warning">;</span>
+
+chk_CO2_use(j,<span class="gams-string">"%"</span>) = 100 * chk_CO2_use(j,<span class="gams-string">"MtCO2"</span>) / chk_CO2_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"MtCO2"</span>)<span class="gams-lst-warning">;</span>
+chk_CO2_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"%"</span>) = 100 * chk_CO2_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"MtCO2"</span>) / chk_CO2_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"MtCO2"</span>)<span class="gams-lst-warning">;</span>
+chk_CO2_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"%"</span>) = 100 * chk_CO2_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"MtCO2"</span>) / chk_CO2_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"MtCO2"</span>)<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">display</span> chk_CO2_use<span class="gams-lst-warning">;</span>
+
+chk_CO2_use_int(j,<span class="gams-string">"tCO2/M.Yen"</span>)<span class="gams-dollar">$</span>chk_out_sec(j,<span class="gams-string">"Value"</span>)
+    = 1000 * chk_CO2_use(j,<span class="gams-string">"MtCO2"</span>) / chk_out_sec(j,<span class="gams-string">"Value"</span>)<span class="gams-lst-warning">;</span>
+chk_CO2_use_int(j,<span class="gams-string">"tCO2/M.Yen(VA)"</span>)<span class="gams-dollar">$</span>chk_VA_sec(j,<span class="gams-string">"Value"</span>)
+    = 1000 * chk_CO2_use(j,<span class="gams-string">"MtCO2"</span>) / chk_VA_sec(j,<span class="gams-string">"Value"</span>)<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">display</span> chk_CO2_use_int<span class="gams-lst-warning">;</span>
+
+chk_ind_CO2_use(j,<span class="gams-string">"DE"</span>) = chk_CO2_use(j,<span class="gams-string">"MtCO2"</span>)<span class="gams-lst-warning">;</span>
+chk_ind_CO2_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"DE"</span>) = chk_CO2_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"MtCO2"</span>)<span class="gams-lst-warning">;</span>
+chk_ind_CO2_use(<span class="gams-string">"e_f"</span>,<span class="gams-string">"DE"</span>) = 0<span class="gams-lst-warning">;</span>
+chk_ind_CO2_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"DE"</span>) =
+    <span class="gams-statement">sum</span>(j, chk_ind_CO2_use(j,<span class="gams-string">"DE"</span>)) + chk_ind_CO2_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"DE"</span>)<span class="gams-lst-warning">;</span>
+
+chk_ind_CO2_use(j,<span class="gams-string">"IDE"</span>) =
+    0.01 * chk_ely_use(j,<span class="gams-string">"%"</span>) * chk_ind_CO2<span class="gams-lst-warning">;</span>
+chk_ind_CO2_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"IDE"</span>) =
+    0.01 * chk_ely_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"%"</span>) * chk_ind_CO2<span class="gams-lst-warning">;</span>
+chk_ind_CO2_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"IDE"</span>) =
+    <span class="gams-statement">sum</span>(j, chk_ind_CO2_use(j,<span class="gams-string">"IDE"</span>)) + chk_ind_CO2_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"IDE"</span>)<span class="gams-lst-warning">;</span>
+    
+chk_ind_CO2_use(j,<span class="gams-string">"TE"</span>) = chk_ind_CO2_use(j,<span class="gams-string">"DE"</span>) + chk_ind_CO2_use(j,<span class="gams-string">"IDE"</span>)<span class="gams-lst-warning">;</span>
+chk_ind_CO2_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"TE"</span>) = chk_ind_CO2_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"DE"</span>) + chk_ind_CO2_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"IDE"</span>)<span class="gams-lst-warning">;</span>
+chk_ind_CO2_use(<span class="gams-string">"sum"</span>,<span class="gams-string">"TE"</span>) =
+    <span class="gams-statement">sum</span>(j, chk_ind_CO2_use(j,<span class="gams-string">"TE"</span>)) + chk_ind_CO2_use(<span class="gams-string">"HHC"</span>,<span class="gams-string">"TE"</span>)<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">display</span> chk_ind_CO2_use<span class="gams-lst-warning">;</span>
+
+chk_ind_CO2_use_int(j,<span class="gams-string">"tCO2/M.Yen"</span>)<span class="gams-dollar">$</span>chk_out_sec(j,<span class="gams-string">"Value"</span>)
+    = 1000 * chk_ind_CO2_use(j,<span class="gams-string">"TE"</span>) / chk_out_sec(j,<span class="gams-string">"Value"</span>)<span class="gams-lst-warning">;</span>
+chk_ind_CO2_use_int(j,<span class="gams-string">"tCO2/M.Yen(VA)"</span>)<span class="gams-dollar">$</span>chk_VA_sec(j,<span class="gams-string">"Value"</span>)
+    = 1000 * chk_ind_CO2_use(j,<span class="gams-string">"TE"</span>) / chk_VA_sec(j,<span class="gams-string">"Value"</span>)<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">display</span> chk_ind_CO2_use_int<span class="gams-lst-warning">;</span>
+
+<span class="gams-dollar">$if</span> %bau_check% == 0 <span class="gams-dollar">$goto</span> model_def
+<span class="gams-statement">execute_unload</span> <span class="gams-string">".\results\bau_check.gdx"</span>,
+    chk_VA_sec, chk_out_sec, chk_CO2_use, chk_CO2_use_int, chk_ind_CO2_use, chk_ely_use, chk_ind_CO2_use_int<span class="gams-lst-warning">;</span>
+<span class="gams-dollar">$if</span> <span class="gams-statement">not</span> %bau_check% == 0 <span class="gams-dollar">$goto</span> end
+
+<span class="gams-dollar">$label</span> model_def
+
+<span class="gams-comment">*       ------------------------------------------------------------</span>
+<span class="gams-comment">*       &#25919;&#31574;&#29992;&#12497;&#12521;&#12513;&#12540;&#12479;</span>
+<span class="gams-statement">parameters</span>
+    fl_vla      <span class="gams-explanation">&#33258;&#20027;&#30340;&#21462;&#32068;&#12398;&#12465;&#12540;&#12473;&#12391;&#12399;&#38750;&#12476;&#12525;</span>
+    fl_etr      <span class="gams-explanation">&#25490;&#20986;&#37327;&#21462;&#24341;&#12395;&#12424;&#12427;&#35215;&#21046;&#12394;&#12425;&#38750;&#12476;&#12525;</span>
+    fl_etr_e    <span class="gams-explanation">ETR&#12363;&#12425;&#25511;&#38500;&#12373;&#12428;&#12427;&#37096;&#38272;&#12364;&#12354;&#12427;&#12465;&#12540;&#12473;&#12391;&#38750;&#12476;&#12525;</span>
+    fl_vla_osub <span class="gams-explanation">&#33258;&#20027;&#30340;&#21462;&#32068;&#65291;&#29983;&#29987;&#35036;&#21161;</span>
+<span class="gams-lst-warning">;</span>
+fl_vla = 0<span class="gams-lst-warning">;</span>
+fl_etr = 1<span class="gams-lst-warning">;</span>
+fl_etr_e = 0<span class="gams-lst-warning">;</span>
+fl_vla_osub(j) = 0<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> fl_vla, fl_etr, fl_etr_e, fl_vla_osub<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">option</span> sysout = on<span class="gams-lst-warning">;</span>
+<span class="gams-comment">*       ------------------------------------------------------------</span>
+<span class="gams-comment">*       &#12514;&#12487;&#12523;&#12398;&#35352;&#36848;</span>
+<span class="gams-comment">$ontext
++ &#12514;&#12487;&#12523;&#12399; MPSGE &#12391;&#35352;&#36848;
+$offtext
+</span><span class="gams-dollar">$ontext</span>
+
+<span class="gams-mpsge">$model:</span>jp_co2
+
+<span class="gams-comment">*       Debug options for MPSGE</span>
+<span class="gams-comment">* $echop:.true.</span>
+<span class="gams-comment">* $datech:.true.</span>
+<span class="gams-comment">* $funlog:.true.</span>
+    
+<span class="gams-mpsge">$sectors:</span>
+    q(j)<span class="gams-dollar">$</span>vq0(j)         <span class="gams-comment">! &#29983;&#29987;&#27700;&#28310;</span>
+    adx(i)<span class="gams-dollar">$</span>vdo0(i)      <span class="gams-comment">! &#22269;&#20869;&#20379;&#32102;&#12539;&#36664;&#20986;&#20379;&#32102;&#12398;&#37197;&#20998;</span>
+    af(i,j)<span class="gams-dollar">$</span>vintd0(i,j) <span class="gams-comment">! Armington&#32113;&#21512;&#65288;&#20013;&#38291;&#25237;&#20837;&#65289;</span>
+    ac(i)<span class="gams-dollar">$</span>vcd0(i)       <span class="gams-comment">! Armington&#32113;&#21512;&#65288;&#27665;&#38291;&#28040;&#36027;&#65289;</span>
+    ag(i)<span class="gams-dollar">$</span>vgd0(i)       <span class="gams-comment">! Armington&#32113;&#21512;&#65288;&#25919;&#24220;&#28040;&#36027;&#65289;</span>
+    ai(i)<span class="gams-dollar">$</span>vid0(i)       <span class="gams-comment">! Armington&#32113;&#21512;&#65288;&#25237;&#36039;&#65289;</span>
+    ae(j)<span class="gams-dollar">$</span>vae0(j)       <span class="gams-comment">! Energy&#32113;&#21512;</span>
+    con                 <span class="gams-comment">! &#27665;&#38291;&#28040;&#36027;</span>
+    gov                 <span class="gams-comment">! &#25919;&#24220;&#28040;&#36027;</span>
+    inv                 <span class="gams-comment">! &#25237;&#36039;</span>
+    ex(i)<span class="gams-dollar">$</span>vexp0(i)      <span class="gams-comment">! &#36664;&#20986;</span>
+    im(i)<span class="gams-dollar">$</span>vimp0(i)      <span class="gams-comment">! &#36664;&#20837;</span>
+    util                <span class="gams-comment">! &#65288;&#20206;&#24819;&#30340;&#12394;&#65289;&#21177;&#29992;</span>
+    lsup                <span class="gams-comment">! &#21172;&#21205;&#20379;&#32102;</span>
+    
+<span class="gams-mpsge">$commodities:</span>
+    p(i)                <span class="gams-comment">! &#36001;&#12398;&#20385;&#26684;</span>
+    pd(i)<span class="gams-dollar">$</span>vdd0(i)       <span class="gams-comment">! &#22269;&#20869;&#21521;&#12369;&#20379;&#32102;&#20385;&#26684;</span>
+    px(i)<span class="gams-dollar">$</span>vdx0(i)       <span class="gams-comment">! &#36664;&#20986;&#21521;&#12369;&#20379;&#32102;&#20385;&#26684;</span>
+    paf(i,j)<span class="gams-dollar">$</span>vintd0(i,j)        <span class="gams-comment">! Armington&#32113;&#21512;&#65288;&#20013;&#38291;&#25237;&#20837;&#65289;</span>
+    pac(i)<span class="gams-dollar">$</span>vcd0(i)      <span class="gams-comment">! Armington&#32113;&#21512;&#65288;&#27665;&#38291;&#28040;&#36027;&#65289;</span>
+    pag(i)<span class="gams-dollar">$</span>vgd0(i)      <span class="gams-comment">! Armington&#32113;&#21512;&#65288;&#25919;&#24220;&#28040;&#36027;&#65289;</span>
+    pai(i)<span class="gams-dollar">$</span>vid0(i)      <span class="gams-comment">! Armington&#32113;&#21512;&#65288;&#25237;&#36039;&#65289;</span>
+    pm(i)<span class="gams-dollar">$</span>vimp0(i)      <span class="gams-comment">! &#36664;&#20837;&#36001;&#12398;&#20385;&#26684;</span>
+    pae(j)<span class="gams-dollar">$</span>vae0(j)      <span class="gams-comment">! Energy&#32113;&#21512;</span>
+    pl                  <span class="gams-comment">! &#21172;&#21205;&#12398;&#20385;&#26684;</span>
+    pls                 <span class="gams-comment">! &#21172;&#21205;&#12398;&#20385;&#26684;</span>
+    pk                  <span class="gams-comment">! &#36039;&#26412;&#12398;&#12524;&#12531;&#12479;&#12523;&#12503;&#12521;&#12452;&#12473;</span>
+    pfx                 <span class="gams-comment">! &#22806;&#22269;&#28858;&#26367;&#12398;&#20385;&#26684;</span>
+    pgov                <span class="gams-comment">! &#25919;&#24220;&#28040;&#36027;&#12398;&#20385;&#26684;</span>
+    pcon                <span class="gams-comment">! &#27665;&#38291;&#28040;&#36027;&#12398;&#20385;&#26684;</span>
+    pinv                <span class="gams-comment">! &#25237;&#36039;&#36001;&#12398;&#20385;&#26684;</span>
+    putil               <span class="gams-comment">! &#65288;&#20206;&#24819;&#30340;&#12394;&#65289;&#21177;&#29992;&#12398;&#20385;&#26684;</span>
+    plnd(j)<span class="gams-dollar">$</span>vnd0(j)     <span class="gams-comment">! &#22303;&#22320;&#12398;&#20385;&#26684;</span>
+    pres(j)<span class="gams-dollar">$</span>vrd0(j)     <span class="gams-comment">! &#36039;&#28304;&#12398;&#20385;&#26684;</span>
+    pco2<span class="gams-dollar">$</span>fl_etr         <span class="gams-comment">! &#25490;&#20986;&#26528;&#20385;&#26684;</span>
+    pco2f(j)<span class="gams-dollar">$</span>(fl_vla <span class="gams-statement">and</span> reg_f(j) <span class="gams-statement">and</span> co2_lim_f0(j))    <span class="gams-comment">! &#25490;&#20986;&#26528;&#20385;&#26684;</span>
+    pco2c<span class="gams-dollar">$</span>fl_vla        <span class="gams-comment">! &#25490;&#20986;&#26528;&#20385;&#26684;</span>
+
+<span class="gams-mpsge">$consumers:</span>
+    m_hh                <span class="gams-comment">! &#23478;&#35336;&#12398;&#25152;&#24471;</span>
+    m_gov               <span class="gams-comment">! &#25919;&#24220;&#12398;&#25152;&#24471;</span>
+
+<span class="gams-mpsge">$auxiliary:</span>
+    lumpt               <span class="gams-comment">! &#19968;&#25324;&#31246;</span>
+    esl<span class="gams-dollar">$</span>fl_wc           <span class="gams-comment">! &#21172;&#21205;&#12398;&#36229;&#36942;&#20379;&#32102;</span>
+    ur<span class="gams-dollar">$</span>fl_wc            <span class="gams-comment">! &#22833;&#26989;&#29575;</span>
+    osub(j)<span class="gams-dollar">$</span>fl_vla_osub(j)      <span class="gams-comment">! &#35036;&#21161;&#37329;&#29575;</span>
+    co2_e<span class="gams-dollar">$</span>fl_etr_e              <span class="gams-comment">! &#25511;&#38500;&#12373;&#12428;&#12427;&#37096;&#38272;&#12398;CO2</span>
+
+<span class="gams-comment">*       Energy&#32113;&#21512;</span>
+<span class="gams-mpsge">$prod:</span>ae(j)<span class="gams-dollar">$</span>(vae0(j) <span class="gams-statement">and</span> (<span class="gams-statement">not</span> sen(j)))  s:e_ely(j)  ene:e_ene(j)
+    o:pae(j)    q:vae0(j)
+    i:paf(i,j)<span class="gams-dollar">$</span>e_nely(i) q:vintd0(i,j)  ene:
+    i:paf(i,j)<span class="gams-dollar">$</span>ely(i)    q:vintd0(i,j)   
+    
+<span class="gams-comment">*       Energy&#32113;&#21512; (for PET, COP and G_H)</span>
+<span class="gams-mpsge">$prod:</span>ae(j)<span class="gams-dollar">$</span>(vae0(j) <span class="gams-statement">and</span> sen(j))  s:e_ely(j)  ene:e_ene(j)
+    o:pae(j)    q:vae0(j)
+    i:paf(i,j)<span class="gams-dollar">$</span>e_ene_c(i,j)     q:vintd0(i,j)  ene:
+    i:paf(i,j)<span class="gams-dollar">$</span>ely(i)           q:vintd0(i,j)
+
+<span class="gams-comment">*       &#29983;&#29987;&#65288;&#36786;&#26989;&#65289;</span>
+<span class="gams-mpsge">$prod:</span>q(j)<span class="gams-dollar">$</span>(vq0(j) <span class="gams-statement">and</span> agr(j))  t:0  s:e_lnd(j)  nld:0  kle(nld):e_kle(j)  kl(kle):e_kl(j)  
+    o:p(i)      q:vqq0(i,j)     p:(1-rt_q0(j))  a:m_gov  t:rt_q(j)
++   a:m_gov  n:osub(j)<span class="gams-dollar">$</span>fl_vla_osub(j)  m:(-1)<span class="gams-dollar">$</span>fl_vla_osub(j)
+    i:plnd(j)   q:vnd0(j)       
+    i:paf(i,j)<span class="gams-dollar">$</span>(<span class="gams-statement">not</span> ene(i))     q:vintd0(i,j)  nld:
+    i:pae(j)    q:vae0(j)       kle:
+    i:pl        q:vld0(j)       p:(1+rt_l0(j))  a:m_gov  t:rt_l(j)  kl:
+    i:pk        q:vkd0(j)       kl:
+
+<span class="gams-comment">*       &#29983;&#29987;&#65288;&#21270;&#30707;&#29123;&#26009;&#65289;</span>
+<span class="gams-mpsge">$prod:</span>q(j)<span class="gams-dollar">$</span>(vq0(j) <span class="gams-statement">and</span> f_f(j))  t:0  s:e_res(j)  nrs:0  kle(nrs):e_kle(j)  kl(kle):e_kl(j)
+    o:p(i)      q:vqq0(i,j)     p:(1-rt_q0(j))  a:m_gov  t:rt_q(j)
++   a:m_gov  n:osub(j)<span class="gams-dollar">$</span>fl_vla_osub(j)  m:(-1)<span class="gams-dollar">$</span>fl_vla_osub(j)
+    i:pres(j)   q:vrd0(j)       
+    i:paf(i,j)<span class="gams-dollar">$</span>(<span class="gams-statement">not</span> ene(i))     q:vintd0(i,j)  nrs:
+    i:pae(j)    q:vae0(j)       kle:
+    i:pl        q:vld0(j)       p:(1+rt_l0(j))  a:m_gov  t:rt_l(j)  kl:
+    i:pk        q:vkd0(j)       kl:
+
+<span class="gams-comment">*       &#29983;&#29987;&#65288;&#38651;&#21147;&#65289;</span>
+<span class="gams-mpsge">$prod:</span>q(j)<span class="gams-dollar">$</span>(vq0(j) <span class="gams-statement">and</span> ely_s(j))  t:0  s:e_res(j)  nrs:0  kle(nrs):e_kle(j) kl(kle):e_kl(j)
+    o:p(i)      q:vqq0(i,j)     p:(1-rt_q0(j))  a:m_gov  t:rt_q(j)
++   a:m_gov  n:osub(j)<span class="gams-dollar">$</span>fl_vla_osub(j)  m:(-1)<span class="gams-dollar">$</span>fl_vla_osub(j)
+    i:pres(j)   q:vrd0(j)       
+    i:paf(i,j)<span class="gams-dollar">$</span>(<span class="gams-statement">not</span> ene(i))     q:vintd0(i,j)  nrs:
+    i:pae(j)    q:vae0(j)       kle:
+    i:pl        q:vld0(j)       p:(1+rt_l0(j))  a:m_gov  t:rt_l(j)  kl:
+    i:pk        q:vkd0(j)       kl:
+
+<span class="gams-comment">*       &#29983;&#29987;&#65288;PET, COP and G_H&#65289;</span>
+<span class="gams-mpsge">$prod:</span>q(j)<span class="gams-dollar">$</span>(vq0(j) <span class="gams-statement">and</span> sen(j))  t:0  s:0  kle:e_kle(j)  kl(kle):e_kl(j)
+    o:p(i)      q:vqq0(i,j)     p:(1-rt_q0(j))  a:m_gov  t:rt_q(j)
++   a:m_gov  n:osub(j)<span class="gams-dollar">$</span>fl_vla_osub(j)  m:(-1)<span class="gams-dollar">$</span>fl_vla_osub(j)
+    i:paf(i,j)<span class="gams-dollar">$</span>(<span class="gams-statement">not</span> ene(i))     q:vintd0(i,j)
+    i:paf(i,j)<span class="gams-dollar">$</span>e_ene_nc(i,j)    q:vintd0(i,j)
+    i:pae(j)    q:vae0(j)       kle:
+    i:pl        q:vld0(j)       p:(1+rt_l0(j))  a:m_gov  t:rt_l(j)  kl:
+    i:pk        q:vkd0(j)       kl:
+
+<span class="gams-comment">*       &#29983;&#29987;&#65288;&#12381;&#12398;&#20182;&#65289;</span>
+<span class="gams-mpsge">$prod:</span>q(j)<span class="gams-dollar">$</span>(vq0(j) <span class="gams-statement">and</span> oth_s(j))  t:0  s:0  kle:e_kle(j)  kl(kle):e_kl(j)
+    o:p(i)      q:vqq0(i,j)     p:(1-rt_q0(j))  a:m_gov  t:rt_q(j)
++   a:m_gov  n:osub(j)<span class="gams-dollar">$</span>fl_vla_osub(j)  m:(-1)<span class="gams-dollar">$</span>fl_vla_osub(j)
+    i:paf(i,j)<span class="gams-dollar">$</span>(<span class="gams-statement">not</span> ene(i))     q:vintd0(i,j)
+    i:pae(j)    q:vae0(j)       kle:
+    i:pl        q:vld0(j)       p:(1+rt_l0(j))  a:m_gov  t:rt_l(j)  kl:
+    i:pk        q:vkd0(j)       kl:
+
+<span class="gams-comment">*       &#22269;&#20869;&#20379;&#32102;&#12539;&#36664;&#20986;&#20379;&#32102;&#12398;&#37197;&#20998;</span>
+<span class="gams-mpsge">$prod:</span>adx(i)<span class="gams-dollar">$</span>vdo0(i)  t:e_des(i)
+    o:px(i)     q:vdx0(i)
+    o:pd(i)     q:vdd0(i)
+    i:p(i)      q:vdo0(i)
+
+<span class="gams-comment">*       Armington&#32113;&#21512;&#65288;&#20013;&#38291;&#25237;&#20837;&#65289;</span>
+<span class="gams-mpsge">$prod:</span>af(i,j)<span class="gams-dollar">$</span>(vintd0(i,j) <span class="gams-statement">and</span> (<span class="gams-statement">not</span> es(i)))  s:e_dm(i)
+    o:paf(i,j)  q:vintd0(i,j)
+    i:pd(i)     q:vintdd0(i,j)
+    i:pm(i)     q:vintdi0(i,j)
+
+<span class="gams-comment">*       Armington&#32113;&#21512;&#65288;&#20013;&#38291;&#25237;&#20837;&#65289;</span>
+<span class="gams-mpsge">$prod:</span>af(i,j)<span class="gams-dollar">$</span>(vintd0(i,j) <span class="gams-statement">and</span> es(i))  s:0  dm:e_dm(i)
+    o:paf(i,j)  q:vintd0(i,j)
+    i:pco2<span class="gams-dollar">$</span>(fl_etr <span class="gams-statement">and</span> reg_f(j))        q:qco2(i,j)
+    i:pco2f(j)<span class="gams-dollar">$</span>(fl_vla <span class="gams-statement">and</span> reg_f(j))    q:qco2(i,j)
+    i:pd(i)     q:vintdd0(i,j)  dm:
+    i:pm(i)     q:vintdi0(i,j)  dm:
+
+<span class="gams-comment">*       Armington&#32113;&#21512;&#65288;&#27665;&#38291;&#28040;&#36027;&#65289;</span>
+<span class="gams-mpsge">$prod:</span>ac(i)<span class="gams-dollar">$</span>(vcd0(i) <span class="gams-statement">and</span> (<span class="gams-statement">not</span> es(i)))  s:e_dm(i)
+    o:pac(i)    q:vcd0(i)
+    i:pd(i)     q:vcdd0(i)
+    i:pm(i)     q:vcdi0(i)
+
+<span class="gams-comment">*       Armington&#32113;&#21512;&#65288;&#27665;&#38291;&#28040;&#36027;&#65289;</span>
+<span class="gams-mpsge">$prod:</span>ac(i)<span class="gams-dollar">$</span>(vcd0(i) <span class="gams-statement">and</span> es(i))  s:0  dm:e_dm(i)
+    o:pac(i)    q:vcd0(i)
+    i:pco2<span class="gams-dollar">$</span>fl_etr       q:qco2c(i)
+    i:pco2c<span class="gams-dollar">$</span>fl_vla      q:qco2c(i)
+    i:pd(i)     q:vcdd0(i)  dm:
+    i:pm(i)     q:vcdi0(i)  dm:
+
+<span class="gams-comment">*       Armington&#32113;&#21512;&#65288;&#25919;&#24220;&#28040;&#36027;&#65289;</span>
+<span class="gams-mpsge">$prod:</span>ag(i)<span class="gams-dollar">$</span>vgd0(i)  s:e_dm(i)
+    o:pag(i)    q:vgd0(i)
+    i:pd(i)     q:vgdd0(i)
+    i:pm(i)     q:vgdi0(i)
+
+<span class="gams-comment">*       Armington&#32113;&#21512;&#65288;&#25237;&#36039;&#65289;</span>
+<span class="gams-mpsge">$prod:</span>ai(i)<span class="gams-dollar">$</span>vid0(i)  s:e_dm(i)
+    o:pai(i)    q:vid0(i)
+    i:pd(i)     q:vidd0(i)
+    i:pm(i)     q:vidi0(i)
+
+<span class="gams-comment">*       &#27665;&#38291;&#28040;&#36027;</span>
+<span class="gams-mpsge">$prod:</span>con  s:e_cc  ec:e_ec  nec:e_nec
+    o:pcon      q:vcon0
+    i:pac(i)<span class="gams-dollar">$</span>ene(i)             q:vcd0(i)  ec:
+    i:pac(i)<span class="gams-dollar">$</span>(<span class="gams-statement">not</span> ene(i))       q:vcd0(i)  nec:
+
+<span class="gams-comment">*       &#25919;&#24220;&#28040;&#36027;</span>
+<span class="gams-mpsge">$prod:</span>gov  s:0
+    o:pgov      q:vgov0
+    i:pag(i)    q:vgd0(i)
+
+<span class="gams-comment">*       &#25237;&#36039;</span>
+<span class="gams-mpsge">$prod:</span>inv  s:0
+    o:pinv      q:vinv0
+    i:pai(i)    q:vid0(i)
+
+<span class="gams-comment">*       &#36664;&#20986;</span>
+<span class="gams-mpsge">$prod:</span>ex(i)<span class="gams-dollar">$</span>vexp0(i)
+    o:pfx       q:vexp0(i)
+    i:px(i)     q:vexp0(i)
+
+<span class="gams-comment">*       &#36664;&#20837;      </span>
+<span class="gams-mpsge">$prod:</span>im(i)<span class="gams-dollar">$</span>vimp0(i)
+    o:pm(i)     q:vimp_0(i)
+    i:pfx       q:vimp0(i)  p:(1+rt_m0(i))  a:m_gov  t:rt_m(i)
+
+<span class="gams-comment">*       &#65288;&#20206;&#24819;&#30340;&#12394;&#65289;&#21177;&#29992;    </span>
+<span class="gams-mpsge">$prod:</span>util  s:1
+    o:putil     q:vutil0
+    i:pcon      q:vcon0
+    i:pinv<span class="gams-dollar">$</span>fl_vinv      q:vsave0
+
+<span class="gams-comment">*       &#21172;&#21205;&#20379;&#32102;</span>
+<span class="gams-mpsge">$prod:</span>lsup
+    o:pl        q:vsup0
+    i:pls       q:vsup0  a:m_gov  t:rt_li
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       &#25152;&#24471;&#22793;&#25968;</span>
+
+<span class="gams-comment">*       &#23478;&#35336;&#12398;&#25152;&#24471;    </span>
+<span class="gams-mpsge">$demand:</span>m_hh
+    d:putil     q:vutil0
+    e:pk        q:(end_cap*s_f)
+    e:plnd(j)   q:(end_lnd(j)*s_f)
+    e:pres(j)   q:(end_res(j)*s_f)
+    e:pd(i)     q:(-vdem_hh0(i)*s_f)
+    e:pfx       q:(-vca0*s_f)
+    e:pgov      q:(-vlumpt0)    r:lumpt
+    e:pinv<span class="gams-dollar">$</span>(<span class="gams-statement">not</span> fl_vinv)        q:(-vsave0*s_f)
+    e:pls<span class="gams-dollar">$</span>(<span class="gams-statement">not</span> fl_wc)   q:(end_lab*s_f*s_f_lab)
+    e:pls<span class="gams-dollar">$</span>fl_wc         q:(end_lab_*s_f*s_f_lab)
+    e:pls<span class="gams-dollar">$</span>fl_wc q:(-1)  r:esl
+    
+<span class="gams-comment">*       &#25919;&#24220;&#12398;&#25152;&#24471;</span>
+<span class="gams-mpsge">$demand:</span>m_gov
+    d:pgov      q:vgov0
+    e:pgov      q:vlumpt0       r:lumpt
+    e:pco2<span class="gams-dollar">$</span>fl_etr       q:(co2_lim)
+    e:pco2<span class="gams-dollar">$</span>fl_etr_e     q:(-1)  r:co2_e
+    e:pco2f(j)<span class="gams-dollar">$</span>(fl_vla <span class="gams-statement">and</span> reg_f(j))    q:(co2_lim_f(j))
+    e:pco2c<span class="gams-dollar">$</span>fl_vla      q:(co2_lim_c)
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       &#21046;&#32004;&#24335;</span>
+
+<span class="gams-comment">*       &#19968;&#25324;&#31246;&#12398;&#27700;&#28310;</span>
+<span class="gams-mpsge">$constraint:</span>lumpt
+    gov <span class="gams-operator">=e=</span> s_f * s_f_g<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       ----------------------------------------------------------------------</span>
+<span class="gams-comment">*       &#23455;&#36074;&#36035;&#37329;&#12408;&#12398;&#21046;&#32004;&#65288;Wage curve&#12514;&#12487;&#12523;&#65289;</span>
+<span class="gams-mpsge">$constraint:</span>ur<span class="gams-dollar">$</span>fl_wc
+    pl / pcon <span class="gams-operator">=e=</span> v0 * (ur / ur0)**(wc_elas)<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       &#21172;&#21205;&#12398;&#36229;&#36942;&#20379;&#32102;&#37327;</span>
+<span class="gams-mpsge">$constraint:</span>esl<span class="gams-dollar">$</span>fl_wc
+    esl - ur * (end_lab_*s_f) <span class="gams-operator">=g=</span> 0<span class="gams-lst-warning">;</span>
+
+<span class="gams-mpsge">$constraint:</span>osub(j)<span class="gams-dollar">$</span>fl_vla_osub(j)
+    osub(j) * <span class="gams-statement">sum</span>(i<span class="gams-dollar">$</span>vqq0(i,j), p(i)*z_qq(i,j)) <span class="gams-operator">=e=</span> pco2f(j)*co2_lim_f(j)<span class="gams-lst-warning">;</span>
+    
+<span class="gams-comment">*       &#25511;&#38500;&#12373;&#12428;&#12390;&#12356;&#12427;&#37096;&#38272;&#12363;&#12425;&#12398;CO2</span>
+<span class="gams-mpsge">$constraint:</span>co2_e<span class="gams-dollar">$</span>fl_etr_e
+    co2_e <span class="gams-operator">=e=</span>
+    <span class="gams-statement">sum</span>((i,j)<span class="gams-dollar">$</span>(es(i) <span class="gams-statement">and</span> (<span class="gams-statement">not</span> reg_f(j))), qco2(i,j) * af(i,j))<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       &#12381;&#12398;&#20182;&#12398;&#22793;&#25968;&#12398;&#23450;&#32681;</span>
+<span class="gams-mpsge">$report:</span>
+    v:z_intd(i,j)       i:paf(i,j)      prod:q(j)       <span class="gams-comment">! &#20013;&#38291;&#25237;&#20837;&#38656;&#35201;</span>
+
+<span class="gams-mpsge">$report:</span>
+    v:z_ld(j)   i:pl    prod:q(j)               <span class="gams-comment">! &#21172;&#21205;&#38656;&#35201;</span>
+    v:z_kd(j)   i:pk    prod:q(j)               <span class="gams-comment">! &#36039;&#26412;&#38656;&#35201;</span>
+    v:z_nd(j)   i:plnd(j)       prod:q(j)       <span class="gams-comment">! &#22303;&#22320;&#38656;&#35201;</span>
+    v:z_rd(j)   i:pres(j)       prod:q(j)       <span class="gams-comment">! &#22303;&#22320;&#38656;&#35201;</span>
+
+<span class="gams-mpsge">$report:</span>
+    v:z_qq(i,j) o:p(i)          prod:q(j)       <span class="gams-comment">! &#29983;&#29987;&#37327;&#65288;&#37096;&#38272;&#21029;&#65289;</span>
+    v:z_qdd(i)  o:pd(i)         prod:adx(i)     <span class="gams-comment">! &#22269;&#20869;&#29983;&#29987;&#8594;&#22269;&#20869;&#20379;&#32102;</span>
+    v:z_qdx(i)  o:px(i)         prod:adx(i)     <span class="gams-comment">! &#22269;&#20869;&#29983;&#29987;&#8594;&#36664;&#20986;&#20379;&#32102;</span>
+    v:z_qd(i)   i:p(i)          prod:adx(i)     <span class="gams-comment">! &#22269;&#20869;&#29983;&#29987;</span>
+    v:z_ae(j)   o:pae(j)        prod:ae(j)      <span class="gams-comment">! Energy&#32113;&#21512;</span>
+
+<span class="gams-mpsge">$report:</span>
+    v:z_ex_i(i) i:px(i)         prod:ex(i)      <span class="gams-comment">! &#36664;&#20986;&#37327;</span>
+    v:z_im_i(i) i:pfx           prod:im(i)      <span class="gams-comment">! &#36664;&#20837;&#37327;</span>
+
+<span class="gams-mpsge">$report:</span>
+    v:z_cd(i)   i:pac(i)        prod:con        <span class="gams-comment">! &#27665;&#38291;&#28040;&#36027;&#38656;&#35201;</span>
+    v:z_gd(i)   i:pag(i)        prod:gov        <span class="gams-comment">! &#25919;&#24220;&#28040;&#36027;&#38656;&#35201;</span>
+    v:z_id(i)<span class="gams-dollar">$</span>fl_vinv   i:pai(i)        prod:inv        <span class="gams-comment">! &#25237;&#36039;&#38656;&#35201;</span>
+
+<span class="gams-mpsge">$report:</span>
+    v:z_co2(i,j)<span class="gams-dollar">$</span>(fl_etr <span class="gams-statement">and</span> reg_f(j) <span class="gams-statement">and</span> es(i) <span class="gams-statement">and</span> qco2(i,j))  i:pco2  prod:af(i,j)  <span class="gams-comment">! CO2&#25490;&#20986;&#37327;&#65288;&#20225;&#26989;&#65289;</span>
+    v:z_co2c(i)<span class="gams-dollar">$</span>(fl_etr <span class="gams-statement">and</span> es(i) <span class="gams-statement">and</span> qco2c(i))  i:pco2  prod:ac(i)  <span class="gams-comment">! CO2&#25490;&#20986;&#37327;&#65288;&#28040;&#36027;&#65289;</span>
+    v:z_co2(i,j)<span class="gams-dollar">$</span>(fl_vla <span class="gams-statement">and</span> reg_f(j) <span class="gams-statement">and</span> es(i) <span class="gams-statement">and</span> qco2(i,j))  i:pco2f(j)  prod:af(i,j)  <span class="gams-comment">! CO2&#25490;&#20986;&#37327;&#65288;&#20225;&#26989;&#65289;</span>
+    v:z_co2c(i)<span class="gams-dollar">$</span>(fl_vla <span class="gams-statement">and</span> es(i) <span class="gams-statement">and</span> qco2c(i))  i:pco2c  prod:ac(i)  <span class="gams-comment">! CO2&#25490;&#20986;&#37327;&#65288;&#28040;&#36027;&#65289;</span>
+
+<span class="gams-mpsge">$report:</span>
+    v:z_util    o:putil         prod:util       <span class="gams-comment">! &#20206;&#24819;&#30340;&#12394;&#21177;&#29992;</span>
+    v:z_con     o:pcon          prod:con        <span class="gams-comment">! &#27665;&#38291;&#28040;&#36027;</span>
+    v:z_inv<span class="gams-dollar">$</span>fl_vinv  o:pinv     prod:inv        <span class="gams-comment">! &#25237;&#36039;</span>
+    v:z_gov     o:pgov          prod:gov        <span class="gams-comment">! &#25919;&#24220;&#28040;&#36027;</span>
+    v:z_lsup    o:pl    prod:lsup               <span class="gams-comment">! &#21172;&#20685;&#20379;&#32102;</span>
+    
+<span class="gams-dollar">$offtext</span>
+<span class="gams-dollar">$sysinclude</span> mpsgeset jp_co2
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       &#22793;&#25968;&#12398;&#21021;&#26399;&#20516;</span>
+lumpt.lo = -inf<span class="gams-lst-warning">;</span>
+lumpt.up = +<span class="gams-statement">inf</span><span class="gams-lst-warning">;</span>
+lumpt.l = 1<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       &#25490;&#20986;&#26528;&#20385;&#26684;&#12398;&#21021;&#26399;&#20516;</span>
+pco2.l = 0<span class="gams-lst-warning">;</span>
+pco2f.l(j) = 0<span class="gams-lst-warning">;</span>
+pco2c.l = 0<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       &#12491;&#12517;&#12513;&#12524;&#12540;&#12523;</span>
+pcon.fx = 1<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       &#21172;&#21205;&#12398;&#36229;&#36942;&#20379;&#32102;</span>
+esl.l = 0 + unempr0<span class="gams-dollar">$</span>fl_wc<span class="gams-lst-warning">;</span>
+esl.lo = -1e-1<span class="gams-lst-warning">;</span>
+<span class="gams-comment">*       &#22833;&#26989;&#29575;</span>
+ur.l = ur0<span class="gams-lst-warning">;</span>
+ur.lo = -1e-6<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       &#35036;&#21161;&#37329;&#29575;</span>
+osub.l(j) = 0<span class="gams-lst-warning">;</span>
+osub.lo(j) = 0<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       ----------------------------------------------------------------------</span>
+<span class="gams-comment">*       Benchmark replication.</span>
+<span class="gams-statement">display</span> <span class="gams-string">"@ Benchmark replication"</span><span class="gams-lst-warning">;</span>
+jp_co2.iterlim = 0<span class="gams-lst-warning">;</span>
+<span class="gams-dollar">$include</span> jp_co2.gen
+<span class="gams-statement">solve</span> jp_co2 <span class="gams-statement">using</span> mcp<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       ----------------------------------------------------------------------</span>
+<span class="gams-comment">*       Cleanup calculation.</span>
+<span class="gams-statement">display</span> <span class="gams-string">"@ Cleanup calculation"</span><span class="gams-lst-warning">;</span>
+jp_co2.iterlim = 10000<span class="gams-lst-warning">;</span>
+<span class="gams-dollar">$include</span> jp_co2.gen
+<span class="gams-statement">solve</span> jp_co2 <span class="gams-statement">using</span> mcp<span class="gams-lst-warning">;</span>
+
+<span class="gams-dollar">$include</span> sub_results_parameters.gms
+
+<span class="gams-comment">$ontext
+&#12471;&#12490;&#12522;&#12458;
+
++ &#35443;&#12375;&#12367;&#12399;&#35542;&#25991;&#12290;
++ &#12300;VLA_&#12301;&#12399;&#12300;VLA&#12301;&#12434;&#35336;&#31639;&#12375;&#12420;&#12377;&#12367;&#12377;&#12427;&#12383;&#12417;&#12398;&#12471;&#12490;&#12522;&#12458;&#12290;&#20998;&#26512;&#12377;&#12427;&#12471;&#12490;&#12522;&#12458;&#12391;&#12399;&#12394;&#12356;&#12290;
+$offtext
+</span><span class="gams-statement">set</span>     scn_all <span class="gams-explanation">&#20998;&#26512;&#12377;&#12427;&#12471;&#12490;&#12522;&#12458;&#65288;&#20840;&#37096;&#65289;</span> <span class="gams-slash">/
+        BAU     &#22522;&#28310;&#22343;&#34913;
+        ETR     &#20840;&#12390;&#12398;&#37096;&#38272;&#12434;&#23550;&#35937;&#12392;&#12375;&#12383;&#25490;&#20986;&#37327;&#21462;&#24341;&#12395;&#12424;&#12427;&#21066;&#28187;
+        ETR_A   &#37444;&#37628;&#37096;&#38272;&#12434;&#20813;&#38500;&#12375;&#12383;ETR
+        ETR_B   &#38651;&#21147;&#37096;&#38272;&#12434;&#20813;&#38500;&#12375;&#12383;ETR
+        ETR_C   &#36664;&#36865;&#37096;&#38272;&#12434;&#20813;&#38500;&#12375;&#12383;ETR
+        ETR_D   &#38651;&#21147;&#37096;&#38272;&#12398;&#12415;&#12434;&#23550;&#35937;&#12392;&#12375;&#12383;ETR
+        ETR_E   &#38651;&#21147;&#65292;&#37444;&#37628;&#65292;&#36664;&#36865;&#37096;&#38272;&#12398;&#12415;&#12434;&#23550;&#35937;&#12392;&#12375;&#12383;ETR
+        VLA_
+        VLA     &#33258;&#20027;&#12394;&#34892;&#21205;&#12395;&#12424;&#12427;&#21066;&#28187;
+        /</span>
+        scn_solve(scn_all) <span class="gams-explanation">&#20998;&#26512;&#12377;&#12427;&#12471;&#12490;&#12522;&#12458;&#65288;&#23455;&#38555;&#12395;&#35299;&#12367;&#12418;&#12398;&#65289;</span> <span class="gams-slash">/
+        BAU
+        ETR
+        ETR_A
+        ETR_B
+        ETR_C
+        ETR_D
+        ETR_E
+        VLA_
+        VLA
+        /</span>
+        scn_c(scn_all)
+<span class="gams-lst-warning">;</span>
+<span class="gams-statement">alias</span>(scn,scn_solve)<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       ----------------------------------------------------------------------</span>
+<span class="gams-comment">*       &#12514;&#12487;&#12523;&#12434;&#35299;&#12367;&#12503;&#12525;&#12464;&#12521;&#12512;</span>
+<span class="gams-dollar">$include</span> ./sub_solve_model.gms
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       &#32080;&#26524;</span>
+<span class="gams-statement">display</span> l_intd, l_cd, l_gd, l_id, l_ex_i, l_im_i, l_util, l_con, l_gov, l_inv,
+        l_ex, l_im, l_im_, l_nex, l_gdp, l_income, l_q, l_ld, l_kd, l_p, l_pcon,
+        l_pfx, l_ae, l_co2, l_co2_use, l_co2_use_sh, l_co2_so, l_co2t, l_co2_,
+        l_pco2, l_pco2f, l_pco2c, l_pco2_, l_ur, l_trd<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       --------------------------------------------------------------</span>
+<span class="gams-comment">*       &#22793;&#21270;&#29575;&#12398;&#35336;&#31639;</span>
+pc_intd(i,j,scn)<span class="gams-dollar">$</span>l_intd(i,j,<span class="gams-string">"bau"</span>)
+    = 100 * (l_intd(i,j,scn) / l_intd(i,j,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_cd(i,scn)<span class="gams-dollar">$</span>l_cd(i,<span class="gams-string">"bau"</span>) 
+    = 100 * (l_cd(i,scn) / l_cd(i,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_gd(i,scn)<span class="gams-dollar">$</span>l_gd(i,<span class="gams-string">"bau"</span>) 
+    = 100 * (l_gd(i,scn) / l_gd(i,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_id(i,scn)<span class="gams-dollar">$</span>l_id(i,<span class="gams-string">"bau"</span>) 
+    = 100 * (l_id(i,scn) / l_id(i,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_ex_i(i,scn)<span class="gams-dollar">$</span>l_ex_i(i,<span class="gams-string">"bau"</span>) 
+    = 100 * (l_ex_i(i,scn) / l_ex_i(i,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_im_i(i,scn)<span class="gams-dollar">$</span>l_im_i(i,<span class="gams-string">"bau"</span>) 
+    = 100 * (l_im_i(i,scn) / l_im_i(i,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_util(scn)<span class="gams-dollar">$</span>l_util(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_util(scn) / l_util(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_con(scn)<span class="gams-dollar">$</span>l_con(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_con(scn) / l_con(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_gov(scn)<span class="gams-dollar">$</span>l_gov(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_gov(scn) / l_gov(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_inv(scn)<span class="gams-dollar">$</span>l_inv(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_inv(scn) / l_inv(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_ex(scn)<span class="gams-dollar">$</span>l_ex(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_ex(scn) / l_ex(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_im(scn)<span class="gams-dollar">$</span>l_im(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_im(scn) / l_im(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_im_(scn)<span class="gams-dollar">$</span>l_im_(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_im_(scn) / l_im_(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_nex(scn)<span class="gams-dollar">$</span>l_nex(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_nex(scn) / l_nex(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_gdp(scn)<span class="gams-dollar">$</span>l_gdp(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_gdp(scn) / l_gdp(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_income(scn)<span class="gams-dollar">$</span>l_income(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_income(scn) / l_income(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_lsup(scn)<span class="gams-dollar">$</span>l_lsup(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_lsup(scn) / l_lsup(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_co2t(scn)<span class="gams-dollar">$</span>l_co2t(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_co2t(scn) / l_co2t(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_q(j,scn)<span class="gams-dollar">$</span>l_q(j,<span class="gams-string">"bau"</span>) 
+    = 100 * (l_q(j,scn) / l_q(j,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_qd(i,scn)<span class="gams-dollar">$</span>l_qd(i,<span class="gams-string">"bau"</span>) 
+    = 100 * (l_qd(i,scn) / l_qd(i,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_q_(j,scn)<span class="gams-dollar">$</span>l_q_(j,<span class="gams-string">"bau"</span>) 
+    = 100 * (l_q_(j,scn) / l_q_(j,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_ld(j,scn)<span class="gams-dollar">$</span>l_ld(j,<span class="gams-string">"bau"</span>) 
+    = 100 * (l_ld(j,scn) / l_ld(j,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_ld(<span class="gams-string">"sum"</span>,scn)<span class="gams-dollar">$</span>l_ld(<span class="gams-string">"sum"</span>,<span class="gams-string">"bau"</span>) 
+    = 100 * (l_ld(<span class="gams-string">"sum"</span>,scn) / l_ld(<span class="gams-string">"sum"</span>,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_kd(j,scn)<span class="gams-dollar">$</span>l_kd(j,<span class="gams-string">"bau"</span>) 
+    = 100 * (l_kd(j,scn) / l_kd(j,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_kd(<span class="gams-string">"sum"</span>,scn)<span class="gams-dollar">$</span>l_kd(<span class="gams-string">"sum"</span>,<span class="gams-string">"bau"</span>) 
+    = 100 * (l_kd(<span class="gams-string">"sum"</span>,scn) / l_kd(<span class="gams-string">"sum"</span>,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_ae(j,scn)<span class="gams-dollar">$</span>l_ae(j,<span class="gams-string">"bau"</span>) 
+    = 100 * (l_ae(j,scn) / l_ae(j,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_p(i,scn)<span class="gams-dollar">$</span>l_p(i,<span class="gams-string">"bau"</span>) 
+    = 100 * (l_p(i,scn) / l_p(i,<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_pcon(scn)<span class="gams-dollar">$</span>l_pcon(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_pcon(scn) / l_pcon(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_pfx(scn)<span class="gams-dollar">$</span>l_pfx(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_pfx(scn) / l_pfx(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_wage(scn)<span class="gams-dollar">$</span>l_wage(<span class="gams-string">"bau"</span>) 
+    = 100 * (l_wage(scn) / l_wage(<span class="gams-string">"bau"</span>) - 1) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">display</span> pc_intd, pc_cd, pc_gd, pc_id, pc_ex_i, pc_im_i, pc_util, pc_con, pc_gov,
+        pc_inv, pc_ex, pc_im, pc_im_, pc_ex, pc_gdp, pc_income, pc_co2t, pc_q,
+        pc_lsup, pc_qd, pc_q_, pc_wage, pc_ld, pc_kd, pc_p, pc_pcon, pc_pfx,
+        pc_ae<span class="gams-lst-warning">;</span>
+
+d_qd(i,scn)<span class="gams-dollar">$</span>l_qd(i,<span class="gams-string">"bau"</span>) = l_qd(i,scn) - l_qd(i,<span class="gams-string">"bau"</span>) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+d_q_(j,scn)<span class="gams-dollar">$</span>l_q_(j,<span class="gams-string">"bau"</span>) = l_q_(j,scn) - l_q_(j,<span class="gams-string">"bau"</span>) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+d_nex(scn) = l_nex(scn) - l_nex(<span class="gams-string">"bau"</span>) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+d_ld(j,scn)<span class="gams-dollar">$</span>l_ld(j,<span class="gams-string">"bau"</span>) = l_ld(j,scn) - l_ld(j,<span class="gams-string">"bau"</span>) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+d_ld(<span class="gams-string">"sum"</span>,scn)<span class="gams-dollar">$</span>l_ld(<span class="gams-string">"sum"</span>,<span class="gams-string">"bau"</span>) = l_ld(<span class="gams-string">"sum"</span>,scn) - l_ld(<span class="gams-string">"sum"</span>,<span class="gams-string">"bau"</span>) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+d_kd(j,scn)<span class="gams-dollar">$</span>l_kd(j,<span class="gams-string">"bau"</span>) = l_kd(j,scn) - l_kd(j,<span class="gams-string">"bau"</span>) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+d_kd(<span class="gams-string">"sum"</span>,scn)<span class="gams-dollar">$</span>l_kd(<span class="gams-string">"sum"</span>,<span class="gams-string">"bau"</span>) = l_kd(<span class="gams-string">"sum"</span>,scn) - l_kd(<span class="gams-string">"sum"</span>,<span class="gams-string">"bau"</span>) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">display</span> d_qd, d_q_, d_nex, d_ld, d_kd<span class="gams-lst-warning">;</span>
+
+l_summary(<span class="gams-string">"CO2_"</span>,scn) = l_co2t(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+l_summary(<span class="gams-string">"PCO2(1000yen/t)"</span>,scn) = l_pco2(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+l_summary(<span class="gams-string">"INC_"</span>,scn) = l_income(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+l_summary(<span class="gams-string">"GDP_"</span>,scn) = l_gdp(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+l_summary(<span class="gams-string">"CON_"</span>,scn) = l_con(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+l_summary(<span class="gams-string">"GOV_"</span>,scn) = l_gov(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+l_summary(<span class="gams-string">"INV_"</span>,scn) = l_inv(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+l_summary(<span class="gams-string">"EX_"</span>,scn) = l_ex(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+l_summary(<span class="gams-string">"IM_"</span>,scn) = l_im_(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+l_summary(<span class="gams-string">"LSUP_"</span>,scn) = l_lsup(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+l_summary(<span class="gams-string">"UTIL_"</span>,scn) = l_util(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+l_summary(<span class="gams-string">"UR_"</span>,scn) = l_ur(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+l_summary(<span class="gams-string">"PCO2_(1000yen/t)"</span>,scn) = l_pco2_(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+
+pc_summary(<span class="gams-string">"CO2_"</span>,scn) = pc_co2t(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_summary(<span class="gams-string">"PCO2(1000yen/t)"</span>,scn) = l_pco2(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_summary(<span class="gams-string">"INC_"</span>,scn) = pc_income(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_summary(<span class="gams-string">"GDP_"</span>,scn) = pc_gdp(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_summary(<span class="gams-string">"CON_"</span>,scn) = pc_con(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_summary(<span class="gams-string">"GOV_"</span>,scn) = pc_gov(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_summary(<span class="gams-string">"INV_"</span>,scn) = pc_inv(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_summary(<span class="gams-string">"EX_"</span>,scn) = pc_ex(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_summary(<span class="gams-string">"IM_"</span>,scn) = pc_im_(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_summary(<span class="gams-string">"LSUP_"</span>,scn) = pc_lsup(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_summary(<span class="gams-string">"UTIL_"</span>,scn) = pc_util(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_summary(<span class="gams-string">"UR_"</span>,scn) = l_ur(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+pc_summary(<span class="gams-string">"PCO2_(1000yen/t)"</span>,scn) = l_pco2_(scn) + <span class="gams-statement">eps</span><span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">display</span> chk_pcon_m<span class="gams-lst-warning">;</span>
+<span class="gams-statement">display</span> l_summary, pc_summary<span class="gams-lst-warning">;</span>
+
+bau_check(<span class="gams-string">"CO2_"</span>) = l_summary(<span class="gams-string">"CO2_"</span>,<span class="gams-string">"bau"</span>)<span class="gams-lst-warning">;</span>
+bau_check(<span class="gams-string">"INC_"</span>) = l_summary(<span class="gams-string">"INC_"</span>,<span class="gams-string">"bau"</span>)<span class="gams-lst-warning">;</span>
+bau_check(<span class="gams-string">"GDP_"</span>) = l_summary(<span class="gams-string">"GDP_"</span>,<span class="gams-string">"bau"</span>)<span class="gams-lst-warning">;</span>
+
+<span class="gams-statement">display</span> bau_check<span class="gams-lst-warning">;</span>
+
+<span class="gams-comment">*       GDX &#12501;&#12449;&#12452;&#12523;&#12395;&#32080;&#26524;&#12434;&#20986;&#21147;</span>
+<span class="gams-statement">execute_unload</span> <span class="gams-string">".\results\%scn_name%_results.gdx"</span>, l_summary, pc_summary, pc_q,
+    l_q, pc_qd, d_qd, pc_q_, d_q_, bau_check<span class="gams-lst-warning">;</span>
+
+<span class="gams-dollar">$label</span> end
+
+<span class="gams-statement">execute</span> <span class="gams-string">'del titlemaker_%scn_name%.cmd'</span><span class="gams-lst-warning">;</span>
+
+
+<span class="gams-comment">* --------------------</span>
+<span class="gams-comment">* Local Variables&#58;</span>
+<span class="gams-comment">* mode: gams</span>
+<span class="gams-comment">* fill-column: 80</span>
+<span class="gams-comment">* coding: sjis-dos</span>
+<span class="gams-comment">* End:</span>
+</pre>
+  </body>
+</html>

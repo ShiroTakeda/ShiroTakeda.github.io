@@ -1,0 +1,118 @@
+<!doctype html public "-//W3C//DTD HTML 4.0//EN"
+	"http://www.w3.org/TR/
+	REC-html40/strict.dtd">
+<html>
+
+<!--  Header. -->
+<head>
+<title>二酸化炭素の排出規制における二重の配当</title>
+<meta name="author" content="Shiro Takeda">
+<meta name="content-language" content="ja">
+<meta name="build" content="Sun Aug 19, 2001 11:05 AM">
+<meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+<meta name="Keyword" content="二重の配当, 排出権, double dividend, GAMS,
+応用一般均衡分析">
+<link href="../../css/shiro_alt.css" rel="stylesheet">
+</head>
+
+<body>
+<a name="top"></a>
+<table class="header" summary="Canned page footer" width="100%" cellpadding="0">
+ <tbody><tr>
+	 <td width="30%"><a href="../index-ja.html">[Up]</a>
+	 <a href="./double_dividend.html">[English]</a></td>
+	 <td width="20%" align="center"></td>
+	 <td width="right" align="right">
+<!-- hhmts start --> Last modified: Mon Aug 06 11:22 2007. <!-- hhmts end -->
+	  </td>
+	</tr>
+</tbody></table>
+<!--  Body starts here. -->
+<body>
+
+<h1>「二酸化炭素の排出規制における二重の配当の可能性」</h1>
+
+<h2>ファイル</h2>
+<ul>
+ <li> <a href="./double_dividend_jp.pdf">「二酸化炭素の排出規制における二重の配当の可能性: 動学的
+ 応用一般均衡分析による評価」</a> (pdf)：論文。
+ <li> <a href="./supplement_jp.pdf">補論</a> (pdf) : 上の論文の補論。モデル、データの作成について詳しく説明しています。
+ <li> <a href="./simulation_jp.pdf">プログラムの説明</a> (pdf) : シミュレーションのプログラムに
+ ついての説明。
+ <li> <a href="./gams_program.zip">gams_program.zip</a>： GAMS のプログラムとデータ。
+</ul>
+
+<h2>GAMS のプログラムの説明</h2>
+
+<p>"gams_program.zip" には、論文内でのシミュレーションをおこなうための GAMS のプログラムとデータが
+含まれています。
+
+<h3>ファイルの説明</h3>
+
+<table cellpadding="2" cellspacing="1" border="1" width="90%">
+  <tbody>
+    <tr bgcolor="#fffbea">
+      <td align="center" nowrap="nowrap"><tt>ファイル名</tt> </td>
+      <td align="center"> 説明</td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap"> <tt>dynamic_mcp.gms</tt> </td>
+      <td> メインのプログラム (<a href="./dynamic_mcp.html">中身</a>)。これは 
+       dynamic_mcp_basic.gms から読み込まれます。</td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap"> <tt>dynamic_mcp_basic.gms</tt></td>
+      <td> これも GAMS のプログラム。シミュレーションをおこなうには、これを GAMS で実行します。
+     </td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap"> <tt>set_definition.gms</tt></td>
+      <td> set の定義ファイルです。</td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap"> <tt>dataset.dat</tt></td>
+      <td> データが含まれるファイル。</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<h3>実行方法</h3>
+
+<p>上の 4 つのファイルを同じフォルダに置き、dynamic_mcp_basic.gms を GAMS で実行するだけです。残
+りの3つのファイルは実行時に dynamic_mcp_basic.gms に読み込まれます。
+
+<h3>計算内容</h3>
+
+<p>このプログラムでは、tax swap による効用への効果 (論文の表9の結果) のみ計算されます。結果は 
+pc_util というパラメータに出力されます。論文内の他の計算もおこなうには、若干プログラムを書き換え
+る必要があります。
+
+
+
+<h3>注意点</h3>
+
+<ul>
+ <li> <p>プログラム内では、モデルは mcp format で記述されています。実行し、適切な結果を得るには 
+      full license の solver PATH が必要となります。少くとも私が試したかぎりでは、GAMS にデフォー
+      ルトで付いている solver MILES では解くことができませんでした。
+ <li> <p>dataset.dat に含まれるデータは加工済みのものだけです。元のデータ (連関表、3EID) を加工
+      するための GAMS プログラムもありますので、欲しい方には差し上げます。ただし、自分でデータを
+      加工するには、1995年の産業連関表、および3EIDの電子ファイルを所有している必要があります。
+ <li> <p>プログラムの内容、およびその他の点について不明な点がありましたら、私に問い合わせていた
+      だけ れば、わかる範囲で説明します。
+</ul>
+
+<br>
+<br>
+<br>
+<hr>
+<a href="#top">[Top of this page]</a>
+<br>
+<a href="../../index-ja.html">[The top page]</a>
+<br>
+<br>
+
+</body>
+</html>
+

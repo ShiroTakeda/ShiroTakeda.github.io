@@ -1,0 +1,85 @@
+<!doctype html public "-//W3C//DTD HTML 4.0//EN"
+	"http://www.w3.org/TR/
+	REC-html40/strict.dtd">
+<html>
+
+<!--  Header. -->
+<head>
+<title>The GTAP model implemented in GAMS</title>
+<meta name="author" content="Shiro Takeda">
+<meta name="content-language" content="en">
+<meta name="build" content="Sun Aug 19, 2001 11:05 AM">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<meta name="Keyword" content="GTAP, GAMS, gms">
+<link href="../../css/shiro_alt.css" rel="stylesheet">
+</head>
+
+<body>
+<a name="top"></a>
+<table class="header" summary="Canned page footer" width="100%" cellpadding="0">
+ <tbody><tr>
+	 <td width="30%"><a href="../index.html">[Up]<a href="./gtap-ja.html">[Japanese]</a>
+	 <td width="20%" align="center"></td>
+	 <td width="right" align="right">
+<!-- hhmts start --> Last modified: Tue Aug 07 11:49 2007. <!-- hhmts end -->
+	  </td>
+	</tr>
+</tbody></table>
+<!--  Body starts here. -->
+<body>
+
+<h1>The GTAP model implemented in GAMS</h1>
+
+<h2>Introduction</h2>
+
+<p>This is a GAMS implementation of the GTAP model.  I know that the GTAP model
+is already implemented in GAMS by a sample model in Tom Rutherford's GTAPinGAMS.
+However, his model differs from the original GTAP model in several ways.  The
+major difference is that
+<ul>
+ <li> The original GTAP model assumes CDE utility function for private
+      consumption, but Rutherford's model assumes Cobb-Douglas utility function.
+ <li> The original GTAP model assumes variable investment, but he assumes
+      constant investment.
+</ul>
+
+<p>With respect to the above two points, my model follows the original GTAP
+model.
+
+<p><b>[Note]</b>
+<br>Although I tried to replicate the original GTAP model as closely as
+possible, the model in my program differs from the original model.  It is
+because the GTAP model uses Divisia type index.  Since Divisia type index cannot
+be represented in the level form, my model uses Tornqvist index, which is a
+discrete approximation to a continuous Divisia index, instead of it.  This makes
+my model differ from the original GTAP model.
+
+<h2>Files</h2>
+<ul>
+ <li> <a href="gtap_200708071104.zip">gtap_200708071104.zip</a> (Tue Aug 07 2007)
+</ul>
+
+<br>
+<br>
+<hr>
+<a href="#top">[Top of this page]</a>
+<br>
+<a href="../../index.html">[The top page]</a>
+<br>
+<br>
+
+<div>Feel free to link to this site.</div>
+&copy;2007 Shiro Takeda
+
+<SCRIPT Language="JavaScript">
+<!--
+document.write("<img src='http://parkcgi.zero.ad.jp/~zbc08106/acc/acclog.cgi?");
+document.write("referrer="+document.referrer+"&");
+document.write("width="+screen.width+"&");
+document.write("height="+screen.height+"&");
+document.write("color="+screen.colorDepth+"'>");
+// -->
+</SCRIPT>
+</body>
+</html>
+
