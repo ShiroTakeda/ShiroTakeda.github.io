@@ -1,0 +1,536 @@
+@charset "UTF-8";
+/*
+
+2060a0
+
+"ax07 written by Nicola Lambathakis (banzai) banzai@tattoocms.it"
+に付属するstyle.cssを編集・変更したもの。
+オリジナルのax07は以下の場所で入手可能。
+Theme URI: http://www.tattoocms.it/templates/ax07.html
+
+Time-stamp: <2011-11-19 18:32:32 Shiro Takeda>
+*/
+
+/* 最大幅を1050px とする */
+
+/*
+------------------------------------------------------------------------- */
+/* Main Sections
+------------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+}
+/* body */
+/* { */
+/*   margin: 1em;          /\* Margin 1em *\/ */
+/*   padding: 0;           /\* Padding はゼロ *\/ */
+/*   font-size: 90%;       /\* 文字の大きさ．少し小さく． *\/ */
+/*   background-color: #ffffff;    /\* グレー *\/ */
+/*   line-height: 150%; */
+/*   } */
+
+body {
+   margin: 0;
+   padding: 0;
+   font: 12px Helvetica;
+   -webkit-text-size-adjust: none;
+   min-height: 460px;
+   background-repeat: repeat;
+   background-position: 0 0;
+
+   max-width: 100%;
+   height: auto;
+
+   overflow-x: hidden;
+}
+
+div, p, img, a, td, ul, ol
+{
+}
+
+/* Font size for heading */
+h1 { font-size: 22px }
+h2 { font-size: 18px }
+h3 { font-size: 15px }
+h4 { font-size: 13px }
+h5 { font-size: 12px }
+h6 { font-size: 12px }
+
+h1
+{
+  margin: 1em 3em 1em 0em;
+  padding-bottom: 0.2em;
+
+  color: #2060a0;
+
+  border-bottom-width: 4px;
+  border-bottom-color: #2060a0;
+  border-bottom-style: double;
+  }
+h2
+{
+  margin: 1em 3em 1em 0em;
+  padding-bottom: 0.2em 0 0.2em 0;
+
+  color: #2060a0;
+
+  border-bottom-color: #2060a0;
+  border-bottom-width: 3px;
+  border-bottom-style: double;
+  }
+h3
+{
+  margin: 1em 3em 1em 0em;
+  padding-bottom: 0.2em;
+
+  color: #808080;
+  
+  border-bottom-color: #808080;
+  border-bottom-width: 3px;
+  border-bottom-style: double;
+  }
+h4
+{
+  margin: 1em 3em 1em 0em;
+  padding-bottom: 0.2em;
+
+  color: #707070;
+  }
+h6 
+{
+  font-weight: bold;
+  }
+
+p { padding: 0 0 0.5em 0; }
+
+a, a:link
+{
+  color: #2060a0;
+  text-decoration: none;
+  border-bottom-width: 1px;
+  border-bottom-style: dotted;
+  border-bottom-color: #999999;
+}
+a:visited
+{
+color: #a060a0;
+  }
+a:hover
+{
+  background-color: #e0e0ff;
+  color: #000000;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  }
+a:active            /* ??? */
+{
+  color: #2060a0;
+  }
+
+a img
+{
+  border-color: #a0c0a0;
+  border-width: 1.5px;
+  border-style: outset;
+}
+a:hover img 
+{
+  border-color: #90b090;
+  border-width: 2px;
+  border-style: outset;
+}
+img
+{
+  border: none;
+}
+
+/* 番号付きリスト */
+ol
+{
+  margin: 0.5em 0 1em 1.5em;
+}
+ol li
+{
+  list-style-type: decimal;
+/*   padding: 0.2em 0 0.3em 0.3em; */
+  padding: 0.2em 0 0.3em 0em;
+}
+
+/* 記号付きリスト */
+ul
+{
+/*   margin: 0 0 0 1em; */
+  margin: 0 0 0 0;
+}
+ul li
+{
+  }
+
+/* ここの設定よくわからず． */
+.clear
+{
+  clear: both;          /* float による回り込みを解除 */
+  height: 1px;
+  margin: -1px 0 0;
+  font-size: 1px;
+  }
+
+/* page は全体 */
+#page
+{
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0px;
+}
+
+/* header 部分 */
+#header
+{
+  margin: 0px;
+
+  background-color: #f3f7fa;
+  border-color: #cfe4f2;
+  border-width: 1px;
+  border-style: solid;
+/*   max-width: 1050px; */
+
+  width: 100%;
+}
+
+#insideheader
+{
+  margin: 0em 1em 0em 1em;
+}
+
+#insideheader h1
+{
+  margin: 1em 0em 0em 0em;
+/*   padding: 0.5em 1em 0.5em 40px;    /\* wide left padding for icon  *\/ */
+  padding: 0 0 0 0;    /* wide left padding for icon  */
+
+  color: #2060a0;
+
+/*  background-image: url(http://shirotakeda.org/css/images/000645_small.jpg); */
+/*   background-repeat: no-repeat; */
+/*   background-position: left center; */
+  border-bottom-style: none; */
+  
+  line-height: 180%
+}
+
+#header p
+{
+  padding: 0 0 0 0;
+  }
+
+/* ??? */
+#middlebody
+{
+  height: 30px;
+  margin: 0px;
+  padding: 0px 0px 0px 20px
+}
+
+/* #contentarea */
+/* { */
+/* } */
+
+#contentarea
+{
+   margin-top: 15px;
+   position: relative;
+   width: 100%;
+}
+
+
+/* left column */
+#leftcolumn
+{
+/*   background-color: #ffffff; */
+  margin: 0px 0px 0px 0px;
+  padding: 1em 1.5em 1em 0.5em;
+
+  width: 200px;
+  float: left;
+
+  border-right-width: 1px;
+  border-right-style: solid;
+  border-right-color: #CCCCCC;
+
+  font-size: 90%;
+  }
+
+#leftcolumn h3
+{
+  margin: 15px 0px 10px 0px;
+  padding: 3px 5px 3px 5px;
+
+  font-size: 120%;
+
+  border-bottom-width: 3px;
+  border-bottom-style: double;
+  border-bottom-color: #CCCCCC;
+
+  }
+
+#leftcolumn ul li
+{
+  padding: 0.2em 0 0.3em 0.3em;
+}
+
+/* #leftcolumn a */
+
+/* { */
+/*   color: #d01050; */
+/*   } */
+
+#leftcolumn a, a:link
+{
+  color: #2060a0;
+  text-decoration: none;
+  border-bottom-width: 1px;
+  border-bottom-style: dotted;
+  border-bottom-color: #999999;
+}
+#leftcolumn a:visited
+{
+color: #a060a0;
+  }
+#leftcolumn a:hover
+{
+  background-color: #e0e0ff;
+  color: #000000;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  }
+#leftcolumn a:active            /* ??? */
+{
+  color: #2060a0;
+  }
+
+/* Footer */
+#footer
+{
+  margin: 0 0 0 0;
+  background-color: #f3f7fa;
+  border-color: #cfe4f2;
+  border-width: 1px;
+  border-style: solid;
+
+/*   max-width: 1050px; */
+  
+  font-size: 90%;
+}
+#infooter
+{
+  padding: 10px 10px 10px 10px;
+  text-align: center;
+}
+#infooter a 
+{
+  font-weight: bold;
+  }
+
+/* Main content. [ *content* ] が入るところ */
+#maincontent
+{
+  margin: 10px 10px 10px 10px;
+
+  height: auto !important; /* Detect height automatically, Incompatible w/IE */
+  min-height: 300px;
+
+  line-height: 180%;
+  }
+
+#maincontent ul
+{
+  margin: 0.5em 0 1em 1.5em;
+  }
+#maincontent ul li
+{
+/*   padding: 0.2em 0 0.3em 0.3em; */
+  padding: 0.2em 0 0.3em 0em;
+}
+
+/* ??? */
+#greyblock {
+    margin-top: 0px;
+    float: right;
+    margin-right: 64px;
+    height: 200px;
+    padding-top: 8px;
+    padding-right: 4px;
+    padding-bottom: 4px;
+    padding-left: 5px;
+}
+
+/* Navi */
+#nav 
+{
+  padding: 1em 2em 1em 0em;
+
+}
+
+blockquote
+{
+  font-style: normal;
+  color: #000080;
+  margin: 1em 1.5em 1em 0.5em;
+  padding: 1em 1em 1em 1em;
+  }
+
+blockquote.inyou
+{
+  font-style: normal;
+  font-size: 100%;
+  margin: 1em 1.5em 1em 0.5em;
+  padding: 1em 1em 1em 1em;
+  border-style: solid;
+  border-width: 1px;
+  color: #400000;
+  background-color: #fef9f9;
+  border-color: #f0e0e0;
+  }
+
+blockquote.chu
+{
+  font-style: normal;
+  font-size: 100%;
+  margin: 1em 1.5em 1em 0.5em;
+  padding: 1em 1em 1em 1em;
+  border-style: solid;
+  border-width: 1px;
+  color: #505050;
+  background-color: #f7f7f7;
+  border-color: #cfe4f2;
+  }
+
+blockquote.italic
+{ font-style: italic;
+  color: #000080;
+  }
+
+div.note
+{
+  color: #f00000;
+}
+
+quote
+{
+  font-family: italic;
+  color: #4444aa;
+  }
+
+pre
+{ font-size: 100%;
+  line-height: 110%;
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  color: #000080;
+  border-color: #f0eac0;
+  background-color: #fffdef;
+  white-space: pre;
+  margin: 1em 1.5em 1em 0.5em;
+  padding: 1em 1em 1em 1em;
+  }
+
+td
+{
+  padding: 5px 0px 5px 0px;
+}
+
+.go2top 
+{
+  margin: 1em 0em 1.5em 0em;
+  font-weight: bold;
+
+}
+
+div.new 
+{
+  color: #5050a0;
+  padding-bottom: 1em;
+
+  background-repeat: no-repeat;
+  background-position: left center;
+  border-bottom-style: none; */
+}
+
+
+fieldset
+{
+  padding: 10px 10px 20px 10px;
+
+}
+
+input 
+{
+  background-color: #f5faff;
+  border-style: inset;
+}
+
+input.button
+{
+  background-color: #f3f3f3;
+  border-style: outset;
+}
+
+#ajaxSearch_submit 
+{
+  background-color: #f3f3f3;
+  border-style: outset;
+}
+
+input.radio
+{
+  border-style: none;
+}
+
+textarea
+{
+  background-color: #fdfcf5;
+  border-style: inset;
+  border-width: 2px 2px 2px 2px;
+}
+
+.intro
+{
+  margin: 0px 0px 0px 0px;
+  padding: 1em 1.5em 1em 1em;
+  background-color: #f3f7fa;
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  border-color: #cfe4f2;
+
+}
+
+.date
+{
+  font-weight: bold;
+  color: #000050;
+}
+
+.date a
+{
+  font-weight: normal;
+  }
+
+
+.login
+{
+  font-style: normal;
+  margin: 1em 3em 1em 0em;
+  padding: 1em 1em 1em 1em;
+  border-style: double;
+  border-width: 1px 2px 1px 2px;
+  color: #505050;
+  background-color: #fff3f3;
+  border-color: #e0b0b0;
+  }
+
+div.top
+{
+  font-size: 14px;
+  margin: 14px 0px 0px 0px;
+}
