@@ -1,6 +1,8 @@
 @charset "UTF-8";
 /*
 
+Check.
+
 2060a0
 
 "ax07 written by Nicola Lambathakis (banzai) banzai@tattoocms.it"
@@ -18,31 +20,63 @@ Time-stamp: <2011-11-19 18:32:32 Shiro Takeda>
 /* Main Sections
 ------------------------------------------------------------------------- */
 * {
-  margin: 0;
-  padding: 0;
-}
-/* body */
-/* { */
-/*   margin: 1em;          /\* Margin 1em *\/ */
-/*   padding: 0;           /\* Padding はゼロ *\/ */
-/*   font-size: 90%;       /\* 文字の大きさ．少し小さく． *\/ */
-/*   background-color: #ffffff;    /\* グレー *\/ */
-/*   line-height: 150%; */
-/*   } */
-
-body {
    margin: 0;
    padding: 0;
-   font: 12px Helvetica;
-   -webkit-text-size-adjust: none;
-   min-height: 460px;
-   background-repeat: repeat;
-   background-position: 0 0;
+}
 
-   max-width: 100%;
-   height: auto;
+body
+{
+  font-family: 'Noto Sans JP', sans-serif;
+  /* font-family: "Hannari"; */
+  /* font-family: "M PLUS Rounded 1c"; */
+  /* font-family: "Sawarabi Gothic"; */
+  /* font-family: 'Helvetica Neue', 'Hiragino Sans W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif; */
+  
+  font-size: 90%;       /* 文字の大きさ.少し小さく. */
+  background-color: #ffffff;    /* グレー */
+  line-height: 150%;
+  color: #333333;
+  text-align: center;
+  margin: 0px auto;
+  padding: 0px;
+}
 
-   overflow-x: hidden;
+/* page は全体 */
+#page
+{
+   max-width: 960px;
+   background-color: #ffffff;
+   text-align: left;  
+   margin: 0px auto;
+}
+
+/* header 部分 */
+#headertop
+{
+   margin: 0px 0px 10px 0px;
+   padding: 0;
+/*    background-color: #f3f7fa; */
+   background-color: #eef2ff;
+   border-color: #c8c7df;
+   border-width: 1px;
+   border-style: solid;
+}
+
+/* header 部分 */
+#headersub
+{
+   margin: 0px 0px 10px 0px;
+   padding: 0;
+   background-color: #eef2ff;
+   border-color: #c8c7df;
+   border-width: 1px;
+   border-style: solid;
+}
+
+#contentarea
+{
+   margin: 0px 0px 0px 0px;
+   padding: 10px 0px 0px 0px;
 }
 
 div, p, img, a, td, ul, ol
@@ -50,233 +84,231 @@ div, p, img, a, td, ul, ol
 }
 
 /* Font size for heading */
-h1 { font-size: 22px }
-h2 { font-size: 18px }
-h3 { font-size: 15px }
-h4 { font-size: 13px }
-h5 { font-size: 12px }
-h6 { font-size: 12px }
+h1 { font-size: 140% }
+h2 { font-size: 120% }
+h3 { font-size: 110% }
+h4 { font-size: 110% }
+h5 { font-size: 105% }
+h6 { font-size: 105% }
 
 h1
 {
-  margin: 1em 3em 1em 0em;
-  padding-bottom: 0.2em;
+   margin: 0.5em 8em 0.5em 0em;
+   padding-bottom: 0.2em;
+/*    color: #2060a0; */
+   color: #0f3388;
+   border-bottom-color: #808080;
+   border-bottom-width: 3px;
+   border-bottom-style: double;
+}
 
-  color: #2060a0;
-
-  border-bottom-width: 4px;
-  border-bottom-color: #2060a0;
-  border-bottom-style: double;
-  }
 h2
 {
-  margin: 1em 3em 1em 0em;
-  padding-bottom: 0.2em 0 0.2em 0;
+   margin: 0.5em 9em 0.5em 0em;
+   padding-bottom: 0.2em;
+/*    color: #2060a0; */
+   color: #0f3388;
+   border-bottom-color: #808080;
+   border-bottom-width: 3px;
+   border-bottom-style: double;
+}
 
-  color: #2060a0;
-
-  border-bottom-color: #2060a0;
-  border-bottom-width: 3px;
-  border-bottom-style: double;
-  }
 h3
 {
-  margin: 1em 3em 1em 0em;
-  padding-bottom: 0.2em;
-
-  color: #808080;
-  
-  border-bottom-color: #808080;
-  border-bottom-width: 3px;
-  border-bottom-style: double;
-  }
+   margin: 0.5em 10em 0.5em 0em;
+   padding-bottom: 0.2em;
+   color: #808080;
+   border-bottom-color: #808080;
+   border-bottom-width: 3px;
+   border-bottom-style: double;
+}
 h4
 {
-  margin: 1em 3em 1em 0em;
-  padding-bottom: 0.2em;
+   margin: 0.5em 10em 0.5em 0em;
+   padding-bottom: 0.2em;
+   color: #707070;
+}
 
-  color: #707070;
-  }
 h6 
 {
-  font-weight: bold;
-  }
+   font-weight: bold;
+}
 
-p { padding: 0 0 0.5em 0; }
+p { 
+   text-indent: 1em;
+   padding: 0 0 0.5em 0;
+}
 
 a, a:link
 {
-  color: #2060a0;
-  text-decoration: none;
-  border-bottom-width: 1px;
-  border-bottom-style: dotted;
-  border-bottom-color: #999999;
+/*    color: #2060a0; */
+   color: #0f3388;
+   text-decoration: none;
+   border-bottom-width: 1px;
+   border-bottom-style: dotted;
+   border-bottom-color: #999999;
 }
+
 a:visited
 {
-color: #a060a0;
-  }
+   color: #a060a0;
+}
+
 a:hover
 {
-  background-color: #e0e0ff;
-  color: #000000;
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-  }
+   background-color: #e0e0ff;
+   color: #000000;
+   border-bottom-width: 2px;
+   border-bottom-style: solid;
+}
+
 a:active            /* ??? */
 {
-  color: #2060a0;
-  }
+   color: #2060a0;
+}
 
 a img
 {
-  border-color: #a0c0a0;
-  border-width: 1.5px;
-  border-style: outset;
+   border-color: #2060a0;
+   border-width: 1px;
+   border-style: solid;
 }
+
 a:hover img 
 {
-  border-color: #90b090;
-  border-width: 2px;
-  border-style: outset;
+   border-color: #000080;
+/*    border-width: 2px; */
+   border-width: 1px 2px 2px 1px;
+   border-style: solid;
 }
+
 img
 {
-  border: none;
+   border: none;
 }
 
 /* 番号付きリスト */
 ol
 {
-  margin: 0.5em 0 1em 1.5em;
+   margin: 0.5em 0 1em 3em;
 }
+
 ol li
 {
-  list-style-type: decimal;
-/*   padding: 0.2em 0 0.3em 0.3em; */
-  padding: 0.2em 0 0.3em 0em;
+   list-style-type: decimal;
+   padding: 0.2em 0 0.3em 0.3em;
 }
 
 /* 記号付きリスト */
 ul
 {
-/*   margin: 0 0 0 1em; */
-  margin: 0 0 0 0;
+   margin: 0 0 0 1em;
 }
+
 ul li
 {
-  }
+}
 
-/* ここの設定よくわからず． */
+/* ここの設定よくわからず. */
 .clear
 {
-  clear: both;          /* float による回り込みを解除 */
-  height: 1px;
-  margin: -1px 0 0;
-  font-size: 1px;
-  }
-
-/* page は全体 */
-#page
-{
-  margin-right: auto;
-  margin-left: auto;
-  padding: 0px;
+   clear: both;          /* float による回り込みを解除 */
+   height: 1px;
+   margin: -1px 0 0;
+   font-size: 1px;
 }
 
-/* header 部分 */
-#header
+#insideheadertop
 {
-  margin: 0px;
-
-  background-color: #f3f7fa;
-  border-color: #cfe4f2;
-  border-width: 1px;
-  border-style: solid;
-/*   max-width: 1050px; */
-
-  width: 100%;
+   margin: 0em 3em 1em 1em;
 }
 
-#insideheader
+#insideheadertop h1
 {
-  margin: 0em 1em 0em 1em;
+   margin: 2em 3em 1em 0em;
+   padding: 0.5em 1em 0.5em 40px;    /* wide left padding for icon  */
+
+  font-family: 'Helvetica Neue', 'Hiragino Sans W5','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+
+  font-size: 160%;
+   color: #0f3388;
+
+   background-image: url(http://shirotakeda.org/css/images/000645_small_alt.gif);
+   background-repeat: no-repeat;
+   background-position: left center;
+   border-bottom-style: none;
+   
+   line-height: 180%
 }
 
-#insideheader h1
+#headertop p
 {
-  margin: 1em 0em 0em 0em;
-/*   padding: 0.5em 1em 0.5em 40px;    /\* wide left padding for icon  *\/ */
-  padding: 0 0 0 0;    /* wide left padding for icon  */
-
-  color: #2060a0;
-
-/*  background-image: url(http://shirotakeda.org/css/images/000645_small.jpg); */
-/*   background-repeat: no-repeat; */
-/*   background-position: left center; */
-  border-bottom-style: none; */
-  
-  line-height: 180%
+   padding: 0 0 0 0;
 }
 
-#header p
+#insideheadersub
 {
-  padding: 0 0 0 0;
-  }
+   margin: 0em 3em 1em 1em;
+}
+
+#insideheadersub h1
+{
+  margin: 0em 3em 0.5em 0em;
+  padding: 0.5em 1em 0.5em 40px;    /* wide left padding for icon  */
+
+  font-family: 'Helvetica Neue', 'Hiragino Sans W5','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+
+   font-size: 160%;
+/*    color: #2060a0; */
+   color: #0f3388;
+
+   background-image: url(http://shirotakeda.org/css/images/000645_small_alt.gif);
+   background-repeat: no-repeat;
+   background-position: left center;
+   border-bottom-style: none;
+   
+   line-height: 180%
+}
+
+#headersub p
+{
+   padding: 0 0 0 0;
+}
 
 /* ??? */
 #middlebody
 {
-  height: 30px;
-  margin: 0px;
-  padding: 0px 0px 0px 20px
+   height: 30px;
+   margin: 0px;
+   padding: 0px 0px 0px 20px
 }
-
-/* #contentarea */
-/* { */
-/* } */
-
-#contentarea
-{
-   margin-top: 15px;
-   position: relative;
-   width: 100%;
-}
-
 
 /* left column */
 #leftcolumn
 {
-/*   background-color: #ffffff; */
-  margin: 0px 0px 0px 0px;
-  padding: 1em 1.5em 1em 0.5em;
-
-  width: 200px;
-  float: left;
-
-  border-right-width: 1px;
-  border-right-style: solid;
-  border-right-color: #CCCCCC;
-
-  font-size: 90%;
-  }
+  display: none;
+}
 
 #leftcolumn h3
 {
-  margin: 15px 0px 10px 0px;
-  padding: 3px 5px 3px 5px;
+   margin: 15px 0px 10px 0px;
+/*    margin: 0; */
+   padding: 3px 5px 3px 3px;
 
-  font-size: 120%;
+   font-size: 120%;
 
-  border-bottom-width: 3px;
-  border-bottom-style: double;
-  border-bottom-color: #CCCCCC;
+   border-bottom-width: 3px;
+   border-bottom-style: double;
+   border-bottom-color: #CCCCCC;
 
-  }
+ /*  border-top-width: 1.5px; */
+/*   border-top-style: groove; */
+/*   border-top-color: #CCCCCC; */
+}
 
 #leftcolumn ul li
 {
-  padding: 0.2em 0 0.3em 0.3em;
+   padding: 0.2em 0 0.3em 0.3em;
 }
 
 /* #leftcolumn a */
@@ -287,250 +319,280 @@ ul li
 
 #leftcolumn a, a:link
 {
-  color: #2060a0;
-  text-decoration: none;
-  border-bottom-width: 1px;
-  border-bottom-style: dotted;
-  border-bottom-color: #999999;
+   color: #2060a0;
+   text-decoration: none;
+   border-bottom-width: 1px;
+   border-bottom-style: dotted;
+   border-bottom-color: #999999;
 }
 #leftcolumn a:visited
 {
-color: #a060a0;
-  }
+   color: #a060a0;
+}
 #leftcolumn a:hover
 {
-  background-color: #e0e0ff;
-  color: #000000;
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-  }
+   background-color: #e0e0ff;
+   color: #000000;
+   border-bottom-width: 2px;
+   border-bottom-style: solid;
+}
 #leftcolumn a:active            /* ??? */
 {
-  color: #2060a0;
-  }
+   color: #2060a0;
+}
 
 /* Footer */
 #footer
 {
-  margin: 0 0 0 0;
-  background-color: #f3f7fa;
-  border-color: #cfe4f2;
-  border-width: 1px;
-  border-style: solid;
-
-/*   max-width: 1050px; */
-  
-  font-size: 90%;
+   margin: 10px 0 0 0;
+/*    background-color: #f3f7fa; */
+   background-color: #eef2ff;
+/*    border-color: #cfe4f2; */
+   border-color: #c8c7df;
+   border-width: 1px;
+   border-style: solid;
+   font-size: 90%;
 }
 #infooter
 {
-  padding: 10px 10px 10px 10px;
-  text-align: center;
+   padding: 10px 10px 10px 2em;
+   text-align: left;
 }
+
 #infooter a 
 {
-  font-weight: bold;
-  }
+   font-weight: bold;
+}
 
 /* Main content. [ *content* ] が入るところ */
 #maincontent
 {
-  margin: 10px 10px 10px 10px;
-
-  height: auto !important; /* Detect height automatically, Incompatible w/IE */
-  min-height: 300px;
-
-  line-height: 180%;
-  }
+   float: left;
+   width: 707px;
+   min-width: 400px;
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+   height: auto !important; /* Detect height automatically, Incompatible w/IE */
+   min-height: 300px;
+   line-height: 180%;
+}
 
 #maincontent ul
 {
-  margin: 0.5em 0 1em 1.5em;
-  }
+   margin: 0.5em 0 1em 2em;
+}
 #maincontent ul li
 {
-/*   padding: 0.2em 0 0.3em 0.3em; */
-  padding: 0.2em 0 0.3em 0em;
+   padding: 0.2em 0 0.3em 0.3em;
 }
 
 /* ??? */
 #greyblock {
-    margin-top: 0px;
-    float: right;
-    margin-right: 64px;
-    height: 200px;
-    padding-top: 8px;
-    padding-right: 4px;
-    padding-bottom: 4px;
-    padding-left: 5px;
+   margin-top: 0px;
+   float: right;
+   margin-right: 64px;
+   height: 200px;
+   padding-top: 8px;
+   padding-right: 4px;
+   padding-bottom: 4px;
+   padding-left: 5px;
+}
+
+#main 
+{
+/*   margin: 10px 5px 10px 10px; */
+  margin: 10px 10px 10px 0px;
+  padding: 0px 1.5em 10em 1.5em;
+  border-color: #c8c7df;
+  border-width: 1px;
+  border-style: solid;
+  
 }
 
 /* Navi */
 #nav 
 {
-  padding: 1em 2em 1em 0em;
+   padding: 1em 2em 1em 0em;
 
 }
 
 blockquote
 {
-  font-style: normal;
-  color: #000080;
-  margin: 1em 1.5em 1em 0.5em;
-  padding: 1em 1em 1em 1em;
-  }
+   font-style: normal;
+   color: #000080;
+   margin: 0em 0em 0em 0em;
+   padding: 1em 1em 1em 2em;
+}
 
 blockquote.inyou
 {
-  font-style: normal;
-  font-size: 100%;
-  margin: 1em 1.5em 1em 0.5em;
-  padding: 1em 1em 1em 1em;
-  border-style: solid;
-  border-width: 1px;
-  color: #400000;
-  background-color: #fef9f9;
-  border-color: #f0e0e0;
-  }
+   font-style: normal;
+   font-size: 100%;
+   margin: 1em 1em 1em 0em;
+   padding: 1em 1em 1em 2em;
+   border-style: solid;
+   border-width: 1px;
+   color: #400000;
+   background-color: #fef9f9;
+   border-color: #f0e0e0;
+}
 
 blockquote.chu
 {
-  font-style: normal;
-  font-size: 100%;
-  margin: 1em 1.5em 1em 0.5em;
-  padding: 1em 1em 1em 1em;
-  border-style: solid;
-  border-width: 1px;
-  color: #505050;
-  background-color: #f7f7f7;
-  border-color: #cfe4f2;
-  }
+   font-style: normal;
+   font-size: 100%;
+   margin: 1em 3em 1em 2em;
+   padding: 1em 1em 1em 2em;
+   border-style: solid;
+   border-width: 1px;
+   color: #505050;
+   background-color: #f7f7f7;
+   border-color: #cfe4f2;
+}
 
 blockquote.italic
 { font-style: italic;
-  color: #000080;
-  }
+   color: #000080;
+}
 
 div.note
 {
-  color: #f00000;
+   color: #f00000;
 }
 
 quote
 {
-  font-family: italic;
-  color: #4444aa;
-  }
+   font-family: italic;
+   color: #4444aa;
+}
 
 pre
 { font-size: 100%;
-  line-height: 110%;
-  border-style: solid;
-  border-width: 1px 1px 1px 1px;
-  color: #000080;
-  border-color: #f0eac0;
-  background-color: #fffdef;
-  white-space: pre;
-  margin: 1em 1.5em 1em 0.5em;
-  padding: 1em 1em 1em 1em;
-  }
+   line-height: 110%;
+   border-style: solid;
+   border-width: 1px 1px 1px 1px;
+   color: #000080;
+   border-color: #f0eac0;
+   background-color: #fffdef;
+   white-space: pre;
+   margin: 1em 1.5em 1em 0.5em;
+   padding: 1em 2em;
+}
 
 td
 {
-  padding: 5px 0px 5px 0px;
+   padding: 5px 0px 5px 0px;
 }
 
 .go2top 
 {
-  margin: 1em 0em 1.5em 0em;
-  font-weight: bold;
+   margin: 1em 0em 1.5em 0em;
+   font-weight: bold;
 
 }
 
 div.new 
 {
-  color: #5050a0;
-  padding-bottom: 1em;
+   color: #5050a0;
+   padding-bottom: 1em;
 
-  background-repeat: no-repeat;
-  background-position: left center;
-  border-bottom-style: none; */
+   background-repeat: no-repeat;
+   background-position: left center;
+   border-bottom-style: none; */
 }
 
 
 fieldset
 {
-  padding: 10px 10px 20px 10px;
+   padding: 10px 10px 20px 10px;
 
 }
 
 input 
 {
-  background-color: #f5faff;
-  border-style: inset;
+   background-color: #f5faff;
+   border-style: inset;
 }
 
 input.button
 {
-  background-color: #f3f3f3;
-  border-style: outset;
+   background-color: #f3f3f3;
+   border-style: outset;
 }
 
 #ajaxSearch_submit 
 {
-  background-color: #f3f3f3;
-  border-style: outset;
+   background-color: #f3f3f3;
+   border-style: outset;
 }
 
 input.radio
 {
-  border-style: none;
+   border-style: none;
 }
 
 textarea
 {
-  background-color: #fdfcf5;
-  border-style: inset;
-  border-width: 2px 2px 2px 2px;
+   background-color: #fdfcf5;
+   border-style: inset;
+   border-width: 2px 2px 2px 2px;
 }
 
-.intro
+#intro
 {
-  margin: 0px 0px 0px 0px;
-  padding: 1em 1.5em 1em 1em;
-  background-color: #f3f7fa;
-  border-style: solid;
-  border-width: 1px 1px 1px 1px;
-  border-color: #cfe4f2;
+   margin: 0px 10px 0px 0px;
+   padding: 1em 2em 1em 1.5em;
+   background-color: #eef2ff;
+  
+   border-style: solid;
+   border-width: 1px 1px 1px 1px;
+/*    border-color: #cfe4f2; */
+   border-color: #c8c7df;
 
+}
+
+#update
+{
+  background-color: #ffffff;
+  border-color: #c8c7df;
+  border-style: solid;
+  border-width: 1px;
 }
 
 .date
 {
-  font-weight: bold;
-  color: #000050;
+   font-weight: bold;
+   color: #000050;
 }
 
 .date a
 {
-  font-weight: normal;
-  }
-
+   font-weight: normal;
+}
 
 .login
 {
-  font-style: normal;
-  margin: 1em 3em 1em 0em;
-  padding: 1em 1em 1em 1em;
-  border-style: double;
-  border-width: 1px 2px 1px 2px;
-  color: #505050;
-  background-color: #fff3f3;
-  border-color: #e0b0b0;
-  }
-
-div.top
-{
-  font-size: 14px;
-  margin: 14px 0px 0px 0px;
+   font-style: normal;
+   margin: 1em 3em 1em 0em;
+   padding: 1em 1em 1em 1em;
+   border-style: double;
+   border-width: 1px 2px 1px 2px;
+   color: #505050;
+   background-color: #fff3f3;
+   border-color: #e0b0b0;
 }
+
+.photo {
+	margin: 10px;
+	padding: 0;
+	float: left;
+/* 	width: 175px; */
+/* 	height: 175px; */
+}
+.photoContents:after {
+	content: " ";
+	clear: both;
+	display: block;
+}
+
+

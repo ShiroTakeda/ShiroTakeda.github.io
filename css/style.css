@@ -25,15 +25,20 @@ Time-stamp: <2011-11-19 18:32:32 Shiro Takeda>
 }
 
 body
-{ 
-  font-family: 'Helvetica Neue', 'Hiragino Sans W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+{
+  font-family: 'Noto Sans JP', sans-serif;
+  /* font-family: "Hannari"; */
+  /* font-family: "M PLUS Rounded 1c"; */
+  /* font-family: "Sawarabi Gothic"; */
+  /* font-family: 'Helvetica Neue', 'Hiragino Sans W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif; */
+  
   font-size: 90%;       /* 文字の大きさ.少し小さく. */
-   background-color: #ffffff;    /* グレー */
-   line-height: 150%;
-   color: #333333;
-   text-align: center;
-   margin: 0px auto;
-   padding: 0px;
+  background-color: #ffffff;    /* グレー */
+  line-height: 150%;
+  color: #333333;
+  text-align: center;
+  margin: 0px auto;
+  padding: 0px;
 }
 
 /* page は全体 */
