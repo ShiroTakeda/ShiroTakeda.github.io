@@ -1,0 +1,397 @@
+@charset "UTF-8";
+/*
+
+   Time-stamp: <2022-04-13 20:38:33 st>
+
+   Check.
+   "ax07 written by Nicola Lambathakis (banzai) banzai@tattoocms.it"
+   に付属するstyle.cssを編集・変更したもの。
+   オリジナルのax07は以下の場所で入手可能。
+   Theme URI: http://www.tattoocms.it/templates/ax07.html
+
+   色
+   ヘッダーの背景用の薄い青: eef2ff
+   文字用の濃い青: 0f3388
+
+ */
+
+/* 最大幅を1050px とする */
+
+/* -------------------------------------------------------------------------
+   全体
+
+   ------------------------------------------------------------------------- */
+
+body {
+  font-size: 90%;				/* 文字のサイズ */
+  font-family: 'Noto Sans JP', sans-serif;
+  background-color: #fcfcfc; 			/* 全体の背景は少しグレー */
+  color: #000000;        			/* 文字は黒 */
+  line-height: 150%;				/* 行間は少し広く */
+}
+
+#page
+{
+  max-width: 960px;
+  background-color: #ffffff; 	/* 白 */
+  margin: 0 auto;		/* 中央揃えにする */
+}
+
+/* 通常の H1 ~ H4 のサイズ
+
+   見出しで利用しているのは H1 ~ H4 のみ。
+   + H1 はヘッダー部分でのみ利用
+   + H2 & H3 を本文の見出しに利用
+   + H4 はサイドコラムの「変更履歴」などの項目にのみ利用。
+ */
+
+h1 { font-size: 160% }
+h2 { font-size: 140% }
+h3 { font-size: 120% }
+h4 { font-size: 110% }
+
+h1
+{
+  color: #0f3388;
+  margin: 0.5em 2em 0.5em 0em;
+  padding-bottom: 0.4em;
+  border-bottom-color: #808080;
+  border-bottom-width: 3px;
+  border-bottom-style: double;
+}
+
+h2
+{
+  color: #0f3388;
+  margin: 1em 3em 0.5em 0em;
+  padding-bottom: 0.4em;
+  border-bottom-color: #0f3388;
+  border-bottom-width: 3px;
+  border-bottom-style: double;
+}
+
+h3
+{
+  color: #808080;
+  margin: 1em 10em 0.5em 0em;
+  padding-bottom: 0.3em;
+  border-bottom-color: #808080;
+  border-bottom-width: 1px;
+  border-bottom-style: dashed;
+}
+
+p { 
+  text-indent: 1em;
+  padding: 0 0 0.5em 0;
+}
+
+a, a:link
+{
+  color: #0f3388;
+  text-decoration: none;
+  border-bottom-width: 1px;
+  border-bottom-style: dotted;
+  border-bottom-color: #999999;
+}
+
+a:visited
+{
+  color: #a060a0;
+}
+
+a:hover
+{
+  background-color: #e0e0ff;
+  color: #000000;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+
+a:active
+{
+}
+
+a img
+{
+  border-color: #2060a0;
+  border-width: 1px;
+  border-style: solid;
+}
+
+a:hover img 
+{
+  border-color: #000080;
+  border-width: 1px 2px 2px 1px;
+  border-style: solid;
+}
+
+img
+{
+  border: none;
+}
+
+ol
+{
+  margin: 0.5em 0 1em 3em;
+}
+
+ol li
+{
+  list-style-type: decimal;
+  padding: 0.2em 0 0.3em 0.3em;
+}
+
+ul
+{
+  margin: 0 0 0 1em;
+}
+
+/* ここの設定の意味はよくわからず. */
+.clear
+{
+  clear: both;          /* float による回り込みを解除 */
+  height: 1px;
+  margin: -1px 0 0;
+  font-size: 1px;
+}
+
+pre
+{
+  line-height: 110%;
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  color: #000080;
+  border-color: #f0eac0;
+  background-color: #fffdef;
+  white-space: pre;
+  margin: 1em 1.5em 1em 0.5em;
+  padding: 1em 2em;
+}
+
+td
+{
+  padding: 5px 0px 5px 0px;
+}
+
+.go2top
+{
+  margin: 1em 0em 1.5em 0em;
+  font-weight: bold;
+}
+
+.kyocho
+{
+  color: #c00000;
+}
+
+/* -------------------------------------------------------------------------
+   change-ja.html でのみ利用している設定
+
+   ------------------------------------------------------------------------- */
+
+div.new 
+{
+  padding-bottom: 1em;
+  background-repeat: no-repeat;
+  background-position: left center;
+  border-bottom-style: none;
+}
+
+.date
+{
+  font-weight: bold;
+  color: #000050;
+}
+
+.date a
+{
+  font-weight: normal;
+}
+
+li.changelist
+{
+}
+
+/* -------------------------------------------------------------------------
+   Header 部分
+
+   ------------------------------------------------------------------------- */
+
+#header
+{
+  padding: 0 0.5em 0 0.5em;
+  background-color: #eef2ff;
+  border-color: #c8c7df;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#insideheader
+{
+  margin: 0em 3em 1em 1em;
+}
+
+#insideheader h1
+{
+  padding: 0.5em 1em 0.5em 40px;    /* wide left padding for icon  */
+  color: #0f3388;
+  background-image: url(https://shirotakeda.github.io/css/images/000645_small_alt.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+  border-bottom-style: none;
+  line-height: 180%
+}
+
+/* トップページ用の設定 */
+#insideheadertop h1
+{
+  font-size: 180%;
+  margin: 1em 3em 0em 0em;
+  /* margin: 2em 3em 0em 0em; */
+}
+
+#header td
+{
+  padding-right: 1em;
+}
+
+#nav 
+{
+  padding: 1em 2em 1em 0em;
+}
+
+/* Header 部分ではインデントなし */
+#header p { 
+  text-indent: 0;
+}
+
+/* -------------------------------------------------------------------------
+   contentarea 部分（Header と footer の間の部分）
+
+   ------------------------------------------------------------------------- */
+/*
+   contentarea = mainconten + leftcolumn
+ */
+#contentarea
+{
+  margin: 1.2em 0 0 0;
+}
+
+/* -------------------------------------------------------------------------
+   Maincontent 部分
+
+   ------------------------------------------------------------------------- */
+
+/* Main content.
+
+   maincontent = intro + main
+*/
+#maincontent
+{
+  float: left;
+  max-width: 707px;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  height: auto !important; /* Detect height automatically, Incompatible w/IE */
+  min-height: 300px;
+  line-height: 180%;
+}
+
+#intro
+{
+  margin: 0em 1em 1em 0em;
+  padding: 1em 2em 1em 1.5em;
+  background-color: #eef2ff;
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  border-color: #c8c7df;
+}
+
+#main 
+{
+  /* margin: 10px 10px 10px 0px; */
+  margin: 0em 1em 1em 0em;
+  padding: 1em 2em 10em 1.5em;
+  border-color: #c8c7df;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#main ul
+{
+  margin: 1em 0em 1em 0em;
+  padding: 0em 1em 0em 1.5em;
+}
+#main ul li
+{
+  padding: 0.2em 0 0.3em 0.3em;
+}
+
+/* -------------------------------------------------------------------------
+   Leftcolumn（サイドバー）部分
+
+   ------------------------------------------------------------------------- */
+
+#leftcolumn
+{
+  font-size: 90%;		/* 他よりもフォントサイズを10%小さくする。 */
+  height: auto !important; 	/* Detect height automatically, Incompatible w/IE */
+  float: right;
+  width: 232px;
+  padding: 0 0.5em 1em 0.6em;
+  border-color: #c8c7df;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#leftcolumn p
+{ 
+  margin: 0 0 0 0;
+}
+
+#leftcolumn h4
+{
+  color: #808080;
+  margin: 1em 1em 0.5em 0.2em;
+  padding: 0 0 0.3em 0;
+  border-bottom-width: 1px;
+  border-bottom-color: #505050;
+  border-bottom-style: dashed;
+}
+
+#leftcolumn ul
+{
+  padding: 0em 0.1em 0em 0.3em;
+}
+
+#leftcolumn ul li
+{
+  padding: 0.2em 0 0.5em 0em;
+}
+
+/* -------------------------------------------------------------------------
+   Footer 部分
+
+------------------------------------------------------------------------- */
+
+#footer
+{
+  background-color: #eef2ff;
+  border-color: #c8c7df;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#infooter
+{
+  padding: 1em 1em 1em 1.5em;
+  text-align: left;
+}
+
+/* --------------------
+   Local Variables:
+   fill-column: 80
+   End:
+*/
+
+

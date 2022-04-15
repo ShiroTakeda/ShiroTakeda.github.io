@@ -1,0 +1,59 @@
+
+#page
+{
+  max-width:707px;
+}
+#header
+{
+  max-width:707px;
+  margin: 0em 1em 1em 0em;
+}
+
+#insideheader h1
+{
+  background-image:none;
+}
+
+#insideheadertop h1
+{
+  padding: 1em 0em 0em 0em;
+}
+
+#main
+{
+
+}
+
+#intro
+{
+  display:none;
+}
+
+#leftcolumn
+{
+  display:none;
+}
+
+#footer
+{
+  display:none;
+}
+
+.kyocho
+{
+}
+
+.midashi
+{
+  color: #0f3388;
+  font-weight: bold;
+}
+
+.midashib
+{
+  font-size: 110%;
+  color: #0f3388;
+  font-weight: bold;
+}
+
+
