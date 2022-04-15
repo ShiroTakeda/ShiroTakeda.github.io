@@ -1,4 +1,8 @@
 
+body
+{
+  font-size: 110%;
+}
 
 #page
 {
@@ -6,8 +10,9 @@
 }
 #header
 {
-  max-width:707px;
-  margin: 0em 1em 1em 0em;
+  /* max-width:707px;
+     margin: 0em 1em 1em 0em; */
+  display:none;
 }
 
 #insideheader h1
@@ -56,4 +61,5 @@
   color: #0f3388;
   font-weight: bold;
 }
+
 
