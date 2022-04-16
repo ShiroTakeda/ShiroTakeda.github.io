@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-<!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-219855037-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -11,7 +11,7 @@
 
   gtag('config', 'UA-219855037-1');
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
@@ -20,12 +20,12 @@
 <!-- <link href="https://fonts.googleapis.com/css?family=Sawarabi+Gothic" rel="stylesheet"> -->
 
 
-<title> Shiro Takeda's Website </title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="keywords" content="" />
-<base href="https://shirotakeda.github.io/" />
-<link rel="stylesheet" media="all" href="https://shirotakeda.github.io/css/style.css" type="text/css" />
-<link rel="stylesheet" media="all" href="https://shirotakeda.github.io/css/menu.css" type="text/css" />
+  <title>GAMS mode for Emacs</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="keywords" content="" />
+  <base href="https://shirotakeda.github.io/" />
+  <link rel="stylesheet" media="all" href="https://shirotakeda.github.io/css/style.css" type="text/css" />
+  <link rel="stylesheet" media="all"  href="https://shirotakeda.github.io/css/menu.css" type="text/css" />
 
 </head>
 
@@ -37,8 +37,11 @@
     <!-- id:header -->
     <div id="header">
 
-      <!-- id:nav -->
-      <div id="nav"><div class="menu">
+      <table class="header" width="100%" cellpadding="0">
+        <tbody>
+          <tr>
+            <td align="left">
+              <div id="nav"><div class="menu">
     <ul>
         <li><a  class="active hide" href="https://shirotakeda.github.io/" title="Shiro Takeda Website">Home (en)<!--[if gte IE 7]><!--></a><!--<![endif]-->
 <table><tr><td>
@@ -65,11 +68,11 @@
 <!--[if lte IE 6]></a><![endif]-->
 
 </li>
-<li><a  class="hide" href="https://shirotakeda.github.io/en/gams/" title="GAMS Page">GAMS<!--[if gte IE 7]><!--></a><!--<![endif]-->
+<li><a  class="active hide" href="https://shirotakeda.github.io/en/gams/" title="GAMS Page">GAMS<!--[if gte IE 7]><!--></a><!--<![endif]-->
 <table><tr><td>
 
 <ul>
-    <li class="category last"><a href="https://shirotakeda.github.io/en/gams/gams-mode.html" title="GAMS mode for Emacs">GAMS mode for Emacs</a></li>
+    <li class="category last active"><a href="https://shirotakeda.github.io/en/gams/gams-mode.html" title="GAMS mode for Emacs">GAMS mode for Emacs</a></li>
 
 </ul>
 
@@ -176,16 +179,19 @@
 
     </ul>
 </div>
-
-        <a href="ja/"><img align=right src="https://shirotakeda.github.io/content/images/japanese-pages.jpg" alt="Japanese Pages"></a>
-      </div> <!-- id:nav -->
+              </div>
+            </td>
+            <td width="30%" align="right">
+              Last update: 2022/04/16
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <!-- id:insideheader -->
       <div id="insideheader">
-        <!-- id:insideheadertop -->
-        <div id="insideheadertop">
-          <h1>Shiro Takeda's Website</h1>
-        </div> <!-- id:insideheadertop -->
+        <h1>GAMS mode for Emacs</h1>
+        <p><a href="https://shirotakeda.github.io/" class="home">Home (en)</a> » <a href="https://shirotakeda.github.io/en/gams/">GAMS</a> » GAMS mode for Emacs</p>
       </div> <!-- id:insideheader -->
 
     </div> <!-- id:header -->
@@ -198,80 +204,73 @@
 
         <!-- id:intro -->
         <div id="intro">
-	  My name is Shiro Takeda.  I am Professor of <a href="https://www.kyoto-su.ac.jp/index-e.html">Kyoto Sangyo University</a> in Japan.<br /><br />
-I am an economist and my main research theme is computable general equilibrium analysis (CGE analysis) on climate change policy.  In this site, I offer the information related to my research, simulation programs and so on.
-        </div> <!-- id:intro -->
+	  This is a macro for using <a href="https://www.gams.com/">GAMS (General Algebraic Modeling System)</a> in Emacs.
+        </div>
 
         <!-- id:main -->
         <div id="main">
-	  <h2>Contents</h2>
+	  <p>GAMS mode for Emacs offers the integrated and flexible environment for using GAMS in Emacs. It is developed on <a href="https://github.com/ShiroTakeda/gams-mode">ShiroTakeda/gams-mode: GAMS mode for Emacs</a> in GitHub. For the details, please see the above site.</p>
 
-<table 90="" border="0" cellpadding="2" cellspacing="5" left="" width:="">
+<h2>Older versions</h2>
 
-  <tbody>
+<p>The new versions of GAMS mode are distributed in GitHub. Here, the older versions are provided.</p>
 
-    <tr>
-      <td style="vertical-align: top; width: 30%;">
-	<a href="en/profile.html">Profile</a></td>
-      <td top="">
-	Profile, CV and Contact Information</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 30%;">
-	<a href="https://shiro-takeda.hateblo.jp/">Weblog</a></td>
-      <td top="">Link to my blog written in Japanese.</td>
-    </tr>
-    <tr>
-      <td><a href="https://www.flickr.com/photos/shiro_takeda/">Photos</a></td>
-      <td style="vertical-align: top;">Link to photographs in Flickr.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 30%;">
-	<a href="en/research/">Research</a></td>
-      <td top="">
-	Research papers and simulation programs</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 30%;">
-	<a href="en/gams/">GAMS</a></td>
-      <td top="">
-	GAMS mode for Emacs.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 30%;">
-	<a href="en/tex/">TeX</a></td>
-      <td top="">
-	BibTeX style file for economics</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 30%;">
-	<a href="en/changes.html">Changelog</a></td>
-      <td top="">
-	List of pages recently changed or added</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 30%;">
-	<a href="en/sitemap.html">Sitemap</a></td>
-      <td top="">Map of this site.
-	&nbsp;</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 30%;">
-	<a href="en/site-search.html">Site search</a></td>
-      <td top="">The map of this site.</td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; width: 30%;">
-	<a href="en/about.html">About this site</a></td>
-      <td top="">
-	How this site is created.</td>
-    </tr>
-
-  </tbody>
-
-</table>
-
-
+<ul>
+  <li> <b>6.0</b>: &lt;02-Mar-2016&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-6.0.zip" onClick="_gaq.push(['_trackEvent', 'download', 'click', '/down/gams-6.0.zip']);">gams-6.0.zip</a></li>
+  <li> <b>5.0</b>: &lt;03-Feb-2016&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-5.0.zip" onClick="_gaq.push(['_trackEvent', 'download', 'click', '/down/gams-5.0.zip']);">gams-5.0.zip</a></li>
+  <li> <b>4.2</b>: &lt;16-Feb-2013&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-4.2.zip" onClick="_gaq.push(['_trackEvent', 'download', 'click', '/down/gams-4.2.zip']);">gams-4.2.zip</a></li>
+  <li> <b>4.1</b>: &lt;13-Oct-2012&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-4.1.zip" onClick="_gaq.push(['_trackEvent', 'download', 'click', '/down/gams-4.1.zip']);">gams-4.1.zip</a></li>
+  <li> <b>4.0</b>: &lt;8-Sep-2012&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-4.0.zip" onClick="_gaq.push(['_trackEvent', 'download', 'click', '/down/gams-4.0.zip']);">gams-4.0.zip</a></li>
+  <li> <b>3.6.6</b>: &lt;2-Jun-2012&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.6.6.zip" onClick="_gaq.push(['_trackEvent', 'download', 'click', '/down/gams-3.6.6.zip']);">gams-3.6.6.zip</a></li>
+  <li> <b>3.6.5</b>: &lt;15-Nov-2011&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.6.5.zip" onClick="_gaq.push(['_trackEvent', 'download', 'click', '/down/gams-3.6.5.zip']);">gams-3.6.5.zip</a></li>
+  <li> <b>3.6.4</b>: &lt;05-Oct-2011&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.6.4.zip" onClick="_gaq.push(['_trackEvent', 'download', 'click', '/down/gams-3.6.4.zip']);">gams-3.6.4.zip</a></li>
+  <li> <b>3.6.3</b>: &lt;19-Jun-2011&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.6.3.zip" onClick="_gaq.push(['_trackEvent', 'download', 'click', '/down/gams-3.6.3.zip']);">gams-3.6.3.zip</a></li>
+  <li> <b>3.6.2</b>: &lt;14-Apr-2011&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.6.2.zip" onClick="_gaq.push(['_trackEvent', 'download', 'click', '/down/gams-3.6.2.zip']);">gams-3.6.2.zip</a></li>
+  <li> <b>3.6.1</b>: &lt;02-Feb-2011&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.6.1.zip" onClick="_gaq.push(['_trackEvent', 'download', 'click', '/down/gams-3.6.1.zip']);">gams-3.6.1.zip</a></li>
+  <li> <b>3.6</b>: &lt;14-Jan-2011&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.6.zip" onClick="_gaq.push(['_trackEvent', 'download', 'click', '/down/gams-3.6.zip']);">gams-3.6.zip</a></li>
+  <li> <b>3.5.2</b>: &lt;06-Nov-2010&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.5.2.zip" onClick="_gaq.push(['_trackEvent', 'download', 'click', '/down/gams-3.5.2.zip']);">gams-3.5.2.zip</a></li>
+  <li> <b>3.5.1</b>: &lt;14-Oct-2010&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.5.1.zip">gams-3.5.1.zip</a></li>
+  <li> <b>3.5</b>: &lt;20-Sep-2010&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.5.zip">gams-3.5.zip</a></li>
+  <li> <b>3.4</b>: &lt;9-Aug-2010&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.4.zip">gams-3.4.zip</a></li>
+  <li> <b>3.3</b>: &lt;24-Jul-2010&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.3.zip">gams-3.3.zip</a></li>
+  <li> <b>3.2</b>: &lt;21-Dec-2009&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.2.zip">gams-3.2.zip</a></li>
+  <li> <b>3.1.1</b>: &lt;11-Oct-2009&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.1.1.zip">gams-3.1.1.zip</a></li>
+  <li> <b>3.1</b>: &lt;3-Aug-2009&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.1.zip">gams-3.1.zip</a></li>
+  <li> <b>3.0</b>: &lt;19-Jul-2009&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-3.0.zip">gams-3.0.zip</a></li>
+  <li> <b>2.7.1</b>: &lt;13-Mar-2009&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-2.7.1.zip">gams-2.7.1.zip</a> </li>
+  <li> <b>2.7</b>: &lt;10-Mar-2009&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-2.7.zip">gams-2.7.zip</a> </li>
+  <li> <b>2.6.1</b>: &lt;01-Jan-2009&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-2.6.1.zip">gams-2.6.1.zip</a> </li>
+  <li> <b>2.6</b>: &lt;20-Dec-2008&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-2.6.zip">gams-2.6.zip</a> </li>
+  <li> <b>2.5.1</b>: &lt;21-July-2008&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-2.5.1.zip">gams-2.5.1.zip</a> </li>
+  <li> <b>2.5</b>: &lt;29-Mar-2007&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-2.5.zip">gams-2.5.zip</a> </li>
+  <li> <b>2.4</b>: &lt;17-Dec-2006&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-2.4.zip">gams-2.4.zip</a> </li>
+  <li> <b>2.3</b>: &lt;05-Nov-2005&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-2.3.zip">gams-2.3.zip</a> </li>
+  <li> <b>2.2</b>: &lt;04-Sep-2005&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-2.2.zip">gams-2.2.zip</a> </li>
+  <li> <b>2.1</b>: &lt;06-Nov-2004&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-2.1.zip">gams-2.1.zip</a> </li>
+  <li> <b>2.0</b>: &lt;09-Sep-2003&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-2.0.zip">gams-2.0.zip</a> </li>
+  <li> <b>1.10</b>: &lt;16-Feb-2003&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-1.10.zip">gams-1.10.zip</a> </li>
+  <li> <b>1.9</b>: &lt;14-Jan-2003&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-1.9.zip">gams-1.9.zip</a> </li>
+  <li> <b>1.8</b>: &lt;07-Dec-2002&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-1.8.zip">gams-1.8.zip</a> </li>
+  <li> <b>1.7.1</b>: &lt;31-Oct-2002&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-1.7.1.zip">gams-1.7.1.zip</a> </li>
+  <li> <b>1.7</b>: &lt;23-Oct-2002&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-1.7.zip">gams-1.7.zip</a> </li>
+  <li> <b>1.6</b>: &lt;07-Sep-2002&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-1.6.zip">gams-1.6.zip</a> </li>
+  <li> <b>1.5</b>: &lt;23-Aug-2002&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-1.5.zip">gams-1.5.zip</a> </li>
+  <li> <b>1.4</b>: &lt;05-Aug-2002&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-1.4.zip">gams-1.4.zip</a> </li>
+  <li> <b>1.3.1</b>: &lt;14-Apr-2002&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-1.3.1.zip">gams-1.3.1.zip</a> </li>
+  <li> <b>1.3</b>: &lt;01-Apr-2002&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-1.3.zip">gams-1.3.zip</a> </li>
+  <li> <b>1.2</b>: &lt;05-Feb-2002&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-1.2.zip">gams-1.2.zip</a> </li>
+  <li> <b>1.1</b>: &lt;20-Jan-2002&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-1.1.zip">gams-1.1.zip</a> </li>
+  <li> <b>1.08</b>: &lt;03-Dec-2001&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-1.08.zip">gams-1.08.zip</a> </li>
+  <li> <b>1.07.1</b>: &lt;13-Nov-2001&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams-mode-1.07.1.zip">gams-mode-1.07.1.zip</a> </li>
+  <li> <b>1.07</b>: &lt;24-Sep-2001&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams_1.07.zip">gams_1.07.zip</a> </li>
+  <li> <b>1.06</b>: &lt;12-Sep-2001&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams_1.06.zip">gams_1.06.zip</a> </li>
+  <li> <b>1.05</b>: &lt;4-Sep-2001&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams_1.05.el">gams_1.05.el</a> </li>
+  <li> <b>1.04</b>: &lt;31-Aug-2001&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams_1.04.el">gams_1.04.el</a> </li>
+  <li> <b>1.03</b>: &lt;25-Aug-2001&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams_1.03.el">gams_1.03.el</a> </li>
+  <li> <b>1.02</b>: &lt;23-Aug-2001&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams_1.02.el">gams_1.02.el</a> </li>
+  <li> <b>1.01</b>: &lt;21-Aug-2001&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams_1.01.el">gams_1.01.el</a> </li>
+  <li> <b>1.00</b>: &lt;21-Aug-2001&gt; <a href="https://shirotakeda.github.io/content/files/gams/gams_1.00.el">gams_1.00.el</a> </li>
+</ul>
 
         </div> <!-- id:main -->
 
@@ -279,7 +278,6 @@ I am an economist and my main research theme is computable general equilibrium a
 
       <!-- id:leftcolumn -->
       <div id="leftcolumn">
-
         <h4>Navigation</h4>
         <ul>
           <li><a href="en/changes.html">Changelog of This Site</a></li>
@@ -288,25 +286,7 @@ I am an economist and my main research theme is computable general equilibrium a
         </ul>
 
         <h4>List of Pages</h4>
-        <ul><li><a href="https://shirotakeda.github.io/en/profile.html" title="Profile & Contact" >Profile and Contact</a></li>
-<li><a href="https://shirotakeda.github.io/en/research/" title="Research Page" >Research Page</a><ul><li><a href="https://shirotakeda.github.io/en/research/dd-carbon.html" title="The double dividend from carbon regulations in Japan" >The double dividend analysis</a></li>
-<li><a href="https://shirotakeda.github.io/en/research/end_reg.html" title="Economic Growth and Carbon Emissions with Endogenous Carbon Taxes" >Economic Growth & Carbon Emissions</a></li>
-<li><a href="https://shirotakeda.github.io/en/research/trade_lib.html" title="A CGE Analysis of the Welfare Effects of Trade Liberalization under Different Market Structures." >Trade CGE Model No.1</a></li>
-<li><a href="https://shirotakeda.github.io/en/research/trade_cge_comp.html" title="Comparison of the Effects of Trade Liberalization under Different Market Structures" >Trade CGE Model No.2</a></li>
-<li><a href="https://shirotakeda.github.io/en/research/rio2008.html" title="Regional Effects of Trade Liberalization in Japan: A CGE Analysis Based on an Interregional Input-Output Table" >Regional Effects of Trade Liberalization in Japan</a></li>
-<li><a href="https://shirotakeda.github.io/en/research/gtap-model.html" title="GTAP model implemented in GAMS" >GTAP model</a></li>
-<li><a href="https://shirotakeda.github.io/en/research/cge_ba.html" title="A Computable General Equilibrium Analysis of Border Adjustments Under the Cap-and-Trade System: A Case Study of the Japanese Economy" >CGE analysis of Border Adjustments</a></li>
-<li><a href="https://shirotakeda.github.io/en/research/cge-iet.html" title="Labor Market Distortions and Welfare-Decreasing International Emissions Trading." >CGE analysis of international emissions trading</a></li>
-<li class="last"><a href="https://shirotakeda.github.io/en/research/dd_japan_2021.html" title="The double dividend analysis for Japan (2021)" >The double dividend analysis (2021)</a></li>
-</ul></li>
-<li><a href="https://shirotakeda.github.io/en/gams/" title="GAMS Page" >GAMS</a><ul><li class="last"><a href="https://shirotakeda.github.io/en/gams/gams-mode.html" title="GAMS mode for Emacs" >GAMS mode for Emacs</a></li>
-</ul></li>
-<li><a href="https://shirotakeda.github.io/en/tex/" title="TeX" >TeX</a><ul><li class="last"><a href="https://shirotakeda.github.io/en/tex/econ-bst.html" title="econ.bst: BibTeX style file for economics" >econ.bst</a></li>
-</ul></li>
-<li><a href="https://shirotakeda.github.io/en/sitemap.html" title="Sitemap" >Sitemap</a></li>
-<li><a href="https://shirotakeda.github.io/en/changes.html" title="Changelog of This Site" >Changelog of This Site</a></li>
-<li><a href="https://shirotakeda.github.io/en/site-search.html" title="Site search" >Site search</a></li>
-<li class="last"><a href="https://shirotakeda.github.io/en/about.html" title="About this site" >About this site</a></li>
+        <ul><li class="last active"><a href="https://shirotakeda.github.io/en/gams/gams-mode.html" title="GAMS mode for Emacs" >GAMS mode for Emacs</a></li>
 </ul>
 
         <h4>Meta:</h4>
@@ -315,7 +295,7 @@ I am an economist and my main research theme is computable general equilibrium a
         <p><a href="https://modx.com" title="Ajax CMS and PHP Application Framework">MODX</a></p>
         <p><a href="https://shirotakeda.github.io/manager/">Login</a></p>
 
-      </div> <!-- leftcolumn -->
+      </div> <!-- id:leftcolumn -->
 
     </div> <!-- id:contentarea -->
 
@@ -325,10 +305,9 @@ I am an economist and my main research theme is computable general equilibrium a
 
     <!-- id:footer -->
     <div id="footer">
-      <!-- infooter -->
       <div id="infooter">
         © 2001 - 2022 Shiro Takeda. All rights reserved.  This site is generated by <a href="https://modx.com/" title="Powered by MODX, Do more with less.">MODX</a>.
-      </div> <!-- infooter -->
+      </div>
     </div> <!-- id:footer -->
 
   </div> <!-- id:page -->
