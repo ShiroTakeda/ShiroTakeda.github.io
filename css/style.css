@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /*
 
-   Time-stamp: <2022-04-13 20:38:33 st>
+   Time-stamp: <2022-09-15 21:37:02 st>
 
    Check.
    "ax07 written by Nicola Lambathakis (banzai) banzai@tattoocms.it"
@@ -233,21 +233,26 @@ li.changelist
 
 #insideheader h1
 {
-  padding: 0.5em 1em 0.5em 40px;    /* wide left padding for icon  */
+  padding: 0.5em 0em 1em 0px;    /* wide left padding for icon  */
   color: #0f3388;
-  background-image: url(https://shirotakeda.github.io/css/images/000645_small_alt.gif);
+  /* background-image: url(https://shirotakeda.github.io/css/images/000645_small_alt.gif); */
   background-repeat: no-repeat;
   background-position: left center;
   border-bottom-style: none;
   line-height: 180%
 }
 
+.update
+{
+  color: #0f3388;
+}
+
+
 /* トップページ用の設定 */
 #insideheadertop h1
 {
   font-size: 180%;
-  margin: 1em 3em 0em 0em;
-  /* margin: 2em 3em 0em 0em; */
+  margin: 1em 0em 0em 0em;
 }
 
 #header td
@@ -289,7 +294,7 @@ li.changelist
 #maincontent
 {
   float: left;
-  max-width: 707px;
+  max-width: 693px;
   margin: 0 0 0 0;
   padding: 0 0 0 0;
   height: auto !important; /* Detect height automatically, Incompatible w/IE */
@@ -299,7 +304,7 @@ li.changelist
 
 #intro
 {
-  margin: 0em 1em 1em 0em;
+  margin: 0em 0em 1em 0em;
   padding: 1em 2em 1em 1.5em;
   background-color: #eef2ff;
   border-style: solid;
@@ -310,7 +315,7 @@ li.changelist
 #main 
 {
   /* margin: 10px 10px 10px 0px; */
-  margin: 0em 1em 1em 0em;
+  margin: 0em 0em 1em 0em;
   padding: 1em 2em 10em 1.5em;
   border-color: #c8c7df;
   border-width: 1px;
@@ -338,6 +343,7 @@ li.changelist
   height: auto !important; 	/* Detect height automatically, Incompatible w/IE */
   float: right;
   width: 232px;
+  margin: 0em 0em 0em 10px;
   padding: 0 0.5em 1em 0.6em;
   border-color: #c8c7df;
   border-width: 1px;
