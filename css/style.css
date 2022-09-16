@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /*
 
-   Time-stamp: <2022-09-15 21:37:02 st>
+   Time-stamp: <2022-09-16 21:54:15 st>
 
    Check.
    "ax07 written by Nicola Lambathakis (banzai) banzai@tattoocms.it"
@@ -23,7 +23,8 @@
    ------------------------------------------------------------------------- */
 
 body {
-  font-size: 90%;				/* 文字のサイズ */
+  font-size: 100%;				/* 文字のサイズ */
+  /* font-size: 90%; */				/* 文字のサイズ */
   font-family: 'Noto Sans JP', sans-serif;
   background-color: #fcfcfc; 			/* 全体の背景は少しグレー */
   color: #000000;        			/* 文字は黒 */
@@ -279,7 +280,7 @@ li.changelist
  */
 #contentarea
 {
-  margin: 1.2em 0 0 0;
+  margin: 15px 0 0 0;
 }
 
 /* -------------------------------------------------------------------------
@@ -290,11 +291,11 @@ li.changelist
 /* Main content.
 
    maincontent = intro + main
-*/
+ */
 #maincontent
 {
   float: left;
-  max-width: 693px;
+  /* max-width: 693px; */
   margin: 0 0 0 0;
   padding: 0 0 0 0;
   height: auto !important; /* Detect height automatically, Incompatible w/IE */
@@ -302,9 +303,24 @@ li.changelist
   line-height: 180%;
 }
 
+/* 画面の幅が992pxまでの場合 */
+@media (max-width:992px) {
+  #maincontent
+  {
+    max-width: 960px;
+  }
+}
+/* 画面の幅が993px以上の場合 */
+@media (min-width:993px) {
+  #maincontent
+  {
+    max-width: 693px;
+  }
+}
+
 #intro
 {
-  margin: 0em 0em 1em 0em;
+  margin: 0 0 15px 0;
   padding: 1em 2em 1em 1.5em;
   background-color: #eef2ff;
   border-style: solid;
@@ -341,13 +357,30 @@ li.changelist
 {
   font-size: 90%;		/* 他よりもフォントサイズを10%小さくする。 */
   height: auto !important; 	/* Detect height automatically, Incompatible w/IE */
-  float: right;
+  /* float: right; */
+  float: left;
   width: 232px;
-  margin: 0em 0em 0em 10px;
-  padding: 0 0.5em 1em 0.6em;
+  /* margin: 0em 0em 0em 16px; */
+  /* padding: 0 0.5em 1em 0.6em; */
+  padding: 0 8px 8px 8px;
   border-color: #c8c7df;
   border-width: 1px;
   border-style: solid;
+}
+
+/* 画面の幅が992pxまでの場合 */
+@media (max-width:992px) {
+  #leftcolumn
+  {
+    margin: 0 0 15px 0;
+  }
+}
+/* 画面の幅が993px以上の場合 */
+@media (min-width:993px) {
+  #leftcolumn
+  {
+    margin: 0 0 15px 16px;
+  }
 }
 
 #leftcolumn p
