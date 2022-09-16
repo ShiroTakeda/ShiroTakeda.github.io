@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /*
 
-   Time-stamp: <2022-09-16 21:54:15 st>
+   Time-stamp: <2022-09-16 22:37:16 st>
 
    Check.
    "ax07 written by Nicola Lambathakis (banzai) banzai@tattoocms.it"
@@ -23,8 +23,7 @@
    ------------------------------------------------------------------------- */
 
 body {
-  font-size: 100%;				/* 文字のサイズ */
-  /* font-size: 90%; */				/* 文字のサイズ */
+  font-size: 90%;				/* 文字のサイズ */
   font-family: 'Noto Sans JP', sans-serif;
   background-color: #fcfcfc; 			/* 全体の背景は少しグレー */
   color: #000000;        			/* 文字は黒 */
