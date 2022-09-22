@@ -204,9 +204,9 @@
         <!-- id:intro -->
         <div id="intro">
 	  このページではGAMSやCGE分析に関係する様々な情報を提供したいと思います。
-<br>
+<br><br>
 
-<div class="kyocho">［注］</div>ここでの「GAMS」とはGeneral Algebraic Modeling System という数値計算のソフトのことです。
+<span class="kyocho">［注］</span>ここでの「GAMS」とはGeneral Algebraic Modeling System という数値計算のソフトウェアのことです。
         </div> <!-- id:intro -->
 
         <!-- id:main -->
@@ -238,38 +238,45 @@
 <br>
  
 </p>
+
 <h2><a name="GAMS_1" id="GAMS_1"></a>GAMS全般についてのリンク</h2>
+
+<p>まずは、GAMS全般についてのリンク。</p>
+
 <ul>
 <li><a href="https://www.gams.com/">GAMS - Cutting Edge Modeling</a>
 <ul>
-<li>ここが GAMS のホームページです。</li>
+<li>ここが GAMS の公式ホームページです。</li>
 <li>ここではマニュアル、ツール、GAMS を使った分析の例等が提供されています。</li>
 </ul></li>
 
 <li><a href="https://www.gams.com/latest/docs/">GAMS Documentation Center</a>   
 <ul>
-<li>GAMS のオンラインDocumentsが置いてある場所です。</li>
+<li>公式ホームページ内の GAMS のオンラインマニュアルが置いてある場所です。</li>
 </ul></li>
 
 <li><a href="https://www.gams.com/latest/docs/UG_MAIN.html#UG_Language_Environment">User's Guide</a>
 <ul>
 <li>これが GAMS のメインのマニュアルになります。</li>
+<li>GAMS の文法などのついてわからないときは、まずこれを探すといいと思います。</li>
 </ul></li>
 
 <li><a href="https://www.gams.com/try_gams/">Try GAMS</a>
 <ul>
-<li>ここからGAMSをデモバージョンとして利用するためのライセンスファイルの申請ができます。デモバージョンは変数や式の数に制限がかかりますが、使い方は有料版と変わらないです。</li>
+<li>ここからGAMSを無料のデモバージョンとして利用するためのライセンスファイルの申請ができます。デモバージョンは変数や式の数に制限がかかりますが、使い方は有料版と変わらないです。</li>
 <li>GAMSの勉強をするのなら、まずは小型のシンプルなモデルを使うようにした方がよいので、デモバージョンを使うのがよいと思います。</li>
 </ul></li>
 
-<li><a href="https://www.mpsge.org/">T. Rutherford のページ</a>
+<li><a href="https://www.mpsge.org/">https://www.mpsge.org</a>
 <ul>
-<li>Thomas F. Rutherford のページ。ここには GAMS を使った経済学での分析の例、使い方を説明したプログラム、便利なアドオンプログラムなんかが置いてあります。</li>
+<li>これはCGE分析の分野で非常に有名な研究者であるThomas F. Rutherford氏のホームページです。</li>
+<li>ここには GAMS を使った経済学での分析の例、使い方を説明したプログラム、便利なアドオンプログラムなどがたくさん置いてあります。</li>
+<li>私はCGE分析をここにある様々な文書やプログラムで学びました。</li>
 </ul></li>
 
 <li><a href="https://forum.gamsworld.org/">GAMS World Forum - Index page</a>
 <ul>
-<li>GAMSのフォーラムです。GAMSの利用法についてわからないことを聞くことができます。また、CGE分析の専門家が多数参加しているので、 CGE分析についてもアドバイスをもらうことができます。</li>
+<li>GAMSのフォーラムです。ここでGAMSについてわからないことを聞くことができます。また、CGE分析の専門家が多数参加しているので、CGE分析についてもアドバイスをもらうことができると思います。</li>
 </ul></li>
 
 <li><a href="https://www.listserv.dfn.de/sympa/arc/gams-l">gams-l - GAMS user list</a>
@@ -280,10 +287,15 @@
 </ul>
 
 <h2><a name="CGE_2" id="CGE_2"></a>CGE分析</h2>
+
+<p>
+次に、CGE分析についての資料を紹介します。
+</p>
+
 <ul>
 <li><a href="https://shirotakeda.github.io/ja/research-ja/cge-howto.html">応用一般均衡分析入門</a>
 <ul>
-<li>私が書いているCGE分析入門用の文書です。</li>
+<li>私が書いているCGE分析の入門用の文書です。</li>
 <li>CGE分析を学びたい場合、日本人ならまずはこれをおすすめします。</li>
 </ul></li>
 
@@ -303,7 +315,7 @@
 <li><a href="https://www.sciencedirect.com/handbook/handbook-of-computable-general-equilibrium-modeling">Handbook of Computable General Equilibrium Modeling | ScienceDirect.com by Elsevier</a>
 <ul>
 <li>CGE分析のハンドブックのページです。</li>
-<li>CGE分析の著名な研究者達がCGE分析についての最新の知見をまとめた本です。ちょっと難しい。</li>
+<li>CGE分析の著名な研究者達がCGE分析についての最新の知見をまとめた本です。ちょっと難しいかも。</li>
 </ul></li>
 </ul>
 
@@ -315,22 +327,21 @@
 
 <p>通常、一般均衡モデル（その均衡条件）は非線形の連立方程式体系（厳密にはMCP、mixed complementary problem）として表現されます。従って、一般均衡モデルを解くということは結局のところ連立方程式を解くことにほかなりません。GAMSで連立方程式を表現するには一本一本方程式を記述していくのが普通の方法なのですが、MPSGEでは特殊な記法を利用することで 非常に簡単・簡潔にモデルを記述することができます。</p>
 
-<p>ただし、MPSGEで表現できるモデルのタイプには制限がありますので、どのようなモデルでもMPSGEを利用できるというわけではありません。</p>
+<p><span class="kyocho">［注］</span>ただし、MPSGEで表現できるモデルのタイプには制限がありますので、どのようなモデルでもMPSGEを利用できるというわけではありません。</p>
 
 <br>
 
 <ul>
 <li><a href="https://www.gams.com/40/docs/UG_MPSGE.html">Mathematical Programming System for General Equilibrium analysis (MPSGE)</a>
 <ul>
-<li>GAMSのドキュメントの中の MPSGE のページ。</li>
+<li>GAMSのドキュメントの中の MPSGE のページです。</li>
+<li>ここにあるものがMPSGEの公式のマニュアルということになると思いますが、少しわかりにくいかなと思います。</li>
 </ul></li>
 
 <li><a href="https://shirotakeda.github.io/ja/gams-ja/mpsge-ja.html">MPSGEの利用方法</a>
 <ul>
-<li>私が書いたMPSGEの利用方法の文書。</li>
-<li>MPSGEの日本人の利用者は非常に少ないので、MPSGEの日本語での解説はおそらくこれ
-くらいしかないと思います。</li>
-<li>日本人でしたらまずはこれを読むといいと思います。</li>
+<li>これは私が書いたMPSGEの利用方法を説明した文書です。</li>
+<li>MPSGEの日本人の利用者は非常に少ないので、MPSGEの日本語での解説はおそらくこれくらいしかないと思います。日本人でしたらまずはこれを読むといいと思います。</li>
 </ul></li>
 
 <li><a href="http://www.mpsge.org/mainpage/mpsge.htm">Economic Model Library: Links</a>
@@ -341,7 +352,7 @@
 
 <li><a href="http://www.mpsge.org/markusen/markusen.htm">Simple Examples</a>
 <ul>
-<li>Rutherford と 国際貿易理論で有名なJames Markusenのレクチャーノートのページ。</li>
+<li>これは、Rutherford と James Markusen（国際貿易理論で非常に有名な研究者）の二人によるレクチャーノートのページです。</li>
 <li>MPSGEのプログラム例がたくさんあります。</li>
 </ul></li>
 
@@ -352,9 +363,9 @@
 
 <li><a href="https://globalchange.mit.edu/research/research-tools/human-system-model">Human System Model | MIT Global Change</a>
 <ul>
-<li>MIT の温暖化対策分析用の CGE モデルである「EPPA model」はMPSGEを利用して記述
+<li>MIT のグループにより開発されている温暖化対策分析用の CGE モデルである「EPPA model」はMPSGEを利用して記述
 されています。そのEPPAモデルのページです。</li>
-<li>モデルのコードもダウンロードできます。</li>
+<li>EPPAモデルはモデルのプログラムコードもダウンロードできます。</li>
 </ul></li>
 </ul>
 
@@ -364,9 +375,13 @@ GTAPinGAMS とは GTAP データを GAMS で利用しやすいように修正、
 </p>
 
 <ul>
-<li><a href="https://shirotakeda.org/blog-ja/?p=3444">新しい GTAPinGAMS（GTAP9用） | 武田史郎のウェブログ</a>
+<li><a href="https://shiro-takeda.hateblo.jp/entry/3444">新しい GTAPinGAMS（GTAP9用） | 武田史郎のウェブログ</a>
 <ul>
 <li>GTAP9 用の GTAPinGAMS についての説明です。</li>
+</ul></li>
+<li><a href="https://doi.org/10.21642/JGEA.010201AF">GTAP9inGAMS</a>
+<ul>
+<li>GTAP9 用の GTAPinGAMS が配布されている場所です。</li>
 </ul></li>
 </ul>
 
@@ -385,7 +400,7 @@ GAMS といっしょに使うと便利なソフト等。
 
 <h2><a name="GAMS_amp_CGE_6" id="GAMS_amp_CGE_6"></a>GAMS &amp; CGE分析についてのブログ</h2>
 <p>
-CGE分析についてのブログ。
+CGE分析についてのブログの紹介。
 </p>
 
 <ul>
@@ -409,22 +424,29 @@ CGE分析についてのブログ。
 
 
 <h2><a name="GAMS_amp_CGETIPS_7" id="GAMS_amp_CGETIPS_7"></a>GAMS &amp; CGE分析についてのTIPS</h2>
+
+<p>
+GAMS、あるいはCGE分析についての様々なTIPSを紹介したページです。
+</p>
+
 <ul>
 <li><a href="https://shiro-takeda.hateblo.jp/entry/4102">GAMS における文字コード | 武田史郎のウェブログ</a>
 <ul>
 <li>GAMS における文字コードの扱いについての説明。</li>
-<li>GAMS は UTF-8 が利用できますが、Windows で UTF-8 にすると困ることあります。</li>
+<li>現在のGAMSは文字コードにUTF-8 が利用できるので、基本的には日本語が混じるファイルはUTF-8を指定すればよいです。</li>
+<li>しかし、Windows でUTF-8を利用すると一つ困ることあります。それについて説明しています。</li>
 </ul></li>
 
 <li><a href="https://shiro-takeda.hateblo.jp/entry/3835">生涯効用の計算 | 武田史郎のウェブログ</a>
 <ul>
-<li>動学モデルで利用されることが多い「生涯効用」という概念について。</li>
-<li>Forward-looking 型のモデルを作成する場合には関係するかも。</li>
+<li>forward-looking型の動学モデルで利用されることが多い「生涯効用」という概念について。</li>
+<li>CGE分析ではforward-looking 型の動学モデルはあまり使わないのですが．．．</li>
 </ul></li>
 
-<li><a href="https://shiro-takeda.hateblo.jp/entry/3804">応用一般均衡分析とCGE分析 &#x00ad; 武田史郎のウェブログ</a>   
+<li><a href="https://shiro-takeda.hateblo.jp/entry/3804">応用一般均衡分析とCGE分析 | 武田史郎のウェブログ</a>   
 <ul>
-<li>「CGE分析」を「計算可能な一般均衡分析」ではなく、「応用一般均衡分析」と呼ぶことが多い理由について。</li>
+<li>「CGE (computable general equilibrium)」の直訳は「計算可能な一般均衡」なのですが、日本語としては「応用一般均衡」という用語の方がよく使われます。</li>
+<li>その理由について（の推測）を説明しています。</li>
 </ul></li>
 
 <li><a href="https://shiro-takeda.hateblo.jp/entry/2919">CGE分析における価格指数と数量指数</a>
@@ -435,6 +457,7 @@ CGE分析についてのブログ。
 <li><a href="https://shiro-takeda.hateblo.jp/entry/2820">GAMSでの累乗 | 武田史郎のウェブログ</a>
 <ul>
 <li>GAMS での累乗（x<sup>n</sup>）の計算方法について。</li>
+<li>GAMS での累乗を計算する方法は二つあります。その使い分けの仕方についての説明。よく忘れるのでメモ代わり。</li>
 </ul></li>
 
 <li><a href="https://shiro-takeda.hateblo.jp/entry/2540">CGEモデルにおける個々の部門の資本ストックの扱い | 武田史郎のウェブログ</a>
@@ -457,6 +480,7 @@ CGE分析についてのブログ。
 <li><a href="https://shiro-takeda.hateblo.jp/entry/1277">CGEモデルのチェック方法 | 武田史郎のウェブログ</a>
 <ul>
 <li>作成している CGE モデルが正しいモデルになっているかのチェック方法について。</li>
+<li>同じようなことを<a href="https://shirotakeda.github.io/ja/research-ja/cge-howto.html">『応用一般均衡分析入門』</a>の第6章、第9章でもっと詳しく説明しています。</li>
 </ul></li>
 
 <li><a href="https://shiro-takeda.hateblo.jp/entry/1259">MPSGEの勉強方法 | 武田史郎のウェブログ</a>
@@ -467,28 +491,24 @@ CGE分析についてのブログ。
 <li><a href="https://shiro-takeda.hateblo.jp/entry/927">一般均衡モデルにおける価格の 0 次同次性 | 武田史郎のウェブログ</a>
 <ul>
 <li>通常の一般均衡モデルでは「価格の0次同次性」と呼べるような性質が成り立ちます。</li>
-<li>CGE モデルを作成する際にこの「価格の0次同次性」が成り立たないモデルにしてし
-まうことがよくあり、それがモデルが正常に動かない原因になっていることが多いで
-す。</li>
+<li>CGE モデルを作成する際にこの「価格の0次同次性」が成り立たないモデルにしてしまうことがよくあり、それがモデルが正常に動かない原因になっていることが多いです。</li>
+<li>同じようなことを<a href="https://shirotakeda.github.io/ja/research-ja/cge-howto.html">『応用一般均衡分析入門』</a>の第2章で説明しています。</li>
 </ul></li>
 
 <li><a href="https://shiro-takeda.hateblo.jp/entry/890">複数のMPSGEのプログラムを同時に実行する方法 | 武田史郎のウェブログ</a>
 <ul>
-<li>CGE モデルを解く際に、パラメータやモデルの設定を変更して何度も解く必要がでてくることがあります。</li>
+<li>CGE モデルを解く際に、パラメータやモデルの設定を変更して何度も解く必要がでてくることがあります。そのようなときに複数のシナリオを同時並行的に解くための方法について説明しています。</li>
+<li>感度分析で多数のシナリオを解くような場合には、私もこの方法を使っています。</li>
 </ul></li>
 
 <li><a href="https://shiro-takeda.hateblo.jp/entry/718">CGE分析でGAMSを利用する理由 | 武田史郎のウェブログ</a>
 <ul>
-<li>CGE分析をおこなう際に、GAMS という数値計算ソフトがよく利用されます。</li>
-<li>その理由について。</li>
+<li>CGE分析をおこなう際に、GAMS という数値計算ソフトがよく利用される理由について説明しています。</li>
 </ul></li>
 
 <li><a href="https://shiro-takeda.hateblo.jp/entry/704">gdxxrw で複数のパラメータを一気に excel に出力する方法 | 武田史郎のウェブログ</a>
 <ul>
-<li>（Windows上の）GAMS では Excel とデータをやりとりする際に gdxxrw というプロ
-グラムを使います（Excel のデータを gdxxrw を用いて GDX 形式に変換して、GAMS
-で読み込む。逆に GAMS から GDX ファイルにデータを出力後に、gdxxrw で Excel
-ファイルに変換する）。</li>
+<li>（Windows上の）GAMS では Excel とデータをやりとりする際に gdxxrw というプログラムを使います（Excel のデータを gdxxrw を用いて GDX 形式に変換して、GAMSで読み込む。逆に GAMS から GDX ファイルにデータを出力後に、gdxxrw で Excelファイルに変換する）。</li>
 <li>gdxxrw を利用する際に一度に複数のパラメータの値を Excel に出力する方法の説明。</li>
 </ul></li>
 
@@ -510,13 +530,26 @@ CGE分析についてのブログ。
 <ul>
 <li>CGEモデルを解く際に、1）連立方程式として解く、2）最適化問題として解くという二つのアプローチがあります。</li>
 <li>どちらを利用すればよいかについての説明。</li>
+<li>同じようなことを<a href="https://shirotakeda.github.io/ja/research-ja/cge-howto.html">『応用一般均衡分析入門』</a>の第11章でもっと詳しく説明しています。</li>
 </ul></li>
 </ul>
+
+<li><a href="https://shiro-takeda.hateblo.jp/entry/1353">EmacsでGAMSのプログラミングをするのに便利なツール | 武田史郎のウェブログ</a></a>
+<ul>
+<li>EmacsでGAMSのプログラミングをする際に使うと便利なツールを紹介しています。</li>
+</ul></li>
+</ul>
+
+
 
 <h2><a name="CGE_8" id="CGE_8"></a>CGE分析の分析例</h2>
 <p>
 追加予定
 </p>
+
+<br>
+<br>
+
 
 <div class="go2top">[<a href="ja/gams-ja/gams-link-ja.html#header">The top of this page</a>]</div>
   
