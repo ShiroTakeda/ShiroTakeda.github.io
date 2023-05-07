@@ -189,7 +189,7 @@
       <!-- id:insideheader -->
       <div id="insideheader">
         <h1>応用一般均衡分析入門</h1>
-        <div class="update">更新日: 2023/01/27</div>
+        <div class="update">更新日: 2023/05/08</div>
         <p><a href="https://shirotakeda.github.io/" class="home">Home (en)</a> » <a href="https://shirotakeda.github.io/ja/">ホーム (ja)</a> » <a href="https://shirotakeda.github.io/ja/research-ja/">研究のページ</a> » 応用一般均衡分析入門</p>
       </div> <!-- id:insideheader -->
 
@@ -222,6 +222,7 @@
 <h3>更新履歴</h2>
 
 <ul>
+  <li><b>2023-05-08:</b> 第1章～第15章の誤植を全体的に修正。</li>
   <li><b>2023-01-27:</b> 第1章のEVの説明のためのプログラムを追加。第15章用に japan_model_mpsge.gmsというプログラムを追加（これは japan_model.gms をMPSGEで記述したもの）。</li>
   <li><b>2022-12-09:</b> 第3章について、全体的に説明の追加・修正。Bruce McCarl のマニュアルについての説明は削除（基本的に GAMS User's Guideに統合されたので）。</li>
   <li><b>2022-08-01:</b> 第1章にEVについての説明を追加。</li>
@@ -244,105 +245,81 @@
 
 <br />
 
-<p>文書において利用されているプログラムファイルは全て<a onClick="_gaq.push(['_trackEvent', 'download', 'click', '/down/CGE_all.zip']);"  href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_all.zip">CGE_all.zip</a> に入っていますので、これも一緒にダウンロードしてください。</p>
+<p>文書において利用されているプログラムファイルは全て<a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_all.zip">CGE_all.zip</a> に入っていますので、これも一緒にダウンロードしてください。</p>
 
 <br />
 
 <ul>
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_1.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_1.pdf">第1章: 企業と消費者の行動</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_1.pdf">第1章: 企業と消費者の行動</a>
     <ul>
       <li>応用一般均衡分析（CGE分析）ではモデルとして一般均衡モデルを利用します。
         その一般均衡モデルを考える前に、第1章ではモデルに現れる個々の経済主体、具体的には企業（生産者）、家計（消費者）、政府の行動をどのように捉えるか解説します。基本的には普通のミクロ経済学の最初の方のパートで解説されているような内容となります。ただし、CGE分析をおこなう際に重要になる内容に限定しています。</li>
     </ul>
   </li>
 
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_A_1.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_A_1.pdf">第A-1章: 関数形のレファレンス</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_A_1.pdf">第A-1章: 関数形のレファレンス</a>
     <ul>
       <li>この第A-1章は様々な関数のレファレンスです。第1章、及び第2章以後で出てくる様々な関数をまとめて説明しています。また、その導出方法についても説明しています。</li>
     </ul>
   </li>
 
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_2.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_2.pdf">第2章: 一般均衡モデル</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_2.pdf">第2章: 一般均衡モデル</a>
     <ul>
       <li> 第2章ではCGEモデルを考える準備として、まず単純な一般均衡モデルを考えます。単純な一般均衡モデルを用いて、1) 一般均衡モデルの表現方法、2) 一般均衡モデルで成立する重要な性質について確認します。</li>
     </ul>
   </li>
 
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_3.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_3.pdf">第3章: GAMSの利用法</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_3.pdf">第3章: GAMSの利用法</a>
     <ul>
       <li>第3章ではGAMSの基本的な利用方法、GAMSにおける連立方程式の解き方について解説します。</li>
     </ul>
   </li>
 
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_4.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_4.pdf">第4章: MCP（Mixed Complementarity Problem）の解き方</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_4.pdf">第4章: MCP（Mixed Complementarity Problem）の解き方</a>
     <ul>
       <li>P第5章以降では、CGEモデルをMCP（mixed complementarity problem）という
         問題の一種として扱っていきます。第4章ではMCPとはどのような問題で、GAMSでどのように扱うのかについて説明します。</li>
     </ul>
   </li>
 
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_5.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_5.pdf">第5章: 一般均衡モデルの解き方</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_5.pdf">第5章: 一般均衡モデルの解き方</a>
     <ul>
       <li>第2章で説明した一般均衡モデルをGAMSで実際に解く方法について解説します。</li>
     </ul>
   </li>
 
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_6.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_6.pdf">第6章: モデルのチェック</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_6.pdf">第6章: モデルのチェック</a>
     <ul>
       <li>第6章では一般均衡モデルのチェック方法について解説します。正しいモデルになっているか、正しくプログラムが記述されているかをチェックする方法です。</li>
     </ul>
   </li>
 
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_7.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_7.pdf">第7章: 社会会計表（Social Accounting Matrix)</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_7.pdf">第7章: 社会会計表（Social Accounting Matrix)</a>
     <ul>
       <li>CGE分析ではSAMと呼ばれるようなデータが必要になります。第7章ではSAMとはどのようなデータで、どのように作成するかを解説します。</li>
     </ul>
   </li>
   
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_8.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_8.pdf">第8章: 関数形とカリブレーション</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_8.pdf">第8章: 関数形とカリブレーション</a>
     <ul>
       <li>CGE分析はシミュレーションですので、モデルに現われる関数は全て特定化す
         る必要があります。第8章ではCGE分析においてどのような関数が利用され、それがどのように特定化されるかを解説しています。</li>
     </ul>
   </li>
 
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_9.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_9.pdf">第9章: CGE モデルのチェック</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_9.pdf">第9章: CGE モデルのチェック</a>
     <ul>
       <li>第9章ではCGEモデルのチェック方法について解説しています。CGEモデルを作成したときにまずチェックすべき事項について説明しています。</li>
     </ul>
   </li>
 
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_10.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_10.pdf">第10章: モデルの別表現</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_10.pdf">第10章: モデルの別表現</a>
     <ul>
       <li>第10章では第8章で解いたモデルの別の表現方法を紹介する。一つは消費活動を生産活動と同じように表現する方法。もう一つは内生変数の初期均衡での値を 1 に規準化するような記述方法。</li>
     </ul>
   </li>
 
-  <li>（※）<a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                        '/down/CGE_chap_11.pdf']);"
-               href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_11.pdf">第11章: NLPとしての一般均衡モデル</a>
+  <li>（※）<a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_11.pdf">第11章: NLPとしての一般均衡モデル</a>
     <ul>
       <li>第10章までは連立方程式（MCP）として一般均衡モデル（CGEモデル）を解いて
         きました。第11章ではNLP（nonlinear programming、非線形の最適化問題）としてモデルを解く方法について説明します。</li>
@@ -350,18 +327,14 @@
     </ul>
   </li>
 
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_12.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_12.pdf">第12章: 貿易の導入（一地域モデル）</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_12.pdf">第12章: 貿易の導入（一地域モデル）</a>
     <ul>
       <li>CGEモデルに貿易を導入する方法について説明しています。実際のデータに基
         づくCGEモデルを構築するには当然貿易も考慮する必要があります。第11章では一国モデル（のさらに小国）という前提で貿易を導入する方法について説明しています。ここでは多地域モデルは扱っていません。</li>
     </ul>
   </li>
 
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_13.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_13.pdf">第13章: 投資の導入（静学モデル）</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_13.pdf">第13章: 投資の導入（静学モデル）</a>
     <ul>
       <li>ここでは CGE モデルに投資（設備投資や住宅投資などの物的な投資）を導入する方法について説明しています。</li>
       <li>ただし、ここではあくまで静学モデルを前提としています。</li>
@@ -369,18 +342,14 @@
     </ul>
   </li>
 
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_14.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_14.pdf">第14章: 政府の導入</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_14.pdf">第14章: 政府の導入</a>
     <ul>
       <li>ここでは CGE モデルにおいて「政府」をどのように扱うかを説明しています。</li>
       <li>また、税金を変更する様々なシミューレションをおこない、現実には大きな効果がありそうな政策が、CGE モデル（実物的な一般均衡モデル）では全く効果を持たないようなケースを紹介しています。</li>
     </ul>
   </li>
 
-  <li><a onClick="_gaq.push(['_trackEvent', 'download', 'click',
-                  '/down/CGE_chap_15.pdf']);"
-         href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_15.pdf">第15章: 日本の CGE モデル</a>
+  <li><a href="https://shirotakeda.github.io/content/files/research/cge_howto/CGE_chap_15.pdf">第15章: 日本の CGE モデル</a>
     <ul>
       <li> ここまで利用してきた CGE モデルは全て仮想的なデータに基づくものであり、現実の国・地域を表したものではないです。</li>
       <li> ここまでの章で CGE モデルを作成するための手順・知識を一通り説明したので、ここでは日本のデータを用いて、日本の CGE モデルを作成してみます。</li>
