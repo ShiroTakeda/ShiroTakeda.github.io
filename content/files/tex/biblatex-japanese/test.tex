@@ -1,0 +1,68 @@
+%#!lualatex
+%#BIBTEX biber test
+
+%% クラスファイル = jlreq
+\documentclass[article]{jlreq}
+
+% biblatex の読み込み．
+\usepackage[style=authoryear,nameorder,backref]{biblatex-japanese}
+
+% % その他のbiblatex の option の指定
+\ExecuteBibliographyOptions{
+sortcites=true,%
+date=year,              % date を year のみ表示
+giveninits=true,        % Given name はイニシャルのみとする
+maxbibnames = 8,	% 参考文献部分の著者数が 8 を越えたら省略
+minbibnames = 3,        % その際、参考文献部分の著者を 3 名までに省略
+maxcitenames = 2,       % 引用部分の著者数が 2 を越えたら省略
+mincitenames = 1,       % その際、引用文献部分の著者を 1 名までに省略
+uniquelist=minyear,     % 上の著者名省略の機能に対する制限
+isbn=false,              % ISBN は非表示
+}
+
+% % localisation stringsの変更．これで書式を変更．
+\DefineBibliographyStrings{japanese}{%
+japanese-editor	 = {（編）},%
+japanese-editors	 = {（編）},%
+japanese-name-delimiter	 = {・},%
+japanese-volume-prefix	 = {第},
+japanese-volume-suffix	 = {巻},
+japanese-number-prefix	 = {\addcomma{}第},
+japanese-number-suffix	 = {号},
+}
+
+% ------------------------------------------------------------
+%	同じ著者が続く場合の省略用の線の形式の変更
+%
+% authoryear style では同じ著者が続く場合に横線で省略される。その形式は
+% \bibnamedash で定義されている。
+% \bibnamedash is originally defined in biblatex.def.
+\renewcommand{\bibnamedash}{%
+  \hskip.2em \leavevmode\rule[.5ex]{2.5em}{.3pt}\hskip0.4em}
+% 前の空白                    高さ 横の長さ 太さ 後ろの空白
+
+% % 文献データベースの指定．
+% \addbibresource{library.bib}
+
+% 文献データベースの指定．
+\addbibresource{test.bib}
+
+\begin{document}
+
+% 引用部分、参考文献部分は input-text.tex というファイル．
+\input{input-text}
+
+%%% Reference 表示
+\printbibliography[heading=bibintoc]
+
+\end{document}
+
+%#####################################################################
+%######################### Document Ends #############################
+%#####################################################################
+
+ --------------------
+ Local Variables:
+ fill-column: 80
+ coding: utf-8-dos
+ End:
